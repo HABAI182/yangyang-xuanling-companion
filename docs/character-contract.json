@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "targetCharacter": "秧秧玄翎（按用户底稿）",
+  "targetPlatforms": ["Windows x64"],
+  "artMode": "preserve-reference-and-underpaint",
+  "currentBaseImage": "public/assets/reference-cutout-v1.png",
+  "baseApproval": "user-supplied-composition; generated-layer-candidates-pending-visual-acceptance",
+  "identityAnchors": ["蓝黑发色渐变至蓝白发梢", "大蓝眼与原图脸角度", "蓝色菱形额纹", "画面左侧羽饰、金花与红穗", "黑白蓝服装与金饰", "画面右侧蓝白小鸟"],
+  "referenceRoles": [
+    {"source":"user attachment 微信图片_20261014141845_297_2.png", "role":"identity and composition", "localOriginalAvailable":false},
+    {"source":"art/source/skill-layout-reference.png", "role":"visually corresponding skill example; different resolution, not exact original bytes"},
+    {"source":"public/assets/reference-cutout-v1.png", "role":"AI-assisted transparent extraction candidate"}
+  ],
+  "preserveRegions": ["角色辨识度", "原图鼠标/键盘手部归属", "小鸟"],
+  "composition": {"view":"front-facing-pet", "keyboardLayout":"mirrored 60% with one upper spacebar", "mouseCable":"wireless reference", "companion":"reference blue-white bird; no independent identity invented"},
+  "inputPolicy": {"keyboardHands":"character left / screen right", "mouseOwnership":"character right / screen left", "autorepeat":"no retrigger", "spaceLanding":"center", "physicalToScreenMirroring":"physical left maps screen right"},
+  "publicationAuthorization":"GitHub private development repository authorized by user on 2026-10-14; public release not authorized",
+  "acceptanceCriteria": ["independent keyboard/mouse presses", "hold once and release smoothly", "real transparent native window and tray", "recoverable click-through", "real Cubism source/export separated from drafts"]
+}

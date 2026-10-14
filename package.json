@@ -1,0 +1,16 @@
+{
+  "name": "yangyang-xuanling-companion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1437",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --test tests/*.test.mjs",
+    "desktop": "tauri dev",
+    "package:windows": "tauri build --bundles nsis",
+    "tauri": "tauri"
+  },
+  "dependencies": {"@tauri-apps/api": "2.11.1"},
+  "devDependencies": {"@tauri-apps/cli": "2.11.5", "typescript": "5.9.3", "vite": "8.3.0"}
+}

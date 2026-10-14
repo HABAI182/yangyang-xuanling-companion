@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "秧秧玄翎", "version": "0.1.0", "identifier": "local.habai182.yangyang-xuanling",
+  "build": {"beforeDevCommand": "npm run dev", "devUrl": "http://127.0.0.1:1437", "beforeBuildCommand": "npm run build", "frontendDist": "../dist"},
+  "app": {
+    "windows": [{"label":"pet", "title":"秧秧玄翎 · 制作预览", "width":420, "height":430, "transparent":true, "backgroundColor":"#00000000", "decorations":false, "shadow":false, "alwaysOnTop":true, "skipTaskbar":true, "focus":false, "focusable":false, "resizable":false, "visible":false}],
+    "security": {"csp":"default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost; script-src 'self' 'wasm-unsafe-eval'"}
+  },
+  "bundle": {"active":true, "targets":["nsis"], "icon":["icons/icon.ico"], "shortDescription":"秧秧玄翎桌面伴侣制作预览", "windows":{"nsis":{"languages":["SimpChinese"],"displayLanguageSelector":false}}, "licenseFile":"../LICENSE.txt"}
+}

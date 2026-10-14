@@ -1,0 +1,10 @@
+{
+  "entry": null,
+  "stage": "layered-art-preview",
+  "parameters": {
+    "headX": "ParamAngleX", "headY": "ParamAngleY", "headZ": "ParamAngleZ",
+    "keyboardPress": "ParamKeyboardPress", "mousePress": "ParamMousePress", "keyboardReach": "ParamKeyboardReach",
+    "breath": "ParamBreath", "birdBounce": "ParamBirdBounce",
+    "eyeLeftOpen": "ParamEyeLOpen", "eyeRightOpen": "ParamEyeROpen"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "draft": true,
+  "canvas": {
+    "width": 1400,
+    "height": 1360
+  },
+  "layers": [
+    {
+      "id": "head-body",
+      "file": "/assets/head-body-v1.png",
+      "x": 0,
+      "y": 0,
+      "width": 1220,
+      "height": 1200
+    },
+    {
+      "id": "keyboard",
+      "file": "/assets/keyboard-v1.png",
+      "x": 265,
+      "y": 1010,
+      "width": 1100,
+      "height": 342
+    },
+    {
+      "id": "mouse-hand",
+      "file": "/assets/mouse-hand-v1.png",
+      "x": 95,
+      "y": 930,
+      "width": 290,
+      "height": 206
+    },
+    {
+      "id": "keyboard-hand",
+      "file": "/assets/keyboard-hand-v1.png",
+      "x": 765,
+      "y": 956,
+      "width": 235,
+      "height": 96
+    },
+    {
+      "id": "bird",
+      "file": "/assets/bird-v1.png",
+      "x": 1130,
+      "y": 890,
+      "width": 235,
+      "height": 199
+    }
+  ]
+}
