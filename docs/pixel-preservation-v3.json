@@ -1,0 +1,18 @@
+{
+  "sourceSize": [
+    1536,
+    1536
+  ],
+  "cropOnlyCanvas": [
+    1536,
+    1360
+  ],
+  "layerCount": 10,
+  "protectedRgbChangedPixels": 0,
+  "neutralRgbChangedPixels": 0,
+  "aiOnlyInHiddenMasks": true,
+  "geometryResamplingOfVisibleSource": false,
+  "psdRoundTripLayers": 10,
+  "artAcceptance": "pending edge, separation and pose QA",
+  "sourceSha256": "f620733c7bdc692948611f4c4139227747a64001d77a1ed807a2a16580d2d5d8"
+}

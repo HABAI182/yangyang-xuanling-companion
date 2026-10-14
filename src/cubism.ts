@@ -23,7 +23,7 @@ export class CubismRenderer implements PetRenderer {
     const local=(file:string)=>{if(file.startsWith('/') || file.includes('..') || file.includes(':'))throw new Error('模型引用越界');return base+file;};
     const refs=manifest.FileReferences;const data=await (await fetch(local(refs.Moc))).arrayBuffer();
     this.moc=CubismMoc.create(data,true);if(!this.moc)throw new Error('真实 MOC3 验证失败');this.model=this.moc.createModel();if(!this.model)throw new Error('模型创建失败');
-    this.canvas.width=1400;this.canvas.height=1360;this.gl=this.canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true})!;if(!this.gl)throw new Error('WebGL 不可用');
+    this.canvas.height=1360;this.canvas.width=Math.round(1360*this.model.getCanvasWidth()/this.model.getCanvasHeight());this.gl=this.canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true})!;if(!this.gl)throw new Error('WebGL 不可用');
     this.model.saveParameters();this.matrix=new CubismModelMatrix(this.model.getCanvasWidth(),this.model.getCanvasHeight());
     if(manifest.Layout)this.matrix.setupFromLayout(new Map(Object.entries(manifest.Layout) as [string,number][]));
     this.renderer=new CubismRenderer_WebGL(this.canvas.width,this.canvas.height);this.renderer.initialize(this.model);this.renderer.startUp(this.gl);this.renderer.setIsPremultipliedAlpha(true);this.renderer.loadShaders(shaderUrl);

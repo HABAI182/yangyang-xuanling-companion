@@ -1,0 +1,24 @@
+{
+  "version": "v4",
+  "officialPage": "https://wutheringwaves.kurogames.com/en/main/news/detail/5007",
+  "referencePanel": "art/references/official-profile-5007-1.png",
+  "paletteInterpretation": "muted gray-blue iris; remove cyan/green cast per user feedback; preserve subtle muted gold rim",
+  "visibleChangedPixels": 20540,
+  "outsideIrisChangedPixels": 0,
+  "alphaChangedPixels": 0,
+  "visibleGeometryResampled": false,
+  "regions": [
+    {
+      "side": "left",
+      "pigmentPixels": 10332,
+      "goldRimPixels": 220
+    },
+    {
+      "side": "right",
+      "pigmentPixels": 10208,
+      "goldRimPixels": 234
+    }
+  ],
+  "beforeSha256": "42937c01f5aae3caca4edd4c20f4ac96f62dab761a5d1c99a490a55576d6a764",
+  "afterSha256": "6a1e30b07a8945dd65aab11a0f4c2d53e26bfed6c40f9e71d4a5f9b413f23f95"
+}
