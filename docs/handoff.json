@@ -2,7 +2,7 @@
   "schema": 1,
   "savedAt": "2026-10-15",
   "projectVersion": "0.2.0",
-  "sourceCommit": null,
+  "sourceCommit": "5c350c4303c24109fc56072051a8bb424c9c4fe4",
   "sourceRef": "v0.2.0",
   "activeModelEntry": "/models/yangyang-v6/YangyangXuanling.model3.json",
   "editableSource": "art/source/YangyangXuanling-v6-rig.cmo3",
@@ -65,5 +65,7 @@
     "physical recovery and custom shortcut chords",
     "manual audio listening"
   ],
-  "nextExactTask": "Further refinement only as requested: native expression/eyelid art, then optional hardware/game and installer acceptance. Model geometry and palette remain v6."
+  "nextExactTask": "Further refinement only as requested: native expression/eyelid art, then optional hardware/game and installer acceptance. Model geometry and palette remain v6.",
+  "ordinaryPetRunning": true,
+  "debugListenerClosed": true
 }

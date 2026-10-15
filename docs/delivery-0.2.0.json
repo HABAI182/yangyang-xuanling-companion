@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "sourceCommit": "5c350c4303c24109fc56072051a8bb424c9c4fe4",
+  "sourceRef": "v0.2.0",
+  "privateRepository": "https://github.com/HABAI182/yangyang-xuanling-companion",
+  "directory": "deliveries/20261015-windows-0.2.0",
+  "verifiedSha256Files": [
+    "manifest.json",
+    "使用说明.txt",
+    "秧秧玄翎-模型源文件-v6.zip",
+    "秧秧玄翎.exe",
+    "秧秧玄翎_0.2.0_x64-setup.exe"
+  ],
+  "sourceZipEntriesVerified": 36,
+  "sourceMatchesTag": true,
+  "textComparison": "LF/CRLF normalized; binary bytes exact",
+  "architecture": "Windows x64",
+  "artifacts": {
+    "使用说明.txt": {
+      "bytes": 1839,
+      "sha256": "93c6c2eb1db9e8a7ba15dfc699c46909859f84a5746b3f8b0c689c71abff71e6"
+    },
+    "秧秧玄翎-模型源文件-v6.zip": {
+      "bytes": 25465180,
+      "sha256": "0ed9e30bea828fe313bbe462b950b8d367dd71ecb58866246990f4aa53fe6e4e"
+    },
+    "秧秧玄翎.exe": {
+      "bytes": 42743296,
+      "sha256": "000531457c9029c68d4aac59453a0ef513030e93fe1557e057b54e9113b16a2d"
+    },
+    "秧秧玄翎_0.2.0_x64-setup.exe": {
+      "bytes": 29943961,
+      "sha256": "8f08393beb6c91d41eb5028ba64f09d00aa61f6859e7f1c2c435cbe3334e4139"
+    }
+  },
+  "validation": "docs/validation-0.2.0.json",
+  "publicReleaseCreated": false
+}
