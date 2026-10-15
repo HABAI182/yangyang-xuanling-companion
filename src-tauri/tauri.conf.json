@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "秧秧玄翎", "version": "0.1.2", "identifier": "local.habai182.yangyang-xuanling",
+  "productName": "秧秧玄翎", "version": "0.2.0", "identifier": "local.habai182.yangyang-xuanling",
   "build": {"beforeDevCommand": "npm run dev", "devUrl": "http://127.0.0.1:1437", "beforeBuildCommand": "npm run build", "frontendDist": "../dist"},
   "app": {
     "windows": [{"label":"pet", "title":"秧秧玄翎 · 制作预览", "width":420, "height":430, "transparent":true, "backgroundColor":"#00000000", "decorations":false, "shadow":false, "alwaysOnTop":true, "skipTaskbar":true, "focus":false, "focusable":false, "resizable":false, "visible":false}],

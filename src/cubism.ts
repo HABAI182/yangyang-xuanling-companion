@@ -6,13 +6,14 @@ import {CubismMatrix44} from '../vendor/live2d/src/math/cubismmatrix44';
 import {CubismRenderer_WebGL} from '../vendor/live2d/src/rendering/cubismrenderer_webgl';
 import {CubismShaderManager_WebGL} from '../vendor/live2d/src/rendering/cubismshader_webgl';
 import {CubismPhysics} from '../vendor/live2d/src/physics/cubismphysics';
-import {loadImage,PetRenderer,AnimationSnapshot} from './renderer';
+import {loadImage,PetRenderer,AnimationSnapshot,AnimationOptions} from './renderer';
 
 type Config={entry:string|null,parameters:Record<string,string>,parameterScale?:Record<string,number>};
 const shaderUrl='/vendor/live2d/shaders/';
 let frameworkReady=false;
 export class CubismRenderer implements PetRenderer {
   private gl!:WebGLRenderingContext;private moc!:CubismMoc;private model!:CubismModel;private renderer!:CubismRenderer_WebGL;private matrix!:CubismModelMatrix;private physics?:CubismPhysics;private textures:WebGLTexture[]=[];private last=0;
+  private restored=new Map<number,Float32Array>();
   constructor(private canvas:HTMLCanvasElement,private config:Config){}
   async load(){
     if(!this.config.entry || !this.config.entry.startsWith('/models/') || this.config.entry.includes('..'))throw new Error('模型入口必须在本地 models 中');
@@ -34,16 +35,49 @@ export class CubismRenderer implements PetRenderer {
   private set(semantic:string,value:number){const id=this.config.parameters[semantic];if(!id)return;const manager=CubismFramework.getIdManager();const parameter=manager.getId(id);const index=this.model.getParameterIndex(parameter);
     // Unknown IDs must never silently manufacture usable model parameters.
     if(index<0||index>=this.model.getParameterCount())return;this.model.setParameterValueByIndex(index,value*(this.config.parameterScale?.[semantic]??1));}
-  draw(now:number,s:AnimationSnapshot,g:{x:number,y:number},intensity:number,idle:boolean){const dt=this.last?Math.min((now-this.last)/1000,.1):1/60;this.last=now;this.model.loadParameters();
+  draw(now:number,s:AnimationSnapshot,g:{x:number,y:number},intensity:number,idle:boolean,options?:AnimationOptions){const dt=this.last?Math.min((now-this.last)/1000,.1):1/60;this.last=now;
+    // Restore the exact Core output before its next update: runtime transforms
+    // must never accumulate into a progressively stretched model.
+    for(const [i,vertices] of this.restored)this.model.getDrawableVertexPositions(i).set(vertices);this.restored.clear();this.model.loadParameters();
     this.set('headX',g.x*8);this.set('headY',-g.y*5);this.set('headZ',g.x*2+(s.keyboardBounce+s.mouseBounce)*2*intensity);
-    this.set('keyboardPress',(s.keyboardPress*.82+s.keyboardBounce*.18)*intensity);this.set('mousePress',(s.mousePress*.82+s.mouseBounce*.18)*intensity);this.set('keyboardReach',s.reach*s.keyboardPress);
+    this.set('keyboardPress',(s.keyboardPress*.82+s.keyboardBounce*.18)*intensity*(options?.keyboardScale??1));this.set('mousePress',(s.mousePress*.82+s.mouseBounce*.18)*intensity*(options?.mouseScale??1));this.set('keyboardReach',s.reach*s.keyboardPress);
     this.set('breath',idle?.5+.5*Math.sin(now/800):.5);this.set('birdBounce',(s.keyboardBounce+s.mouseBounce)*intensity);
     // This model has opacity-bound open/closed art. A short closed hold avoids
     // the double image produced by crossfading the entire eye patches.
-    const phase=now%5700;const open=idle&&phase>5460&&phase<5590?0:1;this.set('eyeLeftOpen',open);this.set('eyeRightOpen',open);
-    this.physics?.evaluate(this.model,dt);this.model.update();const gl=this.gl;gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+    const phase=now%5700;const closed=['sleepy','laugh','shy'].includes(options?.expression??'');const open=closed||idle&&phase>5460&&phase<5590?0:1;this.set('eyeLeftOpen',open);this.set('eyeRightOpen',open);
+    this.physics?.evaluate(this.model,dt);this.model.update();
+    if(options)this.runtimeMotion(now,s,g,intensity,idle,options);
+    const gl=this.gl;gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     const m=new CubismMatrix44();const aspect=this.canvas.width/this.canvas.height;if(aspect>=1)m.scale(1/aspect,1);else m.scale(1,aspect);m.multiplyByMatrix(this.matrix);
     this.renderer.setMvpMatrix(m);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,this.canvas.width,this.canvas.height]);this.renderer.drawModel(shaderUrl);
+  }
+  private runtimeMotion(now:number,s:AnimationSnapshot,g:{x:number,y:number},intensity:number,idle:boolean,o:AnimationOptions){
+    const cw=this.model.getCanvasWidth(),ch=this.model.getCanvasHeight(),level=o.motionLevel;
+    const pulse=(s.keyboardBounce+s.mouseBounce)*intensity;
+    const nod=o.motion==='nod'?Math.sin(o.motionAge/210)*Math.exp(-o.motionAge/1300):0;
+    const cheer=o.motion==='cheer'?Math.max(0,Math.sin(o.motionAge/160))*Math.exp(-o.motionAge/1800):0;
+    const angle=(g.x*.003+pulse*.006+nod*.012)*o.headElasticity*level;
+    const dy=((idle?Math.sin(now/850)*.0006:0)+pulse*.002+cheer*.007+nod*.004)*ch*level;
+    const px=-cw*.02,py=-ch*.11,cos=Math.cos(angle),sin=Math.sin(angle);
+    for(let i=0;i<this.model.getDrawableCount();i++){
+      const id=this.model.getDrawableId(i).getString();
+      const head=['ArtMesh5','ArtMesh1','ArtMesh2','ArtMesh3','ArtMesh4'].includes(id);
+      const bird=id==='bird';const mouse=id==='mouse'||id==='ArtMesh0';const keyboard=id==='ArtMesh';
+      if(!head&&!bird&&!mouse&&!keyboard)continue;
+      const vertices=this.model.getDrawableVertexPositions(i);this.restored.set(i,new Float32Array(vertices));
+      for(let k=0;k<vertices.length;k+=2){let x=vertices[k],y=vertices[k+1];
+        if(head){const dx=x-px,hy=y-py;x=px+dx*cos-hy*sin+g.x*cw*.0015*level;y=py+dx*sin+hy*cos+dy;}
+        if(bird){const playful=o.motion==='bird'?Math.sin(o.motionAge/120)*Math.exp(-o.motionAge/2000):0;y+=((idle?Math.sin(now/500)*.0012:0)+playful*.008+cheer*.003)*ch*level;}
+        if(mouse){x+=g.x*cw*.002*o.mouseScale;y-=g.y*ch*.001*o.mouseScale;}
+        if(keyboard)x+=s.reach*s.keyboardPress*cw*.004*o.keyboardScale;
+        vertices[k]=x;vertices[k+1]=y;
+      }
+    }
+  }
+  diagnostics(){
+    const meshes:Record<string,number>={};for(let i=0;i<this.model.getDrawableCount();i++){let hash=2166136261;for(const n of this.model.getDrawableVertexPositions(i))hash=Math.imul(hash^Math.round(n*1e6),16777619);meshes[this.model.getDrawableId(i).getString()]=hash>>>0;}
+    const parameters:Record<string,number>={};for(const semantic of ['keyboardPress','mousePress','eyeLeftOpen','eyeRightOpen']){const id=this.config.parameters[semantic];if(id){const i=this.model.getParameterIndex(CubismFramework.getIdManager().getId(id));parameters[semantic]=this.model.getParameterValueByIndex(i);}}
+    return {meshes,parameters};
   }
   dispose(){this.physics?.release();this.renderer?.release();for(const t of this.textures)this.gl.deleteTexture(t);if(this.model)this.moc.deleteModel(this.model);this.moc?.release();}
 }
