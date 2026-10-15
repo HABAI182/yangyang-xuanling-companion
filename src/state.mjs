@@ -18,12 +18,12 @@ export class InputState {
     if (frame.keysHeld > 0) this.reach = frame.reach;
     if (frame.newPress) { this.label = frame.keyLabel; this.labelUntil = now + 900; }
   }
-  snapshot(now) {
+  snapshot(now, speed=1) {
     const pulse = (started) => {
-      const age = (now - started) / 1000;
+      const age = (now - started) / 1000 * speed;
       return age >= 0 && age < .45 ? Math.sin(age * 24) * Math.exp(-age * 11) : 0;
     };
-    const press = (held, release) => held ? 1 : Math.max(0, 1 - (now - release) / 150);
+    const press = (held, release) => held ? 1 : Math.max(0, 1 - (now - release) / (150/speed));
     return {
       keyboardPress: press(this.keyboardHeld, this.keyboardRelease),
       mousePress: press(this.mouseHeld, this.mouseRelease),

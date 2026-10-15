@@ -1,0 +1,30 @@
+{
+  "pass": true,
+  "exeSha256": "000531457c9029c68d4aac59453a0ef513030e93fe1557e057b54e9113b16a2d",
+  "physicalInputVerified": false,
+  "errors": [],
+  "untested": [
+    "physical gamepad",
+    "UAC compatibility restart",
+    "Windows login autostart",
+    "installer execution",
+    "fullscreen game input"
+  ],
+  "realCubism": true,
+  "framesAdvance": true,
+  "preferenceRoundTrip": true,
+  "settingsVisibleAndSeparate": true,
+  "ownEditorForeground": true,
+  "detachedMenu": true,
+  "nativeActionDrivesModel": true,
+  "positionPresetDoesNotResize": true,
+  "manualVisibility": true,
+  "clickThroughRecoveredByCommand": true,
+  "invalidPreferenceAndLinkRejected": true,
+  "fullscreenHide": true,
+  "manualHideSurvivesFullscreenExit": true,
+  "fullscreenException": true,
+  "preferencesRestored": true,
+  "persistedPreferenceBytesRestored": true,
+  "positionSlotsRestored": true
+}

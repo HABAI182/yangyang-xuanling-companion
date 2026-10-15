@@ -43,7 +43,12 @@ def main():
         ROOT / "docs/MODEL-HANDOFF.md",
         ROOT / "docs/eye-underpaint-v6.json",
         ROOT / "LICENSE.txt",
+        ROOT / "LICENSE-CHANG-LI-MIT.txt",
+        ROOT / "THIRD-PARTY-NOTICES.md",
+        ROOT / "docs/changli-parity.md",
     ]
+    source_files += sorted((ROOT / "src").rglob("*"))
+    source_files += sorted((ROOT / "src-tauri/src").rglob("*.rs"))
     source_files += sorted((ROOT / "public/models/yangyang-v6").rglob("*"))
     source_files += sorted((ROOT / "public/vendor/live2d").glob("*LICENSE*"))
     source_files = [p for p in source_files if p.is_file()]
@@ -62,14 +67,20 @@ def main():
 默认大小420、按键显示开、置顶开、鼠标穿透关、自动眨眼开。
 启动位于屏幕右下角，设置窗口会放在主体旁边；旧版已交付文件保留。
 
-本版已有真实 Cubism 模型、左右手独立按压和短眨眼。
-文件/Core/WebGL/浏览器检查通过；Windows 原生可见渲染、鼠标、设置保存恢复已检查。
-0.1.1 用户物理输入已通过独立键鼠、稳定长按、快速敲击和鼠标转键盘；本版输入逻辑相同。
-本版修补闭眼隐藏底层，保留灰蓝瞳色、比例与可见底稿像素；原生导出和 SDK 检查通过。
-仍有少量透明白边，闭眼线为基础形状；发丝物理、转头和小鸟独立动作未制作。
-物理多键/键鼠同时、托盘全部路径、穿透恢复热键与安装流程尚待实测。
+本版按长离0.7.15补齐设置和互动功能，保留画面左手鼠标、右手键盘。
+右键或点击托盘打开独立互动菜单：17种情绪反馈、3段小动作与36条气泡。
+设置分外观/互动/桌面/高级；支持主题、字号、动效、手速、1至6个浮显及长按重复开关。
+桌面功能包括全屏避让及程序例外、磁吸、3个常用位置、靠近淡化、穿透与找回。
+支持可编辑动作快捷键、手柄反馈、轻音、登录启动及高权限兼容手动重启。
+新版用户物理输入已通过独立键鼠、4333ms稳定长按、1秒4次新敲击及鼠标转键盘。
+Windows设置/菜单、全屏/例外、位置与穿透恢复检查通过；详见manifest中的验证范围。
 
-模型源文件压缩包保留项目内目录结构，包含真实 CMO3、分层 PSD 和官方 model3/MOC3/贴图。
+v6原生模型和灰蓝瞳色保留。头部/小鸟随动与情绪装饰是程序效果，未写入CMO3/MOC3。
+仍有少量透明白边，闭眼线为基础形状；精细原生表情、连续眼皮和发丝物理尚未制作。
+手柄实机、游戏输入、UAC兼容重启、Windows登录启动及安装流程未验收。
+
+模型源文件压缩包保留项目内目录结构，包含真实CMO3、分层PSD、官方模型和运行时效果源码。
+完整可构建工程及依赖锁文件在私有GitHub仓库。
 展开后参阅 docs/MODEL-HANDOFF.md；manifest.json 和 SHA256SUMS.txt 可用于核对版本。
 本交付供用户私有开发测试，未公开发布。
 """
@@ -81,7 +92,7 @@ def main():
         "sourceCommit": subprocess.check_output(["git", "rev-parse", f"{args.source_ref}^{{commit}}"], cwd=ROOT, text=True).strip(),
         "sourceRef": args.source_ref,
         "packagingCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-        "palette": "v4-muted-gray-blue", "rig": "v6-hidden-eye-underpaint", "verification": checks,
+        "palette": "v4-muted-gray-blue", "rig": "v6-hidden-eye-underpaint", "runtimeEffectsSeparateFromCmo": True, "verification": checks,
         "modelFiles": {p.relative_to(ROOT).as_posix(): digest(p) for p in source_files},
         "deliverables": {p.name: {"bytes": p.stat().st_size, "sha256": digest(p)} for p in sorted(out.iterdir()) if p.is_file()},
     }

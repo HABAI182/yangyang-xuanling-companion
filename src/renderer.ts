@@ -1,5 +1,6 @@
 export type AnimationSnapshot = {keyboardPress:number,mousePress:number,keyboardBounce:number,mouseBounce:number,reach:number,label:string};
-export interface PetRenderer { draw(now:number,s:AnimationSnapshot,gaze:{x:number,y:number},intensity:number,idle:boolean):void; dispose():void; }
+export type AnimationOptions={keyboardScale:number,mouseScale:number,headElasticity:number,motionLevel:number,expression:string,motion:string,motionAge:number};
+export interface PetRenderer { draw(now:number,s:AnimationSnapshot,gaze:{x:number,y:number},intensity:number,idle:boolean,options?:AnimationOptions):void; dispose():void; }
 type Layer = {id:string,file:string,x:number,y:number,width:number,height:number,opacity?:number,image:HTMLImageElement};
 export function loadImage(url:string):Promise<HTMLImageElement>{return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error(`素材加载失败：${url}`));im.src=url;});}
 export class LayerRenderer implements PetRenderer {

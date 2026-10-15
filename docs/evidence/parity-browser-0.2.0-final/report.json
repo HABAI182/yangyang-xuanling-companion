@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "errors": [],
+  "nativeInputVerified": false,
+  "heldKeyAndGeometryRestore": true,
+  "boundedEphemeralBadges": true,
+  "emotionCatalog": 17,
+  "noCumulativeMeshDrift": true,
+  "fourSettingsPagesAndPersistence": true,
+  "keyboardOnlyRejectsMouse": true,
+  "inputOffSuppressesFeedback": true,
+  "shortcutSlots": 25,
+  "detachedMenuAndCrossWindowAction": true,
+  "runtimeNodChangesRealMesh": true,
+  "runtimeBirdChangesRealMesh": true
+}

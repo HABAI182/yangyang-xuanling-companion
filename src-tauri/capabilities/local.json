@@ -1,4 +1,4 @@
 {
   "identifier":"local-companion", "description":"本地桌宠及设置窗口的最小窗口操作权限",
-  "windows":["pet","settings"], "permissions":["core:default","core:window:allow-start-dragging"]
+  "windows":["pet","settings","menu"], "permissions":["core:default","core:window:allow-start-dragging"]
 }

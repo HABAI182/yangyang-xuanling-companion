@@ -14,3 +14,11 @@ docs/evidence/runtime-*/progress.json
 docs/evidence/runtime-*/options.json
 docs/evidence/windows-*/original-preferences.json
 docs/evidence/windows-*/ready.json
+docs/evidence/**/failure.png
+docs/evidence/**/original-preferences.json
+docs/evidence/**/ready.json
+docs/evidence/**/progress.json
+docs/evidence/parity-browser-0.2.0/
+docs/evidence/parity-windows-0.2.0-retry/
+docs/evidence/parity-windows-0.2.0/*
+!docs/evidence/parity-windows-0.2.0/report.json
