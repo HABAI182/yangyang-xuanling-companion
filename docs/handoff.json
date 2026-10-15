@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "savedAt": "2026-10-15",
+  "projectVersion": "0.1.2",
+  "sourceCommit": "d823e0224187c763ad9301fbeb7d1a8fcf8da7fb",
+  "sourceRef": "v0.1.2",
+  "activeModelEntry": "/models/yangyang-v6/YangyangXuanling.model3.json",
+  "editableSource": "art/source/YangyangXuanling-v6-rig.cmo3",
+  "editablePsd": "art/source/YangyangXuanling-EyeUnderpaint-v6.psd",
+  "runtimeRepairsSeparateFromSource": [
+    "130 ms binary blink avoids half-opacity ghosting; not continuous eyelid deformation"
+  ],
+  "referenceAndBaseProvenance": [
+    "docs/character-contract.json",
+    "docs/iris-correction-v4.json",
+    "docs/eye-underpaint-v6.json",
+    "docs/eye-underpaint-v6-prompt.json"
+  ],
+  "completed": [
+    "v6 PSD import preserving ten matched layers",
+    "CMO3 save and actual reopen from delivery source",
+    "official model3/MOC3/2048 texture export",
+    "official SDK and browser checks",
+    "0.1.2 portable and NSIS build",
+    "0.1.2 Windows visible rendering and settings",
+    "versioned immutable local files and checksums"
+  ],
+  "verification": {
+    "files": "passed",
+    "core": "passed",
+    "browser": "passed",
+    "windowsNative": "visibility passed for 0.1.2; physical input passed by user in 0.1.1 using unchanged input code",
+    "macNative": "not targeted",
+    "userReportedTests": [
+      "independent mouse and keyboard",
+      "3561 ms stable held key",
+      "5 new presses in one second",
+      "mouse-to-keyboard transition"
+    ]
+  },
+  "validation": "docs/validation-0.1.2.json",
+  "deliveryDirectory": "deliveries/20261015-windows-0.1.2",
+  "checksumManifest": "deliveries/20261015-windows-0.1.2/SHA256SUMS.txt",
+  "releaseUrl": null,
+  "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
+  "visibility": "private",
+  "settingsRestoredAndChecked": true,
+  "ordinaryPetRunning": true,
+  "debugListenerClosed": true,
+  "knownLimitations": [
+    "white cutout fringe",
+    "basic compressed closed-eye line and fine lash fragments",
+    "continuous eyelid deformation",
+    "head/gaze, hair physics and bird motion not authored",
+    "physical multi-key chord",
+    "simultaneous physical keyboard and mouse",
+    "fullscreen/game input",
+    "tray full menu paths",
+    "click-through recovery shortcut",
+    "installer execution"
+  ],
+  "nextExactTask": "If further art polish is requested: clean the cutout fringe and closed-eye line; author continuous eyelid geometry before adding gaze/hair/bird motion."
+}
