@@ -10,7 +10,7 @@
   "layers": [
     {
       "id": "head-body",
-      "file": "/assets/v4/head-body.png",
+      "file": "/assets/v6/head-body.png",
       "x": 0,
       "y": 83,
       "width": 1536,
@@ -19,7 +19,7 @@
     },
     {
       "id": "eye-left",
-      "file": "/assets/v4/eye-left.png",
+      "file": "/assets/v6/eye-left.png",
       "x": 486,
       "y": 711,
       "width": 211,
@@ -28,7 +28,7 @@
     },
     {
       "id": "eye-right",
-      "file": "/assets/v4/eye-right.png",
+      "file": "/assets/v6/eye-right.png",
       "x": 830,
       "y": 801,
       "width": 199,
@@ -37,7 +37,7 @@
     },
     {
       "id": "lid-left",
-      "file": "/assets/v4/lid-left.png",
+      "file": "/assets/v6/lid-left.png",
       "x": 488,
       "y": 714,
       "width": 205,
@@ -46,7 +46,7 @@
     },
     {
       "id": "lid-right",
-      "file": "/assets/v4/lid-right.png",
+      "file": "/assets/v6/lid-right.png",
       "x": 855,
       "y": 807,
       "width": 173,
@@ -55,7 +55,7 @@
     },
     {
       "id": "keyboard",
-      "file": "/assets/v4/keyboard.png",
+      "file": "/assets/v6/keyboard.png",
       "x": 346,
       "y": 1108,
       "width": 1109,
@@ -64,7 +64,7 @@
     },
     {
       "id": "mouse",
-      "file": "/assets/v4/mouse.png",
+      "file": "/assets/v6/mouse.png",
       "x": 158,
       "y": 1055,
       "width": 271,
@@ -73,7 +73,7 @@
     },
     {
       "id": "mouse-hand",
-      "file": "/assets/v4/mouse-hand.png",
+      "file": "/assets/v6/mouse-hand.png",
       "x": 210,
       "y": 952,
       "width": 292,
@@ -82,7 +82,7 @@
     },
     {
       "id": "keyboard-hand",
-      "file": "/assets/v4/keyboard-hand.png",
+      "file": "/assets/v6/keyboard-hand.png",
       "x": 851,
       "y": 990,
       "width": 317,
@@ -91,12 +91,13 @@
     },
     {
       "id": "bird",
-      "file": "/assets/v4/bird.png",
+      "file": "/assets/v6/bird.png",
       "x": 1215,
       "y": 927,
       "width": 319,
       "height": 213,
       "opacity": 1
     }
-  ]
+  ],
+  "hiddenUnderpaintVersion": "v6"
 }
