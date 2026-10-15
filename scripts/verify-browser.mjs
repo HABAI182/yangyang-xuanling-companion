@@ -9,6 +9,7 @@ const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
   const page=await browser.newPage({viewport:{width:1100,height:760}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://127.0.0.1:1437/');await page.waitForFunction(()=>window.__petDebug);
+  const renderer=await page.evaluate(()=>window.__petDebug.mode);assert.equal(renderer,'cubism');
   await page.screenshot({path:path.join(out,'preview-light.png')});
   const first=await page.evaluate(()=>window.__petDebug.frames());await page.waitForTimeout(300);assert.ok(await page.evaluate(()=>window.__petDebug.frames())>first);
   const frame={keysHeld:1,mouseDown:false,newPress:true,newMousePress:false,keyLabel:'A',reach:.6,cursorX:0,cursorY:0};
@@ -22,6 +23,6 @@ try{
   await page.locator('#toggleGround').click();await page.screenshot({path:path.join(out,'preview-dark.png')});
   await page.goto('http://127.0.0.1:1437/?settings');await page.locator('#size').waitFor();await page.screenshot({path:path.join(out,'settings.png')});
   assert.equal(await page.locator('#showKeys').isChecked(),true);assert.equal(await page.locator('#clickThrough').isChecked(),false);assert.deepEqual(errors,[]);
-  await fs.writeFile(path.join(out,'browser-report.json'),JSON.stringify({pass:true,renderer:'layered-preview',raf:true,keyboardOnly:true,mouseOnly:true,heldKeySettles:true,overlay:true,settings:true,errors,windowsGlobalInputVerified:false},null,2));
+  await fs.writeFile(path.join(out,'browser-report.json'),JSON.stringify({pass:true,renderer,raf:true,keyboardOnly:true,mouseOnly:true,heldKeySettles:true,overlay:true,settings:true,errors,windowsGlobalInputVerified:false},null,2));
   console.log('Browser rendering and input checks passed; native global input remains separate.');
 }catch(error){console.error('Browser QA failed:',error.message);const pages=browser.contexts().flatMap(c=>c.pages());if(pages[0]){await pages[0].screenshot({path:path.join(out,'failure.png')});console.error((await pages[0].locator('body').innerText()).slice(0,2500));}throw error;}finally{await browser.close();}

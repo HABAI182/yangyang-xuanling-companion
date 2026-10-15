@@ -8,7 +8,7 @@ import {CubismShaderManager_WebGL} from '../vendor/live2d/src/rendering/cubismsh
 import {CubismPhysics} from '../vendor/live2d/src/physics/cubismphysics';
 import {loadImage,PetRenderer,AnimationSnapshot} from './renderer';
 
-type Config={entry:string|null,parameters:Record<string,string>};
+type Config={entry:string|null,parameters:Record<string,string>,parameterScale?:Record<string,number>};
 const shaderUrl='/vendor/live2d/shaders/';
 let frameworkReady=false;
 export class CubismRenderer implements PetRenderer {
@@ -33,12 +33,14 @@ export class CubismRenderer implements PetRenderer {
   }
   private set(semantic:string,value:number){const id=this.config.parameters[semantic];if(!id)return;const manager=CubismFramework.getIdManager();const parameter=manager.getId(id);const index=this.model.getParameterIndex(parameter);
     // Unknown IDs must never silently manufacture usable model parameters.
-    if(index<0||index>=this.model.getParameterCount())return;this.model.setParameterValueByIndex(index,value);}
+    if(index<0||index>=this.model.getParameterCount())return;this.model.setParameterValueByIndex(index,value*(this.config.parameterScale?.[semantic]??1));}
   draw(now:number,s:AnimationSnapshot,g:{x:number,y:number},intensity:number,idle:boolean){const dt=this.last?Math.min((now-this.last)/1000,.1):1/60;this.last=now;this.model.loadParameters();
     this.set('headX',g.x*8);this.set('headY',-g.y*5);this.set('headZ',g.x*2+(s.keyboardBounce+s.mouseBounce)*2*intensity);
-    this.set('keyboardPress',s.keyboardPress*intensity);this.set('mousePress',s.mousePress*intensity);this.set('keyboardReach',s.reach*s.keyboardPress);
+    this.set('keyboardPress',(s.keyboardPress*.82+s.keyboardBounce*.18)*intensity);this.set('mousePress',(s.mousePress*.82+s.mouseBounce*.18)*intensity);this.set('keyboardReach',s.reach*s.keyboardPress);
     this.set('breath',idle?.5+.5*Math.sin(now/800):.5);this.set('birdBounce',(s.keyboardBounce+s.mouseBounce)*intensity);
-    const phase=(now%4700)/1000;const open=idle&&phase>4.35?Math.min(1,Math.abs(phase-4.525)/.12):1;this.set('eyeLeftOpen',open);this.set('eyeRightOpen',open);
+    // This model has opacity-bound open/closed art. A short closed hold avoids
+    // the double image produced by crossfading the entire eye patches.
+    const phase=now%5700;const open=idle&&phase>5460&&phase<5590?0:1;this.set('eyeLeftOpen',open);this.set('eyeRightOpen',open);
     this.physics?.evaluate(this.model,dt);this.model.update();const gl=this.gl;gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     const m=new CubismMatrix44();const aspect=this.canvas.width/this.canvas.height;if(aspect>=1)m.scale(1/aspect,1);else m.scale(1,aspect);m.multiplyByMatrix(this.matrix);
     this.renderer.setMvpMatrix(m);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,this.canvas.width,this.canvas.height]);this.renderer.drawModel(shaderUrl);

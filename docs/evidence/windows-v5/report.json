@@ -1,0 +1,30 @@
+{
+  "pass": false,
+  "windowsNative": true,
+  "renderer": "cubism",
+  "renderedPixels": 1255016,
+  "framesAdvance": true,
+  "keyboardOnlyObserved": false,
+  "mouseOnlyObserved": true,
+  "bothObserved": false,
+  "heldKeyTested": false,
+  "settingsPersisted": true,
+  "preferencesRestored": true,
+  "errors": [
+    "No native keyboard-only frame observed"
+  ],
+  "osInputSource": "Separate sky.press_key / sky.click against the native settings window",
+  "settingsRendered": true,
+  "metricsBefore": {
+    "keyboardHookActive": true,
+    "keyboardPresses": 0,
+    "mousePresses": 0,
+    "samples": 147
+  },
+  "metricsAfter": {
+    "keyboardHookActive": true,
+    "keyboardPresses": 0,
+    "mousePresses": 1,
+    "samples": 4122
+  }
+}

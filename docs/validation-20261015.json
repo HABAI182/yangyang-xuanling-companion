@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-15",
+  "unitInput": {"passed": true, "count": 4, "command": "npm test", "scope": "semantic state: independent hands, hold/repress, multi-key release, rapid keyboard after mouse"},
+  "unitNativeEdges": {"passed": true, "count": 1, "command": "cargo test --manifest-path src-tauri/Cargo.toml", "scope": "short tap retained; autorepeat does not create another edge"},
+  "productionBuild": {"passed": true, "command": "npm run package:windows", "outputs": ["portable exe", "NSIS x64 installer"], "installerExecuted": false},
+  "editor": {"saved": true, "reopened": true, "officialExport": true, "source": "art/source/YangyangXuanling-v5-rig.cmo3"},
+  "coreWebGL": {"passed": true, "core": "6.0.1", "mocConsistency": true, "parameters": 27, "drawables": 10, "report": "docs/evidence/runtime-v5/report.json"},
+  "browser": {"passed": true, "renderer": "cubism", "report": "docs/evidence/browser-v5/report.json", "nativeInputEvidence": false},
+  "windows": {"overallPassed": false, "visibleWebGL": true, "renderedPixels": 1255016, "framesAdvance": true, "settingsRendered": true, "settingsPersisted": true, "preferencesRestored": true, "globalMouseObserved": true, "globalKeyboardObserved": false, "heldPhysicalKeyTested": false, "installerTested": false, "report": "docs/evidence/windows-v5/report.json", "limitation": "Automation key calls produced no observed global keyboard event; physical-key acceptance remains pending. No browser input injection is treated as native keyboard evidence."},
+  "art": {"palette": "v4 muted gray blue", "aspectPreserved": true, "outsideIrisRGBUnchanged": true, "approvedFinalArt": false, "remaining": ["white cutout fringe", "closed-eye underpaint seams", "continuous eyelid deformation", "head/gaze, hair physics and bird motion not authored"]}
+}

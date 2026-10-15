@@ -1,8 +1,10 @@
 # 秧秧玄翎桌面伴侣
 
-本仓库为 HABAI182 的私有开发仓库，按照 [live2d-desktop-pet v3.1.0](https://github.com/HABAI182/live2d-desktop-pet-skill) 制作 Windows Q 版桌宠。
+本仓库为 HABAI182 的私有开发仓库，使用 [live2d-desktop-pet v3.1.0](https://github.com/HABAI182/live2d-desktop-pet-skill) 与新增的 [live2d-automation v0.1.0](https://github.com/HABAI182/live2d-automation-skill) 制作 Windows Q 版桌宠。
 
-当前阶段：原图像素拆层、遮挡底层补绘和 Cubism 原生模型制作。Windows 原生程序骨架、系统输入、托盘、拖动、大小/动作幅度/置顶/穿透设置已实现；首次构建和分层预览的浏览器检查已通过。正式模型和原生实机验收仍在进行，当前 PNG 动作预览不等于已完成的 Live2D。
+当前版本为 0.1.0 基础预览：真实 CMO3 已保存并重开，官方 MOC3、2048 贴图和 model3 已导出，程序已启用 Cubism Core/Framework。两只手有独立的网格参数，眼睛使用短时闭眼切换。原生 WebGL 可见像素、动画循环、设置窗口及设置持久化已通过检查；全局鼠标已观察到，真实键盘输入仍待用户实测，不能称为完整验收通过。
+
+Windows 文件在 `deliveries/20261015-windows-0.1.0`，包括便携 EXE、NSIS 安装程序与模型源文件压缩包。该目录不进入 Git；开发源和检查记录进入私有仓库。安装程序已经生成，安装流程未执行。详细模型入口、检查边界和剩余美术工作见 [MODEL-HANDOFF.md](docs/MODEL-HANDOFF.md)。
 
 2026-10-14 用户指出第一版重绘偏窄、偏艳，已选择“原图像素抠图、拆层，仅补绘隐藏区域”。第一版生成的头部、设备和组合图作为 rejected visual candidate 保留；后续以可读取的同构图参考副本的原始像素为准，保留比例与 RGB，不整体重绘。用户消息中的桌面原文件当前不可读取，同构图 skill 副本为 1536×1536，来源在 `docs/character-contract.json` 中区分记录。
 
@@ -21,7 +23,7 @@ Windows 需要 Rust、Microsoft C++ Build Tools 和 WebView2。美术打包依�
 
 ## 角色与输入
 
-- 保留原图的蓝黑渐变发色、蓝眼、额纹、羽饰金花红穗与蓝白小鸟。
+- 保留原图的蓝黑渐变发色、额纹、羽饰金花红穗与蓝白小鸟；瞳色依用户反馈改成低饱和灰蓝，去除过蓝、过青效果。
 - 画面左侧手（角色右手）负责鼠标，画面右侧手（角色左手）负责键盘。
 - 长按保持落点，不反复弹头；真正再次按下才启动新的弹动。
 - 默认显示最近一个按键，短暂显示后消失；不保存输入文本或历史，不联网传输输入。
@@ -29,7 +31,7 @@ Windows 需要 Rust、Microsoft C++ Build Tools 和 WebView2。美术打包依�
 
 ## 模型接入与证据
 
-`public/assets/model-config.json` 的 `entry=null` 表示图层预览。只有实际经 Cubism 保存、导出的 MOC3/model3 通过验证后，才启用官方 Core/Framework 运行路径。模型加载失败会报告错误，不静默宣称 Live2D 成功。
+`public/assets/model-config.json` 当前入口为 `/models/yangyang-v5/YangyangXuanling.model3.json`，源文件为 `art/source/YangyangXuanling-v5-rig.cmo3`。模型加载失败会报告错误。旧 PNG 和 PSD 检查点保留用于追溯，当前运行路径采用真实 MOC3。
 
 PSD、CMO3、官方导出、运行时处理和文件/Core/浏览器/Windows 原生验证分别保存。源图、AI 提示词、锁区、测试结果、剩余问题和下一步随阶段保存。
 

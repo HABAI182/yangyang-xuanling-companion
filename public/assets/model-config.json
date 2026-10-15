@@ -1,10 +1,10 @@
 {
-  "entry": null,
-  "stage": "layered-art-preview",
+  "entry": "/models/yangyang-v5/YangyangXuanling.model3.json",
+  "stage": "cubism-basic-preview",
   "parameters": {
-    "headX": "ParamAngleX", "headY": "ParamAngleY", "headZ": "ParamAngleZ",
-    "keyboardPress": "ParamKeyboardPress", "mousePress": "ParamMousePress", "keyboardReach": "ParamKeyboardReach",
-    "breath": "ParamBreath", "birdBounce": "ParamBirdBounce",
+    "keyboardPress": "ParamBodyAngleX", "mousePress": "ParamBodyAngleY",
     "eyeLeftOpen": "ParamEyeLOpen", "eyeRightOpen": "ParamEyeROpen"
-  }
+  },
+  "parameterScale": {"keyboardPress": 10, "mousePress": 10},
+  "notes": "Official Editor export. Hands and blink authored; head gaze, hair physics and bird bounce are not authored in this basic model."
 }
