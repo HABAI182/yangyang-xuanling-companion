@@ -26,7 +26,9 @@ def main():
     parser.add_argument("--exe", type=Path, required=True)
     parser.add_argument("--installer", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--validation", type=Path, default=ROOT / "docs/validation-20261015.json")
     args = parser.parse_args()
+    version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     copy_unchanged(args.exe, out / "秧秧玄翎.exe")
@@ -49,11 +51,12 @@ def main():
         assert bundle.testzip() is None
         for p in source_files:
             assert hashlib.sha256(bundle.read(p.relative_to(ROOT).as_posix())).hexdigest() == digest(p)
-    readme = """秧秧玄翎 0.1.0 / Windows x64 基础预览
+    readme = f"""秧秧玄翎 {version} / Windows x64 基础预览
 
 双击“秧秧玄翎.exe”即可运行；带 setup 的文件为安装程序。
 右键桌宠或点击托盘打开设置，拖动手柄移动，托盘菜单可退出。
 默认大小420、按键显示开、置顶开、鼠标穿透关、自动眨眼开。
+启动位于屏幕右下角，设置窗口会放在主体旁边；旧版已交付文件保留。
 
 本版已有真实 Cubism 模型、左右手独立按压和短眨眼。
 文件/Core/WebGL/浏览器检查通过；Windows 原生可见渲染、鼠标、设置保存恢复已检查。
@@ -65,9 +68,9 @@ def main():
 本交付供用户私有开发测试，未公开发布。
 """
     (out / "使用说明.txt").write_text(readme, encoding="utf-8")
-    checks = json.loads((ROOT / "docs/validation-20261015.json").read_text(encoding="utf-8"))
+    checks = json.loads(args.validation.read_text(encoding="utf-8"))
     manifest = {
-        "date": "2026-10-15", "version": "0.1.0", "stage": "basic-preview",
+        "date": "2026-10-15", "version": version, "stage": "basic-preview",
         "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
         "sourceCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "palette": "v4-muted-gray-blue", "rig": "v5", "verification": checks,

@@ -1,8 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 #[cfg(windows)] mod keyboard_edges;
+mod window_layout;
 use serde::{Deserialize, Serialize};
 use std::{fs, sync::{Mutex, atomic::{AtomicU64, Ordering}}};
-use tauri::{Emitter, Manager, WebviewWindowBuilder, WebviewUrl, LogicalSize, LogicalPosition};
+use tauri::{Emitter, Manager, WebviewWindowBuilder, WebviewUrl, LogicalSize, PhysicalPosition};
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::{TrayIconBuilder, TrayIconEvent, MouseButton, MouseButtonState};
 
@@ -40,14 +41,40 @@ fn save_preferences(app:tauri::AppHandle,state:tauri::State<AppState>,mut prefs:
     if let Err(e)=result {let _=apply_preferences(&app,&previous);return Err(format!("保存失败：{e}"));}
     *guard=prefs.clone();let _=app.emit("preferences",&prefs);Ok(prefs)
 }
+fn monitor_work(window:&tauri::WebviewWindow)->Result<Option<(window_layout::Rect,f64)>,String>{
+    let monitor=window.current_monitor().map_err(|e|e.to_string())?.or(window.primary_monitor().map_err(|e|e.to_string())?);
+    Ok(monitor.map(|m|{let a=m.work_area();(window_layout::Rect{x:a.position.x,y:a.position.y,width:a.size.width as i32,height:a.size.height as i32},m.scale_factor())}))
+}
+fn place_pet(app:&tauri::AppHandle)->Result<(),String>{
+    if let Some(w)=app.get_webview_window("pet"){
+        if let Some((work,scale))=monitor_work(&w)?{
+            let size=w.outer_size().map_err(|e|e.to_string())?;
+            let p=window_layout::corner(work,size.width as i32,size.height as i32,(24.0*scale).round() as i32);
+            w.set_position(PhysicalPosition::new(p.x,p.y)).map_err(|e|e.to_string())?;
+        }
+    }Ok(())
+}
+fn reveal_settings(app:&tauri::AppHandle,settings:&tauri::WebviewWindow)->Result<(),String>{
+    if let Some(pet)=app.get_webview_window("pet"){
+        if let Some((work,scale))=monitor_work(&pet)?{
+            let p=pet.outer_position().map_err(|e|e.to_string())?;let s=pet.outer_size().map_err(|e|e.to_string())?;
+            let panel=settings.outer_size().map_err(|e|e.to_string())?;
+            let position=window_layout::beside(window_layout::Rect{x:p.x,y:p.y,width:s.width as i32,height:s.height as i32},panel.width as i32,panel.height as i32,work,(16.0*scale).round() as i32);
+            settings.set_position(PhysicalPosition::new(position.x,position.y)).map_err(|e|e.to_string())?;
+        }
+        pet.unminimize().map_err(|e|e.to_string())?;pet.show().map_err(|e|e.to_string())?;
+    }
+    settings.show().map_err(|e|e.to_string())?;settings.set_focus().map_err(|e|e.to_string())
+}
 fn open_settings(app:&tauri::AppHandle)->Result<(),String>{
     // WebView2 creation must run off the Windows event loop. Serialize requests
     // so repeated tray clicks cannot create two windows with the same label.
     let state=app.state::<AppState>();
     let _guard=state.settings_gate.lock().unwrap_or_else(|p|p.into_inner());
-    if let Some(w)=app.get_webview_window("settings"){let _=w.show();return w.set_focus().map_err(|e|e.to_string());}
-    WebviewWindowBuilder::new(app,"settings",WebviewUrl::App("index.html?settings".into()))
-        .title("秧秧玄翎 · 设置").inner_size(440.0,620.0).resizable(false).always_on_top(true).build().map_err(|e|e.to_string())?;Ok(())
+    if let Some(w)=app.get_webview_window("settings"){return reveal_settings(app,&w);}
+    let w=WebviewWindowBuilder::new(app,"settings",WebviewUrl::App("index.html?settings".into()))
+        .title("秧秧玄翎 · 设置").inner_size(440.0,620.0).resizable(false).always_on_top(true).visible(false).build().map_err(|e|e.to_string())?;
+    reveal_settings(app,&w)
 }
 #[tauri::command]
 async fn show_settings(app:tauri::AppHandle)->Result<(),String>{
@@ -67,7 +94,19 @@ fn drag_pet(app:tauri::AppHandle)->Result<(),String>{app.get_webview_window("pet
 fn reset_pet(app:tauri::AppHandle,state:tauri::State<AppState>)->Result<(),String>{
     let mut p=state.prefs.lock().unwrap_or_else(|p|p.into_inner()).clone();p.click_through=false;
     let _=save_preferences(app.clone(),state,p.clone())?;
-    if let Some(w)=app.get_webview_window("pet") {w.set_position(LogicalPosition::new(100.0,100.0)).map_err(|e|e.to_string())?;w.show().map_err(|e|e.to_string())?;}Ok(())
+    place_pet(&app)?;
+    if let Some(w)=app.get_webview_window("pet") {w.unminimize().map_err(|e|e.to_string())?;w.show().map_err(|e|e.to_string())?;}Ok(())
+}
+#[tauri::command]
+fn window_diagnostics(app:tauri::AppHandle)->Result<serde_json::Value,String>{
+    let mut result=serde_json::Map::new();
+    for label in ["pet","settings"]{
+        if let Some(w)=app.get_webview_window(label){
+            let position=w.outer_position().map_err(|e|e.to_string())?;let size=w.outer_size().map_err(|e|e.to_string())?;
+            let work=monitor_work(&w)?.map(|(r,scale)|serde_json::json!({"x":r.x,"y":r.y,"width":r.width,"height":r.height,"scale":scale}));
+            result.insert(label.into(),serde_json::json!({"x":position.x,"y":position.y,"width":size.width,"height":size.height,"visible":w.is_visible().map_err(|e|e.to_string())?,"minimized":w.is_minimized().map_err(|e|e.to_string())?,"alwaysOnTop":w.is_always_on_top().map_err(|e|e.to_string())?,"work":work}));
+        }
+    }Ok(result.into())
 }
 #[tauri::command]
 fn input_metrics(state:tauri::State<AppState>)->serde_json::Value{
@@ -105,11 +144,12 @@ fn start_input(app:tauri::AppHandle){std::thread::spawn(move||{
 });}
 
 fn main(){tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![read_preferences,save_preferences,show_settings,close_settings,pet_ready,drag_pet,reset_pet,input_metrics,quit_app])
+    .invoke_handler(tauri::generate_handler![read_preferences,save_preferences,show_settings,close_settings,pet_ready,drag_pet,reset_pet,window_diagnostics,input_metrics,quit_app])
     .setup(|app|{
         let p=prefs_path(app.handle()).ok().and_then(|f|fs::read(f).ok()).and_then(|s|serde_json::from_slice::<Preferences>(&s).ok()).unwrap_or_default();
         app.manage(AppState{prefs:Mutex::new(p.clone()),settings_gate:Mutex::new(()),keyboard_presses:AtomicU64::new(0),mouse_presses:AtomicU64::new(0),samples:AtomicU64::new(0)});
         apply_preferences(app.handle(),&p)?;
+        place_pet(app.handle())?;
         let settings=MenuItem::with_id(app,"settings","打开设置",true,None::<&str>)?;let show=MenuItem::with_id(app,"show","显示桌宠",true,None::<&str>)?;
         let through=MenuItem::with_id(app,"through","切换鼠标穿透",true,None::<&str>)?;let reset=MenuItem::with_id(app,"reset","找回桌宠 / 关闭穿透",true,None::<&str>)?;let quit=MenuItem::with_id(app,"quit","退出",true,None::<&str>)?;
         let menu=Menu::with_items(app,&[&show,&settings,&through,&reset,&quit])?;
