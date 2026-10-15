@@ -15,8 +15,10 @@ def digest(path):
 
 
 def copy_unchanged(source, destination):
-    if destination.exists() and digest(source) != digest(destination):
-        raise RuntimeError(f"Existing delivery differs; choose a new directory: {destination}")
+    if destination.exists():
+        if digest(source) != digest(destination):
+            raise RuntimeError(f"Existing delivery differs; choose a new directory: {destination}")
+        return  # A running, identical EXE must not be opened for writing.
     shutil.copy2(source, destination)
     assert digest(source) == digest(destination)
 
@@ -27,6 +29,7 @@ def main():
     parser.add_argument("--installer", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--validation", type=Path, default=ROOT / "docs/validation-20261015.json")
+    parser.add_argument("--source-ref", default="HEAD")
     args = parser.parse_args()
     version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
     out = args.output.resolve()
@@ -72,7 +75,9 @@ def main():
     manifest = {
         "date": "2026-10-15", "version": version, "stage": "basic-preview",
         "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
-        "sourceCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "sourceCommit": subprocess.check_output(["git", "rev-parse", f"{args.source_ref}^{{commit}}"], cwd=ROOT, text=True).strip(),
+        "sourceRef": args.source_ref,
+        "packagingCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "palette": "v4-muted-gray-blue", "rig": "v5", "verification": checks,
         "modelFiles": {p.relative_to(ROOT).as_posix(): digest(p) for p in source_files},
         "deliverables": {p.name: {"bytes": p.stat().st_size, "sha256": digest(p)} for p in sorted(out.iterdir()) if p.is_file()},
