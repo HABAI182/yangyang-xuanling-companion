@@ -1,5 +1,5 @@
 {
-  "entry": "/models/yangyang-v5/YangyangXuanling.model3.json",
+  "entry": "/models/yangyang-v6/YangyangXuanling.model3.json",
   "stage": "cubism-basic-preview",
   "parameters": {
     "keyboardPress": "ParamBodyAngleX", "mousePress": "ParamBodyAngleY",

@@ -9,3 +9,8 @@ work/
 .env.*
 !.env.example
 art/rejected/
+docs/evidence/runtime-*/project/
+docs/evidence/runtime-*/progress.json
+docs/evidence/runtime-*/options.json
+docs/evidence/windows-*/original-preferences.json
+docs/evidence/windows-*/ready.json

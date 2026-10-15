@@ -37,16 +37,17 @@ def main():
     copy_unchanged(args.exe, out / "秧秧玄翎.exe")
     copy_unchanged(args.installer, out / args.installer.name)
     source_files = [
-        ROOT / "art/source/YangyangXuanling-v5-rig.cmo3",
-        ROOT / "art/source/YangyangXuanling-OfficialIris-v4.psd",
+        ROOT / "art/source/YangyangXuanling-v6-rig.cmo3",
+        ROOT / "art/source/YangyangXuanling-EyeUnderpaint-v6.psd",
         ROOT / "public/assets/model-config.json",
         ROOT / "docs/MODEL-HANDOFF.md",
+        ROOT / "docs/eye-underpaint-v6.json",
         ROOT / "LICENSE.txt",
     ]
-    source_files += sorted((ROOT / "public/models/yangyang-v5").rglob("*"))
+    source_files += sorted((ROOT / "public/models/yangyang-v6").rglob("*"))
     source_files += sorted((ROOT / "public/vendor/live2d").glob("*LICENSE*"))
     source_files = [p for p in source_files if p.is_file()]
-    archive = out / "秧秧玄翎-模型源文件-v5.zip"
+    archive = out / "秧秧玄翎-模型源文件-v6.zip"
     with zipfile.ZipFile(archive, "x", compression=zipfile.ZIP_DEFLATED) as bundle:
         for p in source_files:
             bundle.write(p, p.relative_to(ROOT).as_posix())
@@ -63,8 +64,10 @@ def main():
 
 本版已有真实 Cubism 模型、左右手独立按压和短眨眼。
 文件/Core/WebGL/浏览器检查通过；Windows 原生可见渲染、鼠标、设置保存恢复已检查。
-真实物理键盘、托盘全部路径、穿透恢复热键与安装流程尚待实测。
-有少量透明白边及闭眼肤色接缝；发丝物理、转头和小鸟独立动作未制作。
+0.1.1 用户物理输入已通过独立键鼠、稳定长按、快速敲击和鼠标转键盘；本版输入逻辑相同。
+本版修补闭眼隐藏底层，保留灰蓝瞳色、比例与可见底稿像素；原生导出和 SDK 检查通过。
+仍有少量透明白边，闭眼线为基础形状；发丝物理、转头和小鸟独立动作未制作。
+物理多键/键鼠同时、托盘全部路径、穿透恢复热键与安装流程尚待实测。
 
 模型源文件压缩包保留项目内目录结构，包含真实 CMO3、分层 PSD 和官方 model3/MOC3/贴图。
 展开后参阅 docs/MODEL-HANDOFF.md；manifest.json 和 SHA256SUMS.txt 可用于核对版本。
@@ -78,7 +81,7 @@ def main():
         "sourceCommit": subprocess.check_output(["git", "rev-parse", f"{args.source_ref}^{{commit}}"], cwd=ROOT, text=True).strip(),
         "sourceRef": args.source_ref,
         "packagingCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-        "palette": "v4-muted-gray-blue", "rig": "v5", "verification": checks,
+        "palette": "v4-muted-gray-blue", "rig": "v6-hidden-eye-underpaint", "verification": checks,
         "modelFiles": {p.relative_to(ROOT).as_posix(): digest(p) for p in source_files},
         "deliverables": {p.name: {"bytes": p.stat().st_size, "sha256": digest(p)} for p in sorted(out.iterdir()) if p.is_file()},
     }

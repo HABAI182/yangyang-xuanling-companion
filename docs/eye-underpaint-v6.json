@@ -15,5 +15,12 @@
   "psdLayers": 10,
   "aiSourceSha256": "02833b35a201dc837e290e3df0749ffc7f1e17d43580bf0de28073972db210d8",
   "sourcePsdSha256": "ff3b92bab616266b6e3cec52e960c56de886403ba2b3120548b2c3602eb205b7",
-  "status": "PSD prepared; native model replacement/export pending"
+  "status": "Native PSD replacement, CMO3 save/reopen, official export and SDK WebGL checks passed",
+  "sourceCmoSha256": "ccc7826341cb279e0cc72ef97a6f4e4b0d615a350527f2e19393749fd1c1919b",
+  "mocUnchangedFromV5": true,
+  "runtimeTextureSha256": "2634e75775dd9cd73d068da20c76e49d740100aa00a492988e408603b0680b00",
+  "bindingStructureAndPropertiesUnchanged": true,
+  "evidence": "docs/native-authoring-v6.json",
+  "visualReview": "Flat eye-socket patches improved. Closed lines remain a basic compressed shape with fine lash fragments; continuous eyelid deformation is not authored.",
+  "rasterComparison": {"report": "docs/render-comparison-v6.json", "neutralChangedPixels": 693, "closedChangedPixels": 11482, "changesConfinedToEyeBounds": [374, 455, 618, 572], "scope": "1000x1000 official SDK screenshots. Neutral GPU feather-edge changes are distinct from the zero-difference source RGBA composite."}
 }

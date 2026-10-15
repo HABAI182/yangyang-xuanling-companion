@@ -1,0 +1,12 @@
+{
+  "pass": true,
+  "renderer": "cubism",
+  "raf": true,
+  "keyboardOnly": true,
+  "mouseOnly": true,
+  "heldKeySettles": true,
+  "overlay": true,
+  "settings": true,
+  "errors": [],
+  "windowsGlobalInputVerified": false
+}
