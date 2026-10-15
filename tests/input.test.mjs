@@ -18,3 +18,16 @@ test('one key releasing while another stays held keeps the hand down',()=>{
   const s=new InputState();s.update(frame({keysHeld:2,newPress:true}),100);s.update(frame({keysHeld:1}),200);
   assert.equal(s.snapshot(300).keyboardPress,1);s.update(frame(),400);assert.equal(s.snapshot(550).keyboardPress,0);
 });
+test('rapid keyboard presses after a mouse release never retrigger the mouse hand',()=>{
+  const s=new InputState();s.update(frame({mouseDown:true,newMousePress:true}),0);
+  s.update(frame(),40);
+  for(let now=200;now<800;now+=30){
+    s.update(frame({keysHeld:1,newPress:true}),now);
+    assert.equal(s.snapshot(now+5).mousePress,0);
+    assert.equal(s.snapshot(now+5).keyboardPress,1);
+    assert.equal(s.mouseStarted,0);
+    s.update(frame(),now+10);
+  }
+  assert.equal(s.snapshot(1000).keyboardPress,0);
+  assert.equal(s.snapshot(1000).mousePress,0);
+});

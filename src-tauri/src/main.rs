@@ -1,4 +1,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#[cfg(windows)] mod keyboard_edges;
 use serde::{Deserialize, Serialize};
 use std::{fs, sync::{Mutex, atomic::{AtomicU64, Ordering}}};
 use tauri::{Emitter, Manager, WebviewWindowBuilder, WebviewUrl, LogicalSize, LogicalPosition};
@@ -9,7 +10,7 @@ use tauri::tray::{TrayIconBuilder, TrayIconEvent, MouseButton, MouseButtonState}
 #[serde(rename_all = "camelCase", default)]
 struct Preferences { size: f64, intensity: f64, always_on_top: bool, click_through: bool, show_keys: bool, idle_enabled: bool }
 impl Default for Preferences { fn default() -> Self { Self { size: 420.0, intensity: 1.0, always_on_top: true, click_through: false, show_keys: true, idle_enabled: true } } }
-struct AppState { prefs: Mutex<Preferences>, keyboard_presses: AtomicU64, mouse_presses: AtomicU64, samples: AtomicU64 }
+struct AppState { prefs: Mutex<Preferences>, settings_gate: Mutex<()>, keyboard_presses: AtomicU64, mouse_presses: AtomicU64, samples: AtomicU64 }
 
 #[derive(Clone, Serialize, Default, PartialEq)]
 #[serde(rename_all = "camelCase")]
@@ -40,12 +41,22 @@ fn save_preferences(app:tauri::AppHandle,state:tauri::State<AppState>,mut prefs:
     *guard=prefs.clone();let _=app.emit("preferences",&prefs);Ok(prefs)
 }
 fn open_settings(app:&tauri::AppHandle)->Result<(),String>{
+    // WebView2 creation must run off the Windows event loop. Serialize requests
+    // so repeated tray clicks cannot create two windows with the same label.
+    let state=app.state::<AppState>();
+    let _guard=state.settings_gate.lock().unwrap_or_else(|p|p.into_inner());
     if let Some(w)=app.get_webview_window("settings"){let _=w.show();return w.set_focus().map_err(|e|e.to_string());}
     WebviewWindowBuilder::new(app,"settings",WebviewUrl::App("index.html?settings".into()))
         .title("秧秧玄翎 · 设置").inner_size(440.0,620.0).resizable(false).always_on_top(true).build().map_err(|e|e.to_string())?;Ok(())
 }
 #[tauri::command]
-fn show_settings(app:tauri::AppHandle)->Result<(),String>{open_settings(&app)}
+async fn show_settings(app:tauri::AppHandle)->Result<(),String>{
+    tauri::async_runtime::spawn_blocking(move||open_settings(&app)).await.map_err(|e|e.to_string())?
+}
+fn request_settings(app:&tauri::AppHandle){
+    let handle=app.clone();
+    tauri::async_runtime::spawn_blocking(move||{if let Err(e)=open_settings(&handle){eprintln!("打开设置失败：{e}");}});
+}
 #[tauri::command]
 fn close_settings(app:tauri::AppHandle)->Result<(),String>{if let Some(w)=app.get_webview_window("settings"){w.close().map_err(|e|e.to_string())?;}Ok(())}
 #[tauri::command]
@@ -59,7 +70,11 @@ fn reset_pet(app:tauri::AppHandle,state:tauri::State<AppState>)->Result<(),Strin
     if let Some(w)=app.get_webview_window("pet") {w.set_position(LogicalPosition::new(100.0,100.0)).map_err(|e|e.to_string())?;w.show().map_err(|e|e.to_string())?;}Ok(())
 }
 #[tauri::command]
-fn input_metrics(state:tauri::State<AppState>)->serde_json::Value{serde_json::json!({"samples":state.samples.load(Ordering::Relaxed),"keyboardPresses":state.keyboard_presses.load(Ordering::Relaxed),"mousePresses":state.mouse_presses.load(Ordering::Relaxed)})}
+fn input_metrics(state:tauri::State<AppState>)->serde_json::Value{
+    #[cfg(windows)] let hook_active=keyboard_edges::active();
+    #[cfg(not(windows))] let hook_active=false;
+    serde_json::json!({"samples":state.samples.load(Ordering::Relaxed),"keyboardPresses":state.keyboard_presses.load(Ordering::Relaxed),"mousePresses":state.mouse_presses.load(Ordering::Relaxed),"keyboardHookActive":hook_active})
+}
 #[tauri::command]
 fn quit_app(app:tauri::AppHandle){app.exit(0)}
 
@@ -74,7 +89,9 @@ fn start_input(app:tauri::AppHandle){std::thread::spawn(move||{
     let mut last_emit=std::time::Instant::now();
     loop {let mut now=[false;256];for k in 1..256 {now[k]=unsafe{GetAsyncKeyState(k as i32)} as u16 & 0x8000 !=0;}
         let mut new_press=false;let mut count=0u16;
-        for k in 8..256 {if matches!(k,16|17|18|229){continue;}if now[k]{count+=1;}if now[k]&&!held[k]{new_press=true;label=key_label(k);position=reach(k);}}
+        for k in 8..256 {let edge=keyboard_edges::take_press(k);if matches!(k,16|17|18|229){continue;}
+            if now[k]||(edge&&!held[k]){count+=1;}
+            if edge||(!keyboard_edges::active()&&now[k]&&!held[k]){new_press=true;label=key_label(k);position=reach(k);}}
         let mouse_down=now[1]||now[2]||now[4];let new_mouse_press=(now[1]&&!held[1])||(now[2]&&!held[2])||(now[4]&&!held[4]);
         let state=app.state::<AppState>();state.samples.fetch_add(1,Ordering::Relaxed);if new_press{state.keyboard_presses.fetch_add(1,Ordering::Relaxed);}if new_mouse_press{state.mouse_presses.fetch_add(1,Ordering::Relaxed);}
         let mut pt=windows_sys::Win32::Foundation::POINT{x:0,y:0};unsafe{GetCursorPos(&mut pt);}
@@ -91,15 +108,15 @@ fn main(){tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![read_preferences,save_preferences,show_settings,close_settings,pet_ready,drag_pet,reset_pet,input_metrics,quit_app])
     .setup(|app|{
         let p=prefs_path(app.handle()).ok().and_then(|f|fs::read(f).ok()).and_then(|s|serde_json::from_slice::<Preferences>(&s).ok()).unwrap_or_default();
-        app.manage(AppState{prefs:Mutex::new(p.clone()),keyboard_presses:AtomicU64::new(0),mouse_presses:AtomicU64::new(0),samples:AtomicU64::new(0)});
+        app.manage(AppState{prefs:Mutex::new(p.clone()),settings_gate:Mutex::new(()),keyboard_presses:AtomicU64::new(0),mouse_presses:AtomicU64::new(0),samples:AtomicU64::new(0)});
         apply_preferences(app.handle(),&p)?;
         let settings=MenuItem::with_id(app,"settings","打开设置",true,None::<&str>)?;let show=MenuItem::with_id(app,"show","显示桌宠",true,None::<&str>)?;
         let through=MenuItem::with_id(app,"through","切换鼠标穿透",true,None::<&str>)?;let reset=MenuItem::with_id(app,"reset","找回桌宠 / 关闭穿透",true,None::<&str>)?;let quit=MenuItem::with_id(app,"quit","退出",true,None::<&str>)?;
         let menu=Menu::with_items(app,&[&show,&settings,&through,&reset,&quit])?;
         TrayIconBuilder::new().icon(app.default_window_icon().unwrap().clone()).tooltip("秧秧玄翎 · 右键设置").menu(&menu).show_menu_on_left_click(false)
-            .on_menu_event(|app,event|{match event.id.as_ref(){"settings"=>{let _=open_settings(app);},"show"=>{if let Some(w)=app.get_webview_window("pet"){let _=w.show();}},"reset"=>{let _=reset_pet(app.clone(),app.state::<AppState>());},"through"=>{let s=app.state::<AppState>();let mut p=s.prefs.lock().unwrap_or_else(|p|p.into_inner()).clone();p.click_through=!p.click_through;let _=save_preferences(app.clone(),s,p);},"quit"=>app.exit(0),_=>{}}})
-            .on_tray_icon_event(|tray,event|{if let TrayIconEvent::Click{button:MouseButton::Left,button_state:MouseButtonState::Up,..}=event {let _=open_settings(tray.app_handle());}}).build(app)?;
-        #[cfg(windows)] start_input(app.handle().clone());
+            .on_menu_event(|app,event|{match event.id.as_ref(){"settings"=>request_settings(app),"show"=>{if let Some(w)=app.get_webview_window("pet"){let _=w.show();}},"reset"=>{let _=reset_pet(app.clone(),app.state::<AppState>());},"through"=>{let s=app.state::<AppState>();let mut p=s.prefs.lock().unwrap_or_else(|p|p.into_inner()).clone();p.click_through=!p.click_through;let _=save_preferences(app.clone(),s,p);},"quit"=>app.exit(0),_=>{}}})
+            .on_tray_icon_event(|tray,event|{if let TrayIconEvent::Click{button:MouseButton::Left,button_state:MouseButtonState::Up,..}=event {request_settings(tray.app_handle());}}).build(app)?;
+        #[cfg(windows)] {keyboard_edges::start();start_input(app.handle().clone());}
         let handle=app.handle().clone();std::thread::spawn(move||{std::thread::sleep(std::time::Duration::from_secs(8));if let Some(w)=handle.get_webview_window("pet"){let _=w.show();}});
         Ok(())
     }).run(tauri::generate_context!()).expect("秧秧玄翎启动失败");}
