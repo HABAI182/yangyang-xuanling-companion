@@ -1,0 +1,103 @@
+{
+  "schema": 2,
+  "draft": true,
+  "sourcePixelsPreserved": true,
+  "irisColorVersion": "v4",
+  "canvas": {
+    "width": 1536,
+    "height": 1360
+  },
+  "layers": [
+    {
+      "id": "head-body",
+      "file": "/assets/v6/head-body.png",
+      "x": 0,
+      "y": 83,
+      "width": 1536,
+      "height": 1215,
+      "opacity": 1
+    },
+    {
+      "id": "eye-left",
+      "file": "/assets/v6/eye-left.png",
+      "x": 486,
+      "y": 711,
+      "width": 211,
+      "height": 185,
+      "opacity": 1
+    },
+    {
+      "id": "eye-right",
+      "file": "/assets/v6/eye-right.png",
+      "x": 830,
+      "y": 801,
+      "width": 199,
+      "height": 170,
+      "opacity": 1
+    },
+    {
+      "id": "lid-left",
+      "file": "/assets/v6/lid-left.png",
+      "x": 488,
+      "y": 714,
+      "width": 205,
+      "height": 71,
+      "opacity": 0
+    },
+    {
+      "id": "lid-right",
+      "file": "/assets/v6/lid-right.png",
+      "x": 855,
+      "y": 807,
+      "width": 173,
+      "height": 58,
+      "opacity": 0
+    },
+    {
+      "id": "keyboard",
+      "file": "/assets/v6/keyboard.png",
+      "x": 346,
+      "y": 1108,
+      "width": 1109,
+      "height": 191,
+      "opacity": 1
+    },
+    {
+      "id": "mouse",
+      "file": "/assets/v6/mouse.png",
+      "x": 158,
+      "y": 1055,
+      "width": 271,
+      "height": 147,
+      "opacity": 1
+    },
+    {
+      "id": "mouse-hand",
+      "file": "/assets/v6/mouse-hand.png",
+      "x": 210,
+      "y": 952,
+      "width": 292,
+      "height": 156,
+      "opacity": 1
+    },
+    {
+      "id": "keyboard-hand",
+      "file": "/assets/v6/keyboard-hand.png",
+      "x": 851,
+      "y": 990,
+      "width": 317,
+      "height": 144,
+      "opacity": 1
+    },
+    {
+      "id": "bird",
+      "file": "/assets/v6/bird.png",
+      "x": 1215,
+      "y": 927,
+      "width": 319,
+      "height": 213,
+      "opacity": 1
+    }
+  ],
+  "hiddenUnderpaintVersion": "v6"
+}

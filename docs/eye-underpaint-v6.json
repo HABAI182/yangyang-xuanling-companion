@@ -1,0 +1,19 @@
+{
+  "version": "v6",
+  "purpose": "hidden eye-socket seam repair",
+  "maskPixels": 56459,
+  "changedPixels": 56445,
+  "outsideMaskChangedPixels": 0,
+  "alphaChangedPixels": 0,
+  "neutralCompositeChangedPixels": 0,
+  "irisLayersUnchanged": true,
+  "canvas": [
+    1536,
+    1360
+  ],
+  "layerNamesAndPositionsUnchanged": true,
+  "psdLayers": 10,
+  "aiSourceSha256": "02833b35a201dc837e290e3df0749ffc7f1e17d43580bf0de28073972db210d8",
+  "sourcePsdSha256": "ff3b92bab616266b6e3cec52e960c56de886403ba2b3120548b2c3602eb205b7",
+  "status": "PSD prepared; native model replacement/export pending"
+}

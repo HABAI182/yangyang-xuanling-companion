@@ -2,7 +2,7 @@
 
 本仓库为 HABAI182 的私有开发仓库，使用 [live2d-desktop-pet v3.1.0](https://github.com/HABAI182/live2d-desktop-pet-skill) 与新增的 [live2d-automation v0.1.0](https://github.com/HABAI182/live2d-automation-skill) 制作 Windows Q 版桌宠。
 
-当前版本为 0.1.1 基础预览：修复测试异常退出后关闭置顶未恢复的问题，启动和找回主体放在屏幕右下角，设置放在旁边。真实桌面已观察到主体，打开设置后依然可见；当前 150% DPI 下两窗重叠面积为 0，测试后偏好已恢复。真实 CMO3、官方 MOC3、2048 贴图与 model3 仍为 v5，程序使用 Cubism Core/Framework。两只手和短眨眼已制作；真实键盘输入仍待实测，完整桌宠验收尚未通过。
+当前版本为 0.1.1 基础预览：修复测试异常退出后关闭置顶未恢复的问题，启动和找回主体放在屏幕右下角，设置放在旁边。真实桌面已观察到主体，打开设置后依然可见；当前 150% DPI 下两窗重叠面积为 0，测试后偏好已恢复。真实 CMO3、官方 MOC3、2048 贴图与 model3 仍为 v5，程序使用 Cubism Core/Framework。用户物理输入已通过独立两手、3.56 秒稳定长按、1 秒 5 次快速敲击及鼠标→键盘切换检查，见 [native-input-20261015.json](docs/native-input-20261015.json)。闭眼底层与透明边缘仍在精修，完整美术验收尚未完成。
 
 当前 Windows 文件在 `deliveries/20261015-windows-0.1.1`，包括便携 EXE、NSIS 安装程序与模型源文件压缩包；0.1.0 原目录保留。交付目录不进入 Git，开发源和检查记录进入私有仓库。安装程序已经生成，安装流程未执行。详细模型入口和美术边界见 [MODEL-HANDOFF.md](docs/MODEL-HANDOFF.md)，本次可见性检查见 [visibility-fix-20261015.json](docs/visibility-fix-20261015.json)。
 

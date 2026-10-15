@@ -61,12 +61,33 @@ try{
   report.metricsBefore=await ipc('input_metrics');
   await fs.writeFile(path.join(output,'ready.json'),JSON.stringify({ready:true,title:'秧秧玄翎 · 设置'}));console.log('READY: native renderer is running; awaiting separate OS input.');
   const deadline=mode==='visibility'?Date.now():Date.now()+Number(process.env.PET_QA_WAIT_MS||180000);
+  let heldSince=null,seenMouse=false,lastProgress=0,heldScreenshot=false;
+  const recentCounts=[];
+  report.mouseToKeyboardObserved=false;report.maxKeyboardHoldMs=0;report.maxNewKeyboardPressesIn1s=0;report.heldKeySettled=false;
   while(Date.now()<deadline){
     try{await fs.access(stop);break;}catch{}
     const s=await page.evaluate(()=>{const r=window.__petStatus.read();return {frames:r.frames,keyboardPress:r.snapshot.keyboardPress,mousePress:r.snapshot.mousePress,keyboardBounce:r.snapshot.keyboardBounce,mouseBounce:r.snapshot.mouseBounce};});
     if(s.keyboardPress>.1&&s.mousePress===0)report.keyboardOnlyObserved=true;
     if(s.mousePress>.1&&s.keyboardPress===0)report.mouseOnlyObserved=true;
     if(s.mousePress>.1&&s.keyboardPress>.1)report.bothObserved=true;
+    const now=Date.now();
+    if(s.mousePress>.1)seenMouse=true;
+    if(seenMouse&&s.keyboardPress>.1&&s.mousePress===0)report.mouseToKeyboardObserved=true;
+    if(s.keyboardPress>=.999){
+      heldSince??=now;report.maxKeyboardHoldMs=Math.max(report.maxKeyboardHoldMs,now-heldSince);
+      if(now-heldSince>600&&Math.abs(s.keyboardBounce)<.0001)report.heldKeySettled=true;
+      if(now-heldSince>1800&&!heldScreenshot){await page.screenshot({path:path.join(output,'native-keyboard-held.png'),omitBackground:true});heldScreenshot=true;}
+    }else heldSince=null;
+    if(now-lastProgress>=100){
+      report.metricsAfter=await ipc('input_metrics');
+      recentCounts.push({time:now,count:report.metricsAfter.keyboardPresses});
+      while(recentCounts.length>1&&recentCounts[0].time<now-1000)recentCounts.shift();
+      report.maxNewKeyboardPressesIn1s=Math.max(report.maxNewKeyboardPressesIn1s,report.metricsAfter.keyboardPresses-recentCounts[0].count);
+      report.heldKeyTested=report.maxKeyboardHoldMs>=1800&&report.heldKeySettled;
+      await fs.writeFile(path.join(output,'progress.json'),JSON.stringify({keyboardOnly:report.keyboardOnlyObserved,mouseOnly:report.mouseOnlyObserved,mouseToKeyboard:report.mouseToKeyboardObserved,held:report.heldKeyTested,maxHoldMs:report.maxKeyboardHoldMs,rapid:report.maxNewKeyboardPressesIn1s>=3,metrics:report.metricsAfter}));
+      lastProgress=now;
+    }
+    if(process.env.PET_QA_AUTO_COMPLETE==='1'&&report.keyboardOnlyObserved&&report.mouseOnlyObserved&&report.mouseToKeyboardObserved&&report.heldKeyTested&&report.maxNewKeyboardPressesIn1s>=3&&s.keyboardPress===0&&s.mousePress===0)break;
     await delay(25);
   }
   report.metricsAfter=await ipc('input_metrics');
@@ -75,6 +96,11 @@ try{
     assert.ok(report.mouseOnlyObserved,'No native mouse-only frame observed');
     assert.ok(report.metricsAfter.keyboardPresses>report.metricsBefore.keyboardPresses);
     assert.ok(report.metricsAfter.mousePresses>report.metricsBefore.mousePresses);
+    if(process.env.PET_QA_AUTO_COMPLETE==='1'){
+      assert.ok(report.heldKeyTested,'No settled physical key hold observed');
+      assert.ok(report.mouseToKeyboardObserved,'No native mouse-to-keyboard transition observed');
+      assert.ok(report.maxNewKeyboardPressesIn1s>=3,'No rapid physical keyboard presses observed');
+    }
   }
   await ipc('save_preferences',{prefs:original});assert.deepEqual(await ipc('read_preferences'),original);report.preferencesRestored=true;
   await delay(300);assert.deepEqual(await page.evaluate(()=>window.__petStatus.read().preferences),original);
