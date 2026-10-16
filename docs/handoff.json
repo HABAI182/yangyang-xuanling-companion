@@ -33,7 +33,8 @@
   "debugListenerClosed": true,
   "finalOrdinaryExe": "deliveries/20261016-windows-0.3.2/秧秧玄翎.exe",
   "finalOrdinaryPid": 28676,
-  "repositorySourceTagVerified": false,
+  "repositorySourceTagVerified": true,
   "nativeSourceModifiedThisVersion": false,
-  "runtimeSupplementPsd": "art/source/YangyangXuanling-Details-v12.psd"
+  "runtimeSupplementPsd": "art/source/YangyangXuanling-Details-v12.psd",
+  "sourceCommit": "407e1deb691a58f4f098008ac759402f8ad69445"
 }
