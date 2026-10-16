@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "nativeBase": "yangyang-v11",
+  "nativeExportModified": false,
+  "viewBox": [
+    -24,
+    0,
+    1584,
+    1360
+  ],
+  "patches": [
+    {
+      "id": "hair-tip",
+      "file": "/assets/detail-v12/hair-tip.png",
+      "box": [
+        -20,
+        950,
+        6,
+        1080
+      ],
+      "always": true
+    },
+    {
+      "id": "mouth-skin",
+      "file": "/assets/detail-v12/mouth-skin.png",
+      "box": [
+        704,
+        922,
+        760,
+        976
+      ],
+      "always": false
+    }
+  ],
+  "binding": "cached barycentric weights on native head triangles",
+  "neutralExistingPixelChanges": 0,
+  "hairMaxExtensionSourcePx": 16,
+  "nativePsd": "YangyangXuanling-Separated-v11.psd",
+  "supplementPsd": "YangyangXuanling-Details-v12.psd"
+}

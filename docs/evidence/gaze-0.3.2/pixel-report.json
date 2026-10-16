@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "sourcePadding": 24,
+  "guardPx": 5,
+  "poses": {
+    "neutral": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    },
+    "left-up": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    },
+    "right-up": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    },
+    "left-down": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    },
+    "right-down": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    },
+    "max": {
+      "outsideApertureGuardPixels": 0,
+      "transparentEyePixels": 0
+    }
+  }
+}

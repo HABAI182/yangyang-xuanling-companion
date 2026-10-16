@@ -1,9 +1,11 @@
-# 秧秧玄翎 0.3.1 模型交接
+# 秧秧玄翎 0.3.2 模型交接
 
-当前运行入口为 `/models/yangyang-v11/YangyangXuanling.model3.json`，对应真实 `art/source/YangyangXuanling-v11-rig.cmo3` 和 `art/source/YangyangXuanling-Separated-v11.psd`。Cubism 5.4.00 alpha2 / API 1.1.0 保存、重开、官方导出已核对；源文件和导出哈希见 `native-eye-v11.json`、`validation-0.3.1.json`。
+原生入口 `/models/yangyang-v11/YangyangXuanling.model3.json` 对应真实 `art/source/YangyangXuanling-v11-rig.cmo3` 和 `art/source/YangyangXuanling-Separated-v11.psd`。原生保存、重开、导出及SDK证据在 `native-eye-v11.json`、`validation-0.3.1.json`。0.3.2未修改这些原生文件。
 
-13 网格保留原先 ID。双瞳孔使用固定眼白的原生剪贴遮罩，睫毛/眼缘/头发位于头部。原生双手按压和开闭眼绑定保留；水平与垂直视线均由 SDK 运行时统一驱动。视觉差异限定在双眼矩形内；其余裁片可见 RGB 和 alpha 不变。
+13个原生网格与ID保留，双虹膜使用眼白原生剪贴遮罩，原生手部按压与开闭眼保留。画面左手鼠标、右手键盘；四键区加Space、二维视线、弹簧及小鸟由运行时驱动。
 
-画面左侧（角色右手）控制鼠标，画面右侧（角色左手）控制键盘，四区加独立 Space。形变每帧从 Core 顶点还原后计算，输入自动重复不重启动作。按下压缩、松开拉伸和小鸟响应增强；浮显高度保留，文字气泡与其对齐并向左移动。
+0.3.2补齐左发梢直切轮廓，左右各24像素透明余量，重合的中性源图像素不变；默认视线幅度165%，设置可调50–250%。文字泡/按键框同一高度、分别缩放，按键默认130%。
 
-开发和构建方法见 README。具体改动与验证见 `refinement-0.3.1.md`；Windows 文件在 `deliveries/20261016-windows-0.3.1`，恢复点见 `handoff.json`。用户仍需视觉评价新眼睛，不能把 SDK 通过视为美术接受。0.3.1 没有新做物理长按、安装和游戏内验收，详见验收 JSON。
+右键菜单17种表情加入不同嘴形、局部眼睑/睫毛形变、单侧闭眼及泪光。新增补充素材为 `art/source/YangyangXuanling-Details-v12.psd`；它未导入原生CMO3。`public/assets/detail-v12`、`src/mesh-details.ts`、`src/face-art.ts` 与 `src/face-pose.mjs` 必须随工程保留，发梢和嘴部补片通过缓存的重心坐标附着真实原生头部三角形。连续眼皮闭合及完整原生口形参数仍未制作。
+
+本版交付在 `deliveries/20261016-windows-0.3.2`，源码恢复点 `v0.3.2`；旧版保留。详见 `refinement-0.3.2.md` 和 `validation-0.3.2.json`。本版单元、真实WebGL、像素遮罩、Windows打包程序和用户观感分别记录，不将程序检查称为美术接受。键鼠钩子未改动，不把旧版物理长按验收冒充本轮新测试。

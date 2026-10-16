@@ -50,19 +50,22 @@ def main():
         ROOT / "docs/hidden-devices-v9.json",
         ROOT / "docs/palms-eyes-v10.json",
         ROOT / "docs/eye-masks-v11.json",
+        ROOT / "docs/detail-patches-v12.json",
+        ROOT / "art/source/YangyangXuanling-Details-v12.psd",
         ROOT / f"docs/refinement-{version}.md",
         ROOT / "LICENSE.txt",
         ROOT / "LICENSE-CHANG-LI-MIT.txt",
         ROOT / "THIRD-PARTY-NOTICES.md",
         ROOT / "docs/changli-parity.md",
     ]
+    source_files += sorted((ROOT / "public/assets/detail-v12").rglob("*"))
     source_files += sorted((ROOT / "src").rglob("*"))
     source_files += sorted((ROOT / "src-tauri/src").rglob("*.rs"))
     source_files += sorted((ROOT / f"public/models/yangyang-{revision}").rglob("*"))
     source_files += sorted((ROOT / f"public/assets/{revision}").rglob("*"))
     source_files += sorted((ROOT / "public/vendor/live2d").glob("*LICENSE*"))
     source_files = [p for p in source_files if p.is_file()]
-    archive = out / f"秧秧玄翎-模型源文件-{revision}.zip"
+    archive = out / f"秧秧玄翎-模型源文件-{version}.zip"
     with zipfile.ZipFile(archive, "x", compression=zipfile.ZIP_DEFLATED) as bundle:
         for p in source_files:
             bundle.write(p, p.relative_to(ROOT).as_posix())
@@ -83,7 +86,7 @@ def main():
 桌面功能包括全屏避让及程序例外、磁吸、3个常用位置、靠近淡化、穿透与找回。
 支持可编辑动作快捷键、手柄反馈、轻音、登录启动及高权限兼容手动重启。
 本版双眼以固定眼白作原生遮罩，完整瞳孔独立移动；睫毛、皮肤和头发不跟着瞳孔缩放。
-保留原有手掌/袖根拆分、外缘纸白清理与极小的左发尖修剪。
+保留原有手掌/袖根拆分与外缘纸白清理。
 键盘四区加独立Space；鼠标和手掌有界联动；头部强弹簧、小鸟跳跃摆尾、二维视线持续跟随。
 静止画面保留比例及低饱和灰蓝瞳色，未授权区域RGBA差异为零。
 原生模型含双手按压、眨眼、双眼剪贴遮罩及连续闭眼线；二维伸手、二维视线、弹性、
@@ -91,7 +94,13 @@ def main():
 增强按下压缩与松开拉伸回弹；长按不反复弹动。按键浮显高度保留，文字气泡与其齐平、略向左移。
 脸红改为渐隐晕染与细笔触，跟随脸部弹动；仍属于运行时表情装饰。
 实际Windows及物理输入验收范围以manifest.json中的verification为准。
-连续眼皮几何闭合、独立口形和发丝物理尚未制作。
+本版修复左发梢直切边，左右增加透明余量，原图重合区域RGBA不变。
+文字泡和按键框采用雾蓝边框；按键默认130%，两者可在互动设置中独立调整大小。
+视线默认165%，可独立调整50%–250%，仍受原生眼白遮罩限制。
+右键菜单17种情绪细化嘴形、眼睑、单侧眨眼与泪光，不是只加外部符号。
+原生模型仍为v11；发梢/口形补片贴合真实头部三角形，运行时矢量源随包保留。
+Details-v12.psd是补充素材，并未冒充新CMO3导出。
+连续闭合眼皮、完整原生口形参数和发丝物理尚未制作。
 手柄实机、游戏输入、UAC兼容重启、Windows登录启动及安装流程未验收。
 
 模型源文件压缩包保留项目内目录结构，包含真实CMO3、分层PSD、官方模型和运行时效果源码。

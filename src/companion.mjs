@@ -16,7 +16,7 @@ export class Companion {
   this.activity(now);this.motion=['nod','bird','cheer'].includes(id)?id:'';
   this.expression=this.motion?this.motion==='cheer'?'smile':'default':id;
   this.actionStarted=now;this.until=this.motion?now+2400:0;
-  const text=({nod:'嗯，我在听',bird:'小鸟也想和你一起玩',cheer:'让风为你捎去一点勇气',sleepy:'稍微休息一会儿',wind:'我听见风的声音了',blush:'被你发现啦',angry:'呼……先深呼吸一下'})[id];
+  const text=({nod:'嗯，我在听',bird:'小鸟也想和你一起玩',cheer:'让风为你捎去一点勇气',sleepy:'稍微休息一会儿',wind:'我听见风的声音了',blush:'被你发现啦',angry:'呼……先深呼吸一下',smile:'有你在，今天很温暖',think:'唔，让我想一想',surprised:'诶，发生什么啦？',resigned:'好吧，听你的',serious:'我会认真陪着你',laugh:'忍不住笑出来啦',pout:'哼，再陪我一会儿嘛',shy:'别、别这样看着我呀',wronged:'可以陪我待一会儿吗',proud:'这次做得不错吧',confused:'嗯？我没听明白',starry:'你的想法闪闪发亮呢'})[id];
   if(id!=='default')this.say(now,p,text);return true;
  }
  touch(now,p){if(!p.touchEnabled||now-this.lastTouch<2500)return;this.lastTouch=now;this.action('blush',now,p);}

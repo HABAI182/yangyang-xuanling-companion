@@ -9,12 +9,12 @@ import {createHash} from 'node:crypto';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.PET_PLAYWRIGHT_PACKAGE||'playwright');
 const exe=process.env.PET_NATIVE_EXE;if(!exe)throw new Error('PET_NATIVE_EXE required');
 const out=path.resolve(process.env.PET_QA_OUTPUT||'../../work/refinement-native-smoke');await fs.mkdir(out,{recursive:true});
-const child=spawn(exe,[],{windowsHide:true,detached:true,stdio:'ignore',env:{...process.env,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:'--remote-debugging-port=9237 --remote-debugging-address=127.0.0.1'}});child.unref();
+if(process.env.PET_QA_ATTACH!=='1'){const child=spawn(exe,[],{windowsHide:true,detached:true,stdio:'ignore',env:{...process.env,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:'--remote-debugging-port=9237 --remote-debugging-address=127.0.0.1'}});child.unref();}
 const delay=ms=>new Promise(r=>setTimeout(r,ms));let browser,page;
 const report={passed:false,physicalInputVerified:false,exeSha256:createHash('sha256').update(await fs.readFile(exe)).digest('hex'),errors:[]};
 const ipc=(name,args={})=>page.evaluate(({name,args})=>window.__TAURI_INTERNALS__.invoke(name,args),{name,args});
 try{
- for(let n=0;n<100;n++){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9237');break;}catch{await delay(200);}}
+ for(let n=0;n<250;n++){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9237');break;}catch{await delay(200);}}
  assert.ok(browser,'native WebView');page=browser.contexts()[0].pages().find(p=>!p.url().includes('?'));
  page.on('pageerror',e=>report.errors.push(e.message));await page.waitForFunction(()=>window.__petStatus?.read().frames>10);
  assert.equal(await page.evaluate(()=>Boolean(window.__petDebug)),false);
@@ -27,14 +27,26 @@ try{
   const sha=async url=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await(await fetch(url)).arrayBuffer()))).map(x=>x.toString(16).padStart(2,'0')).join('');
   return {mocSha256:await sha(base+manifest.FileReferences.Moc),textureSha256:await sha(base+manifest.FileReferences.Textures[0])};
  });report.payload=payload;
+ report.detailHashes=await page.evaluate(async()=>{const result={};for(const name of ['hair-tip.png','mouth-skin.png','patches.json'])result[name]=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await(await fetch('/assets/detail-v12/'+name)).arrayBuffer()))).map(x=>x.toString(16).padStart(2,'0')).join('');return result;});
  const root=path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/(\w:)/,'$1')),'..');
+ for(const [name,hash] of Object.entries(report.detailHashes))assert.equal(hash,createHash('sha256').update(await fs.readFile(path.join(root,'public/assets/detail-v12',name))).digest('hex'));
  const sourceConfig=JSON.parse(await fs.readFile(path.join(root,'public/assets/model-config.json'),'utf8'));
  const sourceEntry=path.join(root,'public',sourceConfig.entry),sourceManifest=JSON.parse(await fs.readFile(sourceEntry,'utf8'));
  const sourceSha=async file=>createHash('sha256').update(await fs.readFile(path.join(path.dirname(sourceEntry),file))).digest('hex');
  assert.equal(payload.mocSha256,await sourceSha(sourceManifest.FileReferences.Moc));
  assert.equal(payload.textureSha256,await sourceSha(sourceManifest.FileReferences.Textures[0]));report.exactBundledModelVerified=true;
+ assert.equal(await page.locator('.mesh-details').count(),1);
+ assert.equal(await page.evaluate(()=>window.__petStatus.read().preferences.gazeScale),1.65);
+ assert.equal(await page.evaluate(()=>window.__petStatus.read().preferences.keyBubbleScale),1.3);
  const a=await page.evaluate(()=>window.__petStatus.read());await delay(250);const b=await page.evaluate(()=>window.__petStatus.read());assert.ok(b.frames>a.frames);assert.equal(b.canvas.height,1360);report.realCoreFramesAdvance=true;
  await page.screenshot({path:path.join(out,'pet-neutral.png'),omitBackground:true});
+ for(const mood of ['smile','blush','angry','wronged']){
+  await ipc('show_menu');let menu;for(let i=0;i<40;i++){menu=browser.contexts()[0].pages().find(p=>p.url().includes('?menu'));if(menu)break;await delay(100);}
+  assert.ok(menu,'native interaction menu');await menu.waitForSelector('[data-action="'+mood+'"]',{state:'attached'});
+  const button=menu.locator('[data-action="'+mood+'"]');if(!await button.isVisible())await menu.locator('.more-expressions summary').click();await button.click();
+  await page.waitForFunction(id=>window.__petStatus.read().expression===id,mood);await page.screenshot({path:path.join(out,'menu-'+mood+'.png'),omitBackground:true});
+ }
+ report.menuExpressionsThroughNativeUi=true;
  await ipc('pet_action',{action:'laugh'});await page.waitForFunction(()=>window.__petStatus.read().model.parameters.eyeLeftOpen===0);
  await page.screenshot({path:path.join(out,'pet-closed.png'),omitBackground:true});
  await ipc('pet_action',{action:'default'});await page.waitForFunction(()=>window.__petStatus.read().model.parameters.eyeLeftOpen===1);report.blinkReopens=true;

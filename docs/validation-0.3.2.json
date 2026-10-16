@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-16",
+  "version": "0.3.2",
+  "stage": "menu-expression-and-interface-refinement",
+  "model": {
+    "source": "art\\source\\YangyangXuanling-v11-rig.cmo3",
+    "sourceSha256": "566a8851f84d0de37b3cd28d46e9fc5c3f0a13ddd221623aec7e8671ab02ad9a",
+    "psd": "art/source/YangyangXuanling-Separated-v11.psd",
+    "psdSha256": "10ea7add052a549f81116c2b09ff0cfb4afd76f2de95f798c8eb01c90f4ad76e",
+    "entry": "public/models/yangyang-v11/YangyangXuanling.model3.json",
+    "mocSha256": "62e9e8314b4db8a4e86a93696d50849c67300723ac02661c4972870c1bbe383d",
+    "textureSha256": "e2e85e05cd09721c8ff047df69f55f158ed18078416dd6b755e1836f24ddf760",
+    "drawables": 13,
+    "parameters": 27,
+    "nativeClipping": {
+      "ArtMesh4": [
+        "ArtMesh6"
+      ],
+      "ArtMesh5": [
+        "ArtMesh7"
+      ]
+    },
+    "palette": "v4 muted gray blue",
+    "unauthorizedPixelChanges": 0,
+    "savedAndReopened": true,
+    "runtimeGazeXYSeparateFromSource": true
+  },
+  "nativeSourceModifiedThisVersion": false,
+  "runtimeSupplement": "docs/detail-patches-v12.json",
+  "neutralExistingSourcePixelChanges": 0,
+  "hairMaxExtensionSourcePx": 16,
+  "sourceSupplementPsdSha256": "b890a7ddcebcce3e60d138f089d1306ec86de0efcfba16d80a0708daf7aa6d45",
+  "unit": {
+    "frontend": {
+      "passed": true,
+      "count": 11
+    },
+    "native": {
+      "passed": true,
+      "count": 12
+    }
+  },
+  "productionBuild": {
+    "passed": true,
+    "exeSha256": "de8ca37eae997d463587e373417b75ac079c217a977436a9036bd9ec93fd3901",
+    "installerExecuted": false
+  },
+  "browser": {
+    "passed": true,
+    "report": "docs/evidence/details-0.3.2/report.json",
+    "menuExpressions": 17,
+    "nativeClipping": true,
+    "defaultGazeMultiplier": 1.65,
+    "gazeScaleMaximum": 2.5,
+    "independentOverlayScalesSaved": true,
+    "alignedBubbleTop": true,
+    "combinedExtremeCaptured": true
+  },
+  "regression": {
+    "passed": true,
+    "report": "docs/evidence/refinement-browser-0.3.2/report.json",
+    "fiveKeyboardZones": true,
+    "independentMousePalm": true,
+    "noCumulativeDrift": true
+  },
+  "eyePixels": {
+    "passed": true,
+    "report": "docs/evidence/gaze-0.3.2/pixel-report.json",
+    "gazePoses": 6,
+    "outsideEyeGuardChangedPixels": 0,
+    "eyeTransparentPixels": 0,
+    "guardPx": 5
+  },
+  "native": {
+    "passed": true,
+    "report": "docs/evidence/native-0.3.2/report.json",
+    "exactBundledModelAndPatchFiles": true,
+    "realCoreFramesAdvance": true,
+    "visibleWindow": true,
+    "menuMoodsClicked": [
+      "smile",
+      "blush",
+      "angry",
+      "wronged"
+    ],
+    "blinkReopens": true,
+    "birdMoves": true,
+    "preferencesBytesUnchanged": true
+  },
+  "physicalInput": {
+    "retested": false,
+    "priorReport": "docs/evidence/refinement-native-0.3.0/report.json",
+    "scope": "Native hooks/mapping unchanged; no claim of a fresh physical hold, game or gamepad test."
+  },
+  "visual": {
+    "agentReviewed": true,
+    "humanAccepted": false,
+    "contactSheet": "art/menu-expressions-0.3.2.png"
+  },
+  "artLimitations": [
+    "Native model remains v11; runtime mouth shapes, local eyelid field and native-mesh-attached patches are not new CMO3 bindings",
+    "Blink still uses separate open/closed art, not a continuous geometric closure",
+    "No independent hair strand physics"
+  ],
+  "notTested": [
+    "physical gamepad",
+    "full-screen game input",
+    "UAC elevated restart",
+    "Windows login autostart",
+    "installer execution",
+    "complete multi-monitor/DPI and native drag gestures",
+    "physical multi-key chords and simultaneous keyboard/mouse",
+    "physical recovery and custom shortcut chords",
+    "manual audio listening"
+  ],
+  "privacy": "Current input state and bounded transient key labels only; no input text/history persistence or network transmission."
+}
