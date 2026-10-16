@@ -29,11 +29,13 @@
     "manual audio listening"
   ],
   "nextExactTask": "User visual review of eyelid corners, Q mood glyphs and framed overlays; monitor ordinary transparent click behaviour. Continuous native eyelid geometry remains optional future art work.",
-  "ordinaryPetRunning": false,
-  "debugListenerClosed": false,
+  "ordinaryPetRunning": true,
+  "debugListenerClosed": true,
   "finalOrdinaryExe": "deliveries/20261017-windows-0.3.3/秧秧玄翎.exe",
-  "repositorySourceTagVerified": false,
+  "repositorySourceTagVerified": true,
   "nativeSourceModifiedThisVersion": false,
   "runtimeSupplementPsd": "art/source/YangyangXuanling-Details-v13.psd",
-  "ordinaryLaunchStatus": "Will be recorded in delivery-0.3.3.json after immutable source tag and package verification."
+  "ordinaryLaunchStatus": "Verified ordinary delivery EXE visible and responding; debug listener closed. Exact package/source audit in delivery-0.3.3.json.",
+  "finalOrdinaryPid": 29480,
+  "sourceCommit": "feeedbf1da5cfff4b9569dda3813b926faae4aee"
 }
