@@ -28,3 +28,15 @@ test('rapid keyboard after mouse release never injects new mouse energy',()=>{
  for(let t=1200;t<1700;t+=40){s.update(frame({keysHeld:1,newPress:true}),t);near(s.snapshot(t+10).mousePress,0);s.update(frame(),t+20);}
  assert.equal(s.mouseStarted,0);near(settle(s,1700,3000).keyboardPress,0);
 });
+
+test('press has a visible impulse, real release recoils, repeated held frames add no energy',()=>{
+ const s=new InputState();s.update(frame({keysHeld:1,newPress:true}),0);
+ assert.ok(s.snapshot(65).keyboardBounce>.8);
+ settle(s,65,1600);
+ for(let t=1600;t<1900;t+=20)s.update(frame({keysHeld:1}),t);
+ near(s.snapshot(1900).keyboardBounce,0);
+ s.update(frame(),1900);assert.ok(s.snapshot(1965).keyboardBounce<-.4);
+ const rapid=new InputState();let peak=0;
+ for(let t=0;t<2000;t+=20){rapid.update(frame({keysHeld:t%40===0?1:0,newPress:t%40===0}),t);peak=Math.max(peak,Math.abs(rapid.snapshot(t+10).keyboardBounce));}
+ assert.ok(peak<=1.05);near(settle(rapid,2010,4000).keyboardBounce,0);
+});

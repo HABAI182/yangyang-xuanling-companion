@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "maskBoundaryGuardPx": 5,
+  "poses": {
+    "neutral": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    },
+    "left-up": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    },
+    "right-up": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    },
+    "left-down": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    },
+    "right-down": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    },
+    "angry": {
+      "changedPixelsOutsideApertureGuard": 0,
+      "transparentEyePixels": 0
+    }
+  }
+}

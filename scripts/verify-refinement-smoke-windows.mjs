@@ -20,7 +20,19 @@ try{
  assert.equal(await page.evaluate(()=>Boolean(window.__petDebug)),false);
  const prefs=await ipc('read_preferences');report.windows=await ipc('window_diagnostics');
  assert.ok(report.windows.pet.visible&&!report.windows.pet.minimized);report.visibleNativeWindow=true;
- report.modelConfig=await page.evaluate(()=>fetch('/assets/model-config.json').then(r=>r.json()));assert.ok(report.modelConfig.entry.includes('yangyang-v10'));
+ report.modelConfig=await page.evaluate(()=>fetch('/assets/model-config.json').then(r=>r.json()));assert.ok(report.modelConfig.entry.includes('yangyang-v11'));
+ assert.deepEqual(await page.evaluate(()=>window.__petStatus.read().model.clipping),{ArtMesh4:['ArtMesh6'],ArtMesh5:['ArtMesh7']});
+ const payload=await page.evaluate(async()=>{
+  const config=await (await fetch('/assets/model-config.json')).json(),base=config.entry.slice(0,config.entry.lastIndexOf('/')+1),manifest=await(await fetch(config.entry)).json();
+  const sha=async url=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await(await fetch(url)).arrayBuffer()))).map(x=>x.toString(16).padStart(2,'0')).join('');
+  return {mocSha256:await sha(base+manifest.FileReferences.Moc),textureSha256:await sha(base+manifest.FileReferences.Textures[0])};
+ });report.payload=payload;
+ const root=path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/(\w:)/,'$1')),'..');
+ const sourceConfig=JSON.parse(await fs.readFile(path.join(root,'public/assets/model-config.json'),'utf8'));
+ const sourceEntry=path.join(root,'public',sourceConfig.entry),sourceManifest=JSON.parse(await fs.readFile(sourceEntry,'utf8'));
+ const sourceSha=async file=>createHash('sha256').update(await fs.readFile(path.join(path.dirname(sourceEntry),file))).digest('hex');
+ assert.equal(payload.mocSha256,await sourceSha(sourceManifest.FileReferences.Moc));
+ assert.equal(payload.textureSha256,await sourceSha(sourceManifest.FileReferences.Textures[0]));report.exactBundledModelVerified=true;
  const a=await page.evaluate(()=>window.__petStatus.read());await delay(250);const b=await page.evaluate(()=>window.__petStatus.read());assert.ok(b.frames>a.frames);assert.equal(b.canvas.height,1360);report.realCoreFramesAdvance=true;
  await page.screenshot({path:path.join(out,'pet-neutral.png'),omitBackground:true});
  await ipc('pet_action',{action:'laugh'});await page.waitForFunction(()=>window.__petStatus.read().model.parameters.eyeLeftOpen===0);
@@ -28,6 +40,7 @@ try{
  await ipc('pet_action',{action:'default'});await page.waitForFunction(()=>window.__petStatus.read().model.parameters.eyeLeftOpen===1);report.blinkReopens=true;
  await ipc('pet_action',{action:'bird'});const c=await page.evaluate(()=>window.__petStatus.read().model.meshes.bird);await delay(140);assert.notEqual(await page.evaluate(()=>window.__petStatus.read().model.meshes.bird),c);report.birdMoves=true;
  await ipc('pet_action',{action:'default'});report.preferencesUnchanged=JSON.stringify(prefs)===JSON.stringify(await ipc('read_preferences'));
+ await ipc('pet_action',{action:'blush'});await delay(150);await page.screenshot({path:path.join(out,'pet-blush.png'),omitBackground:true});await ipc('pet_action',{action:'default'});
  assert.ok(report.preferencesUnchanged);assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(e){report.errors.push(String(e));throw e;}finally{
  await fs.writeFile(path.join(out,'report.json'),JSON.stringify(report,null,2));

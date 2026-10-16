@@ -5,7 +5,7 @@
     "Windows x64"
   ],
   "artMode": "preserve-reference-and-underpaint",
-  "currentBaseImage": "art/source/composition-neutral-v10.png",
+  "currentBaseImage": "art/source/composition-neutral-v11.png",
   "baseApproval": "Original proportions and muted iris RGB retained; local cutout repairs in user-marked gaps, palms, eye rims and left cuff; hidden underpaint only.",
   "identityAnchors": [
     "蓝黑发色渐变至蓝白发梢",
@@ -70,6 +70,7 @@
     "both original palm silhouettes and hidden outlines",
     "fixed eye rims and hidden iris perimeter",
     "character-left keyboard cuff excludes hair and face",
-    "v7 screen-left hair trim limited to 66 visible pixels"
+    "v7 screen-left hair trim limited to 66 visible pixels",
+    "v11 stationary sclera apertures, iris fringe cleanup and hidden iris perimeter completion; all non-eye v10 visible pixels and alpha identical"
   ]
 }

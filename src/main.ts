@@ -55,7 +55,9 @@ async function petPage(){
   if(!active)return;frameRequest=requestAnimationFrame(draw);if(now-lastDraw<1000/prefs.fps-.7)return;lastDraw=now;
   const snapshot=state.snapshot(now,prefs.handSpeed),mood=companion.read(now,prefs),level=prefs.motion==='off'?0:prefs.motion==='low'?.35:1;
   const mouseEnabled=prefs.inputEnabled&&prefs.inputMode==='keyboard_mouse';const look=prefs.cursorFollow?gaze:{x:0,y:0};renderer.draw(now,snapshot,look,prefs.intensity,prefs.idleEnabled,{keyboardScale:prefs.keyboardScale,mouseScale:mouseEnabled?prefs.mouseScale:0,headElasticity:prefs.headElasticity,motionLevel:level,expression:mood.expression,motion:mood.motion,motionAge:mood.age});
-  if(lastExpression!==mood.expression){renderEmotion(emotion,mood.expression);lastExpression=mood.expression;}speech.textContent=mood.bubble;speech.classList.toggle('shown',Boolean(mood.bubble));
+  if(lastExpression!==mood.expression){renderEmotion(emotion,mood.expression);lastExpression=mood.expression;}
+  emotion.querySelectorAll<SVGGElement>('[data-face-y]').forEach(el=>el.setAttribute('transform',live.faceTransform(Number(el.dataset.faceY))));
+  speech.textContent=mood.bubble;speech.classList.toggle('shown',Boolean(mood.bubble));
   const badges=overlay.read(now,prefs),ids=badges.map(x=>x.id).join(',');if(ids!==lastKeyIds){key.innerHTML=badges.map(x=>`<kbd>${escapeHtml(x.label)}</kbd>`).join('');lastKeyIds=ids;}
   shell.style.opacity=prefs.hoverFade&&hovering&&now-hoverSince>prefs.hoverDelay?String(prefs.hoverOpacity):'1';shell.dataset.motion=prefs.motion;frames++;
  }

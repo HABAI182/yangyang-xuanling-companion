@@ -17,6 +17,7 @@ export class CubismRenderer implements PetRenderer {
   private gl!:WebGLRenderingContext;private moc!:CubismMoc;private model!:CubismModel;private renderer!:CubismRenderer_WebGL;private matrix!:CubismModelMatrix;private physics?:CubismPhysics;private textures:WebGLTexture[]=[];private last=0;
   private restored=new Map<number,Float32Array>();
   private lookX=new Spring();private lookY=new Spring();
+  private facePose={angle:0,stretch:0,sourceDy:0};
   constructor(private canvas:HTMLCanvasElement,private config:Config){}
   async load(){
     if(!this.config.entry || !this.config.entry.startsWith('/models/') || this.config.entry.includes('..'))throw new Error('模型入口必须在本地 models 中');
@@ -27,10 +28,14 @@ export class CubismRenderer implements PetRenderer {
     const local=(file:string)=>{if(file.startsWith('/') || file.includes('..') || file.includes(':'))throw new Error('模型引用越界');return base+file;};
     const refs=manifest.FileReferences;const data=await (await fetch(local(refs.Moc))).arrayBuffer();
     this.moc=CubismMoc.create(data,true);if(!this.moc)throw new Error('真实 MOC3 验证失败');this.model=this.moc.createModel();if(!this.model)throw new Error('模型创建失败');
+    // Runtime head/pupil deformation also moves the native sclera masks. The
+    // SDK must redraw those masks when these vertices change outside Core.
+    const coreChanged=this.model.getDrawableDynamicFlagVertexPositionsDidChange.bind(this.model);
+    this.model.getDrawableDynamicFlagVertexPositionsDidChange=(i:number)=>this.restored.has(i)||coreChanged(i);
     this.canvas.height=1360;this.canvas.width=Math.round(1360*this.model.getCanvasWidth()/this.model.getCanvasHeight());this.gl=this.canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true})!;if(!this.gl)throw new Error('WebGL 不可用');
     this.model.saveParameters();this.matrix=new CubismModelMatrix(this.model.getCanvasWidth(),this.model.getCanvasHeight());
     if(manifest.Layout)this.matrix.setupFromLayout(new Map(Object.entries(manifest.Layout) as [string,number][]));
-    this.renderer=new CubismRenderer_WebGL(this.canvas.width,this.canvas.height);this.renderer.initialize(this.model);this.renderer.startUp(this.gl);this.renderer.setIsPremultipliedAlpha(true);this.renderer.loadShaders(shaderUrl);
+    this.renderer=new CubismRenderer_WebGL(this.canvas.width,this.canvas.height);this.renderer.initialize(this.model);this.renderer.setClippingMaskBufferSize(1024);this.renderer.startUp(this.gl);this.renderer.setIsPremultipliedAlpha(true);this.renderer.loadShaders(shaderUrl);
     for(const [i,file] of refs.Textures.entries()){const im=await loadImage(local(file));const gl=this.gl;const tex=gl.createTexture()!;gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,1);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);this.textures.push(tex);this.renderer.bindTexture(i,tex);}
     if(refs.Physics){const d=await (await fetch(local(refs.Physics))).arrayBuffer();this.physics=CubismPhysics.create(d,d.byteLength);}
     const deadline=performance.now()+10000;while(!CubismShaderManager_WebGL.getInstance().getShader(this.gl)._isShaderLoaded){if(performance.now()>deadline)throw new Error('着色器未完成加载');await new Promise(r=>setTimeout(r,16));}
@@ -44,21 +49,31 @@ export class CubismRenderer implements PetRenderer {
     for(const [i,vertices] of this.restored)this.model.getDrawableVertexPositions(i).set(vertices);this.restored.clear();this.model.loadParameters();
     const smooth={x:this.lookX.step(g.x,dt,18,.85),y:this.lookY.step(g.y,dt,18,.85)};
     this.set('eyeBallX',smooth.x);this.set('headX',g.x*8);this.set('headY',-g.y*5);this.set('headZ',g.x*2+(s.keyboardBounce+s.mouseBounce)*2*intensity);
-    this.set('keyboardPress',(s.keyboardPress*.82+s.keyboardBounce*.18)*intensity*(options?.keyboardScale??1));this.set('mousePress',(s.mousePress*.82+s.mouseBounce*.18)*intensity*(options?.mouseScale??1));this.set('keyboardReach',s.reach*s.keyboardPress);
+    // Whole-head recoil is shared; palm pressure is driven only by its own
+    // input spring. Mixing head recoil here makes a click press the other hand.
+    this.set('keyboardPress',s.keyboardPress*intensity*(options?.keyboardScale??1));this.set('mousePress',s.mousePress*intensity*(options?.mouseScale??1));this.set('keyboardReach',s.reach*s.keyboardPress);
     this.set('breath',idle?.5+.5*Math.sin(now/800):.5);this.set('birdBounce',(s.keyboardBounce+s.mouseBounce)*intensity);
     // This model has opacity-bound open/closed art. A short closed hold avoids
     // the double image produced by crossfading the entire eye patches.
     const phase=now%5700;const closed=['sleepy','laugh','shy'].includes(options?.expression??'');const open=closed||idle&&phase>5460&&phase<5590?0:1;this.set('eyeLeftOpen',open);this.set('eyeRightOpen',open);
     this.physics?.evaluate(this.model,dt);this.model.update();
-    if(options)deform(this.model,this.restored,now,s,smooth,intensity,idle,options);
+    if(options)this.facePose=deform(this.model,this.restored,now,s,smooth,intensity,idle,options);
     const gl=this.gl;gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     const m=new CubismMatrix44();const aspect=this.canvas.width/this.canvas.height;if(aspect>=1)m.scale(1/aspect,1);else m.scale(1,aspect);m.multiplyByMatrix(this.matrix);
     this.renderer.setMvpMatrix(m);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,this.canvas.width,this.canvas.height]);this.renderer.drawModel(shaderUrl);
   }
+  faceTransform(sourceY:number){
+    const {angle,stretch,sourceDy}=this.facePose,c=Math.cos(angle),s=Math.sin(angle),sx=1-stretch*.42,sy=1+stretch;
+    const a=sx*c,b=-sx*s,cc=sy*s,d=sy*c,e=760-760*a-1060*cc,f=1060+sourceDy-760*b-1060*d;
+    const w=Math.max(0,Math.min(1,(1130-sourceY)/190));
+    return `matrix(${1+(a-1)*w} ${b*w} ${cc*w} ${1+(d-1)*w} ${e*w} ${f*w})`;
+  }
   diagnostics(){
     const bounds:Record<string,number[]>={};const meshes:Record<string,number>={};for(let i=0;i<this.model.getDrawableCount();i++){let hash=2166136261;for(const n of this.model.getDrawableVertexPositions(i))hash=Math.imul(hash^Math.round(n*1e6),16777619);const id=this.model.getDrawableId(i).getString();meshes[id]=hash>>>0;const v=this.model.getDrawableVertexPositions(i),xs=[],ys=[];for(let k=0;k<v.length;k+=2){xs.push(v[k]);ys.push(v[k+1]);}bounds[id]=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys),this.model.getDrawableOpacity(i)];}
     const parameters:Record<string,number>={};for(const semantic of ['keyboardPress','mousePress','eyeLeftOpen','eyeRightOpen','eyeBallX']){const id=this.config.parameters[semantic];if(id){const i=this.model.getParameterIndex(CubismFramework.getIdManager().getId(id));parameters[semantic]=this.model.getParameterValueByIndex(i);}}
-    return {meshes,parameters,bounds};
+    const clipping:Record<string,string[]>={};const masks=this.model.getDrawableMasks(),counts=this.model.getDrawableMaskCounts();
+    for(let i=0;i<this.model.getDrawableCount();i++)if(counts[i])clipping[this.model.getDrawableId(i).getString()]=Array.from(masks[i]).slice(0,counts[i]).map(j=>this.model.getDrawableId(j).getString());
+    return {meshes,parameters,bounds,clipping};
   }
   dispose(){this.physics?.release();this.renderer?.release();for(const t of this.textures)this.gl.deleteTexture(t);if(this.model)this.moc.deleteModel(this.model);this.moc?.release();}
 }

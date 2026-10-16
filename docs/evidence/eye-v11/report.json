@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "coreWebgl": true,
+  "nativeClipping": {
+    "ArtMesh4": [
+      "ArtMesh6"
+    ],
+    "ArtMesh5": [
+      "ArtMesh7"
+    ]
+  },
+  "bubbleRects": {
+    "speech": {
+      "left": 178.078125,
+      "top": 336.59375,
+      "right": 316.078125,
+      "bottom": 394.59375
+    },
+    "key": {
+      "left": 1564.5625,
+      "top": 336.59375,
+      "right": 1606.5625,
+      "bottom": 385.375
+    }
+  },
+  "errors": [],
+  "physicalInput": false
+}

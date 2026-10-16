@@ -1,0 +1,17 @@
+{
+  "uid": "8facf3ade83c41f191f2e5ba258bed3b",
+  "action": "bind",
+  "beforeHash": "42b969dcb033eaa08b3b6fe546d0685c78291f3c22b5d8593e3a3b69dfeef10c",
+  "backup": {
+    "kind": "last_saved_native_backup",
+    "path": "C:\\Users\\18769\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\live2d-automation\\jobs\\eye-v11-bind-9a2d2a323a0147d7940fc63f54e70bf6\\original.cmo3",
+    "sha256": "28d9ae9bf9f2050569fc242e5f42462e21182ccaed70eca9504d01c8df19367b"
+  },
+  "targets": {
+    "ArtMesh4": "ParamEyeROpen",
+    "ArtMesh5": "ParamEyeLOpen",
+    "ArtMesh6": "ParamEyeROpen",
+    "ArtMesh7": "ParamEyeLOpen"
+  },
+  "officialApi": "https://cubism.live2d.com/editor-alpha/doc/manual/alpha1/zh/external-api-intergration/index.html"
+}

@@ -1,5 +1,5 @@
 {
-  "entry": "/models/yangyang-v10/YangyangXuanling.model3.json",
+  "entry": "/models/yangyang-v11/YangyangXuanling.model3.json",
   "stage": "cubism-refinement-candidate",
   "parameters": {
     "keyboardPress": "ParamBodyAngleX",
@@ -12,5 +12,5 @@
     "keyboardPress": 10,
     "mousePress": 10
   },
-  "notes": "Official v10 Editor export: traced palm mattes, keyboard cuff separated from hair, transparent ribbon/hair-loop gaps, fixed eye rims above independent moving irises, complete closed-eye skin patches and separate authored presses. Bounded XY reach, spring deformation, vertical gaze and bird secondary movement are runtime SDK vertex transforms."
+  "notes": "Official v11 export: complete separate irises clipped natively to stationary sclera apertures, fixed original lashes and skin, original palm/cuff separation. Native blink and hand press remain. Gaze XY, bounded reach, squash/stretch recoil and bird response are explicit SDK runtime vertex transforms."
 }

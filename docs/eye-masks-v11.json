@@ -1,0 +1,45 @@
+{
+  "left": {
+    "clippingMask": "eye-left",
+    "sourceSeedPixels": 12088,
+    "completedHiddenPixels": 6108,
+    "stationaryLashes": true
+  },
+  "right": {
+    "clippingMask": "eye-right",
+    "sourceSeedPixels": 11395,
+    "completedHiddenPixels": 7524,
+    "stationaryLashes": true
+  },
+  "neutralChangedPixels": 10237,
+  "outsideEyeRectsChangedPixels": 0,
+  "nativeImport": "verified",
+  "nativeModelSource": "art/source/YangyangXuanling-v11-rig.cmo3",
+  "nativeClippingVerified": true,
+  "nonEyeLayers": {
+    "lid-left": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "lid-right": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "keyboard": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "mouse": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "sleeve-roots": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "mouse-hand": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "keyboard-hand": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    },
+    "bird": {
+      "visibleRgbaAndAllAlphaIdentical": true
+    }
+  }
+}

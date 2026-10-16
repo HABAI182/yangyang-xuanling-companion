@@ -28,24 +28,29 @@ def main():
     parser.add_argument("--exe", type=Path, required=True)
     parser.add_argument("--installer", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--validation", type=Path, default=ROOT / "docs/validation-0.3.0.json")
+    parser.add_argument("--validation", type=Path)
     parser.add_argument("--source-ref", default="HEAD")
     args = parser.parse_args()
     version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    config = json.loads((ROOT / "public/assets/model-config.json").read_text(encoding="utf-8"))
+    revision = Path(config["entry"]).parent.name.rsplit("-", 1)[-1]
+    assert revision.startswith("v") and revision[1:].isdigit(), revision
+    validation = args.validation or ROOT / f"docs/validation-{version}.json"
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     copy_unchanged(args.exe, out / "秧秧玄翎.exe")
     copy_unchanged(args.installer, out / args.installer.name)
     source_files = [
-        ROOT / "art/source/YangyangXuanling-v10-rig.cmo3",
-        ROOT / "art/source/YangyangXuanling-Separated-v10.psd",
-        ROOT / "art/source/layers-v10.json",
+        ROOT / f"art/source/YangyangXuanling-{revision}-rig.cmo3",
+        ROOT / f"art/source/YangyangXuanling-Separated-{revision}.psd",
+        ROOT / f"art/source/layers-{revision}.json",
         ROOT / "public/assets/model-config.json",
         ROOT / "docs/MODEL-HANDOFF.md",
         ROOT / "docs/art-refinement-v7.json",
         ROOT / "docs/hidden-devices-v9.json",
         ROOT / "docs/palms-eyes-v10.json",
-        ROOT / "docs/refinement-0.3.0.md",
+        ROOT / "docs/eye-masks-v11.json",
+        ROOT / f"docs/refinement-{version}.md",
         ROOT / "LICENSE.txt",
         ROOT / "LICENSE-CHANG-LI-MIT.txt",
         ROOT / "THIRD-PARTY-NOTICES.md",
@@ -53,11 +58,11 @@ def main():
     ]
     source_files += sorted((ROOT / "src").rglob("*"))
     source_files += sorted((ROOT / "src-tauri/src").rglob("*.rs"))
-    source_files += sorted((ROOT / "public/models/yangyang-v10").rglob("*"))
-    source_files += sorted((ROOT / "public/assets/v10").rglob("*"))
+    source_files += sorted((ROOT / f"public/models/yangyang-{revision}").rglob("*"))
+    source_files += sorted((ROOT / f"public/assets/{revision}").rglob("*"))
     source_files += sorted((ROOT / "public/vendor/live2d").glob("*LICENSE*"))
     source_files = [p for p in source_files if p.is_file()]
-    archive = out / "秧秧玄翎-模型源文件-v10.zip"
+    archive = out / f"秧秧玄翎-模型源文件-{revision}.zip"
     with zipfile.ZipFile(archive, "x", compression=zipfile.ZIP_DEFLATED) as bundle:
         for p in source_files:
             bundle.write(p, p.relative_to(ROOT).as_posix())
@@ -77,11 +82,14 @@ def main():
 设置分外观/互动/桌面/高级；支持主题、字号、动效、手速、1至6个浮显及长按重复开关。
 桌面功能包括全屏避让及程序例外、磁吸、3个常用位置、靠近淡化、穿透与找回。
 支持可编辑动作快捷键、手柄反馈、轻音、登录启动及高权限兼容手动重启。
-本版重新拆出纯手掌、固定袖根和独立双瞳孔，清理外缘纸白，仅微修左发尖。
+本版双眼以固定眼白作原生遮罩，完整瞳孔独立移动；睫毛、皮肤和头发不跟着瞳孔缩放。
+保留原有手掌/袖根拆分、外缘纸白清理与极小的左发尖修剪。
 键盘四区加独立Space；鼠标和手掌有界联动；头部强弹簧、小鸟跳跃摆尾、二维视线持续跟随。
 静止画面保留比例及低饱和灰蓝瞳色，未授权区域RGBA差异为零。
-原生模型含双手按压、眨眼、水平视线绑定及连续闭眼线；二维伸手、垂直视线、弹性、
+原生模型含双手按压、眨眼、双眼剪贴遮罩及连续闭眼线；二维伸手、二维视线、弹性、
 小鸟和部分眼形/情绪装饰属于SDK运行时效果，未冒充原生绑定。
+增强按下压缩与松开拉伸回弹；长按不反复弹动。按键浮显高度保留，文字气泡与其齐平、略向左移。
+脸红改为渐隐晕染与细笔触，跟随脸部弹动；仍属于运行时表情装饰。
 实际Windows及物理输入验收范围以manifest.json中的verification为准。
 连续眼皮几何闭合、独立口形和发丝物理尚未制作。
 手柄实机、游戏输入、UAC兼容重启、Windows登录启动及安装流程未验收。
@@ -92,14 +100,14 @@ def main():
 本交付供用户私有开发测试，未公开发布。
 """
     (out / "使用说明.txt").write_text(readme, encoding="utf-8")
-    checks = json.loads(args.validation.read_text(encoding="utf-8"))
+    checks = json.loads(validation.read_text(encoding="utf-8"))
     manifest = {
         "date": "2026-10-16", "version": version, "stage": "refinement-preview",
         "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
         "sourceCommit": subprocess.check_output(["git", "rev-parse", f"{args.source_ref}^{{commit}}"], cwd=ROOT, text=True).strip(),
         "sourceRef": args.source_ref,
         "packagingCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-        "palette": "v4-muted-gray-blue", "rig": "v10-traced-palms-fixed-rims-clean-cuff", "runtimeEffectsSeparateFromCmo": True, "verification": checks,
+        "palette": "v4-muted-gray-blue", "rig": f"{revision}-native-sclera-masks-complete-irises", "runtimeEffectsSeparateFromCmo": True, "verification": checks,
         "modelFiles": {p.relative_to(ROOT).as_posix(): digest(p) for p in source_files},
         "deliverables": {p.name: {"bytes": p.stat().st_size, "sha256": digest(p)} for p in sorted(out.iterdir()) if p.is_file()},
     }

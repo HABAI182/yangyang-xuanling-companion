@@ -1,19 +1,19 @@
 {
   "schema": 1,
   "savedAt": "2026-10-16",
-  "projectVersion": "0.3.0",
-  "sourceRef": "v0.3.0",
-  "activeModelEntry": "/models/yangyang-v10/YangyangXuanling.model3.json",
-  "editableSource": "art/source/YangyangXuanling-v10-rig.cmo3",
-  "editablePsd": "art/source/YangyangXuanling-Separated-v10.psd",
-  "verification": "docs/validation-0.3.0.json",
-  "deliveryDirectory": "deliveries/20261016-windows-0.3.0",
+  "projectVersion": "0.3.1",
+  "sourceRef": "v0.3.1",
+  "activeModelEntry": "/models/yangyang-v11/YangyangXuanling.model3.json",
+  "editableSource": "art/source/YangyangXuanling-v11-rig.cmo3",
+  "editablePsd": "art/source/YangyangXuanling-Separated-v11.psd",
+  "verification": "docs/validation-0.3.1.json",
+  "deliveryDirectory": "deliveries/20261016-windows-0.3.1",
   "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
   "visibility": "private",
   "releaseUrl": null,
   "userSizePreserved": true,
   "modelReopenedAndExported": true,
-  "modelUid": "8facf3ade83c41f191f2e5ba258bed3b",
+  "modelUid": "9ed543f419ff4076bcb76a2e8cd46893",
   "knownLimitations": [
     "blink uses separate closed-eye image rather than continuous eyelid morph",
     "17 mood entries include SVG decorations, not 17 native face rigs",
@@ -28,11 +28,10 @@
     "physical recovery and custom shortcut chords",
     "manual audio listening"
   ],
-  "nextExactTask": "User visual feedback on final v10 native build; optional fine native expressions or hardware acceptance only as requested.",
+  "nextExactTask": "User visual review of v11 clipped eyes and stronger spring; native input/gamepad/game scenarios only if requested.",
   "ordinaryPetRunning": true,
   "debugListenerClosed": true,
-  "sourceCommit": "b8e41bc0efad4d9e8fe553743896b9df9e9371a1",
-  "finalOrdinaryExe": "deliveries/20261016-windows-0.3.0/秧秧玄翎.exe",
-  "finalOrdinaryPid": 46012,
-  "repositorySourceTagVerified": true
+  "finalOrdinaryExe": "deliveries/20261016-windows-0.3.1/秧秧玄翎.exe",
+  "finalOrdinaryPid": 44800,
+  "repositorySourceTagVerified": false
 }

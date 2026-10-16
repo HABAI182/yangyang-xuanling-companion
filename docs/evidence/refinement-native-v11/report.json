@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "physicalInputVerified": false,
+  "exeSha256": "ed2b6f727c8626aae173755fa90f333aa89655388896b1dd42708b443062aec0",
+  "errors": [],
+  "windows": {
+    "pet": {
+      "alwaysOnTop": true,
+      "height": 684,
+      "minimized": false,
+      "visible": true,
+      "width": 668,
+      "work": {
+        "height": 1528,
+        "scale": 1.5,
+        "width": 2560,
+        "x": 0,
+        "y": 0
+      },
+      "x": 1743,
+      "y": 77
+    }
+  },
+  "visibleNativeWindow": true,
+  "modelConfig": {
+    "entry": "/models/yangyang-v11/YangyangXuanling.model3.json",
+    "stage": "cubism-refinement-candidate",
+    "parameters": {
+      "keyboardPress": "ParamBodyAngleX",
+      "mousePress": "ParamBodyAngleY",
+      "eyeLeftOpen": "ParamEyeLOpen",
+      "eyeRightOpen": "ParamEyeROpen",
+      "eyeBallX": "ParamEyeBallX"
+    },
+    "parameterScale": {
+      "keyboardPress": 10,
+      "mousePress": 10
+    },
+    "notes": "Official v11 export: complete separate irises clipped natively to stationary sclera apertures, fixed original lashes and skin, original palm/cuff separation. Native blink and hand press remain. Gaze XY, bounded reach, squash/stretch recoil and bird response are explicit SDK runtime vertex transforms."
+  },
+  "payload": {
+    "mocSha256": "62e9e8314b4db8a4e86a93696d50849c67300723ac02661c4972870c1bbe383d",
+    "textureSha256": "e2e85e05cd09721c8ff047df69f55f158ed18078416dd6b755e1836f24ddf760"
+  },
+  "exactBundledModelVerified": true,
+  "realCoreFramesAdvance": true,
+  "blinkReopens": true,
+  "birdMoves": true,
+  "preferencesUnchanged": true
+}

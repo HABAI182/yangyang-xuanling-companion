@@ -1,0 +1,1740 @@
+{
+  "structure": {
+    "model_uid": "8facf3ade83c41f191f2e5ba258bed3b",
+    "editor_version": "5.4.00 alpha2",
+    "api_version": "1.1.0",
+    "normalized": {
+      "parameters": {
+        "ParamAngleX": {
+          "EntryType": "Parameter",
+          "Name": "Angle X",
+          "Id": "ParamAngleX",
+          "Min": -30.0,
+          "Default": 0.0,
+          "Max": 30.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamAngleY": {
+          "EntryType": "Parameter",
+          "Name": "Angle Y",
+          "Id": "ParamAngleY",
+          "Min": -30.0,
+          "Default": 0.0,
+          "Max": 30.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamAngleZ": {
+          "EntryType": "Parameter",
+          "Name": "Angle Z",
+          "Id": "ParamAngleZ",
+          "Min": -30.0,
+          "Default": 0.0,
+          "Max": 30.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamEyeLOpen": {
+          "EntryType": "Parameter",
+          "Name": "EyeL Open",
+          "Id": "ParamEyeLOpen",
+          "Min": 0.0,
+          "Default": 1.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        },
+        "ParamEyeLSmile": {
+          "EntryType": "Parameter",
+          "Name": "EyeL Smile",
+          "Id": "ParamEyeLSmile",
+          "Min": 0.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamEyeROpen": {
+          "EntryType": "Parameter",
+          "Name": "EyeR Open",
+          "Id": "ParamEyeROpen",
+          "Min": 0.0,
+          "Default": 1.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        },
+        "ParamEyeRSmile": {
+          "EntryType": "Parameter",
+          "Name": "EyeR Smile",
+          "Id": "ParamEyeRSmile",
+          "Min": 0.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamEyeBallX": {
+          "EntryType": "Parameter",
+          "Name": "Eyeball X",
+          "Id": "ParamEyeBallX",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamEyeBallY": {
+          "EntryType": "Parameter",
+          "Name": "Eyeball Y",
+          "Id": "ParamEyeBallY",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowLY": {
+          "EntryType": "Parameter",
+          "Name": "BrowL Y",
+          "Id": "ParamBrowLY",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowRY": {
+          "EntryType": "Parameter",
+          "Name": "BrowR Y",
+          "Id": "ParamBrowRY",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowLX": {
+          "EntryType": "Parameter",
+          "Name": "BrowL X",
+          "Id": "ParamBrowLX",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowRX": {
+          "EntryType": "Parameter",
+          "Name": "BrowR X",
+          "Id": "ParamBrowRX",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowLAngle": {
+          "EntryType": "Parameter",
+          "Name": "BrowL Angle",
+          "Id": "ParamBrowLAngle",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowRAngle": {
+          "EntryType": "Parameter",
+          "Name": "BrowR Angle",
+          "Id": "ParamBrowRAngle",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowLForm": {
+          "EntryType": "Parameter",
+          "Name": "BrowL Form",
+          "Id": "ParamBrowLForm",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBrowRForm": {
+          "EntryType": "Parameter",
+          "Name": "BrowR Form",
+          "Id": "ParamBrowRForm",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamMouthForm": {
+          "EntryType": "Parameter",
+          "Name": "Mouth Form",
+          "Id": "ParamMouthForm",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamMouthOpenY": {
+          "EntryType": "Parameter",
+          "Name": "Mouth Open",
+          "Id": "ParamMouthOpenY",
+          "Min": 0.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamCheek": {
+          "EntryType": "Parameter",
+          "Name": "Cheek",
+          "Id": "ParamCheek",
+          "Min": 0.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBodyAngleX": {
+          "EntryType": "Parameter",
+          "Name": "Body X",
+          "Id": "ParamBodyAngleX",
+          "Min": -10.0,
+          "Default": 0.0,
+          "Max": 10.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": [
+            -10.0,
+            0.0,
+            10.0
+          ]
+        },
+        "ParamBodyAngleY": {
+          "EntryType": "Parameter",
+          "Name": "Body Y",
+          "Id": "ParamBodyAngleY",
+          "Min": -10.0,
+          "Default": 0.0,
+          "Max": 10.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": [
+            -10.0,
+            0.0,
+            10.0
+          ]
+        },
+        "ParamBodyAngleZ": {
+          "EntryType": "Parameter",
+          "Name": "Body Z",
+          "Id": "ParamBodyAngleZ",
+          "Min": -10.0,
+          "Default": 0.0,
+          "Max": 10.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamBreath": {
+          "EntryType": "Parameter",
+          "Name": "Breath",
+          "Id": "ParamBreath",
+          "Min": 0.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamHairFront": {
+          "EntryType": "Parameter",
+          "Name": "Hair Move Front",
+          "Id": "ParamHairFront",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamHairSide": {
+          "EntryType": "Parameter",
+          "Name": "Hair Move Side",
+          "Id": "ParamHairSide",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        },
+        "ParamHairBack": {
+          "EntryType": "Parameter",
+          "Name": "Hair Move Back",
+          "Id": "ParamHairBack",
+          "Min": -1.0,
+          "Default": 0.0,
+          "Max": 1.0,
+          "IsRepeat": false,
+          "IsBlendShape": false,
+          "GroupId": "",
+          "KeyValues": []
+        }
+      },
+      "groups": {},
+      "parts": {
+        "bird": {
+          "Id": "bird",
+          "Name": "bird",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh": {
+          "Id": "ArtMesh",
+          "Name": "keyboard-hand",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh0": {
+          "Id": "ArtMesh0",
+          "Name": "mouse-hand",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh1": {
+          "Id": "ArtMesh1",
+          "Name": "sleeve-roots",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "mouse": {
+          "Id": "mouse",
+          "Name": "mouse",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "keyboard": {
+          "Id": "keyboard",
+          "Name": "keyboard",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh2": {
+          "Id": "ArtMesh2",
+          "Name": "lid-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh3": {
+          "Id": "ArtMesh3",
+          "Name": "lid-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh4": {
+          "Id": "ArtMesh4",
+          "Name": "iris-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh5": {
+          "Id": "ArtMesh5",
+          "Name": "iris-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh6": {
+          "Id": "ArtMesh6",
+          "Name": "eye-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh7": {
+          "Id": "ArtMesh7",
+          "Name": "eye-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh8": {
+          "Id": "ArtMesh8",
+          "Name": "head-body",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        }
+      },
+      "deformers": {
+        "bird": {
+          "Id": "bird",
+          "Name": "bird",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh": {
+          "Id": "ArtMesh",
+          "Name": "keyboard-hand",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh0": {
+          "Id": "ArtMesh0",
+          "Name": "mouse-hand",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh1": {
+          "Id": "ArtMesh1",
+          "Name": "sleeve-roots",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "mouse": {
+          "Id": "mouse",
+          "Name": "mouse",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "keyboard": {
+          "Id": "keyboard",
+          "Name": "keyboard",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh2": {
+          "Id": "ArtMesh2",
+          "Name": "lid-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh3": {
+          "Id": "ArtMesh3",
+          "Name": "lid-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh4": {
+          "Id": "ArtMesh4",
+          "Name": "iris-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh5": {
+          "Id": "ArtMesh5",
+          "Name": "iris-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh6": {
+          "Id": "ArtMesh6",
+          "Name": "eye-right",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh7": {
+          "Id": "ArtMesh7",
+          "Name": "eye-left",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        },
+        "ArtMesh8": {
+          "Id": "ArtMesh8",
+          "Name": "head-body",
+          "Type": "ArtMesh",
+          "TreeParentId": ""
+        }
+      }
+    },
+    "raw": {
+      "ParameterStructure": {
+        "GroupName": "Root",
+        "Id": "ParamGroupRoot",
+        "Entries": [
+          {
+            "EntryType": "Parameter",
+            "Name": "Angle X",
+            "Id": "ParamAngleX",
+            "Min": -30.0,
+            "Default": 0.0,
+            "Max": 30.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Angle Y",
+            "Id": "ParamAngleY",
+            "Min": -30.0,
+            "Default": 0.0,
+            "Max": 30.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Angle Z",
+            "Id": "ParamAngleZ",
+            "Min": -30.0,
+            "Default": 0.0,
+            "Max": 30.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "EyeL Open",
+            "Id": "ParamEyeLOpen",
+            "Min": 0.0,
+            "Default": 1.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "EyeL Smile",
+            "Id": "ParamEyeLSmile",
+            "Min": 0.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "EyeR Open",
+            "Id": "ParamEyeROpen",
+            "Min": 0.0,
+            "Default": 1.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "EyeR Smile",
+            "Id": "ParamEyeRSmile",
+            "Min": 0.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Eyeball X",
+            "Id": "ParamEyeBallX",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Eyeball Y",
+            "Id": "ParamEyeBallY",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowL Y",
+            "Id": "ParamBrowLY",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowR Y",
+            "Id": "ParamBrowRY",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowL X",
+            "Id": "ParamBrowLX",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowR X",
+            "Id": "ParamBrowRX",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowL Angle",
+            "Id": "ParamBrowLAngle",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowR Angle",
+            "Id": "ParamBrowRAngle",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowL Form",
+            "Id": "ParamBrowLForm",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "BrowR Form",
+            "Id": "ParamBrowRForm",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Mouth Form",
+            "Id": "ParamMouthForm",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Mouth Open",
+            "Id": "ParamMouthOpenY",
+            "Min": 0.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Cheek",
+            "Id": "ParamCheek",
+            "Min": 0.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Body X",
+            "Id": "ParamBodyAngleX",
+            "Min": -10.0,
+            "Default": 0.0,
+            "Max": 10.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Body Y",
+            "Id": "ParamBodyAngleY",
+            "Min": -10.0,
+            "Default": 0.0,
+            "Max": 10.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Body Z",
+            "Id": "ParamBodyAngleZ",
+            "Min": -10.0,
+            "Default": 0.0,
+            "Max": 10.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Breath",
+            "Id": "ParamBreath",
+            "Min": 0.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Hair Move Front",
+            "Id": "ParamHairFront",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Hair Move Side",
+            "Id": "ParamHairSide",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          },
+          {
+            "EntryType": "Parameter",
+            "Name": "Hair Move Back",
+            "Id": "ParamHairBack",
+            "Min": -1.0,
+            "Default": 0.0,
+            "Max": 1.0,
+            "Repeat": false,
+            "Type": 0
+          }
+        ]
+      },
+      "PartStructure": {
+        "Children": [
+          {
+            "Id": "bird",
+            "Name": "bird",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh",
+            "Name": "keyboard-hand",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh0",
+            "Name": "mouse-hand",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh1",
+            "Name": "sleeve-roots",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "mouse",
+            "Name": "mouse",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "keyboard",
+            "Name": "keyboard",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh2",
+            "Name": "lid-right",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh3",
+            "Name": "lid-left",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh4",
+            "Name": "iris-right",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh5",
+            "Name": "iris-left",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh6",
+            "Name": "eye-right",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh7",
+            "Name": "eye-left",
+            "Type": "ArtMesh"
+          },
+          {
+            "Id": "ArtMesh8",
+            "Name": "head-body",
+            "Type": "ArtMesh"
+          }
+        ],
+        "Id": "%Root",
+        "Name": "Root Part",
+        "Type": "Part"
+      },
+      "DeformerStructure": [
+        {
+          "Name": "root",
+          "Id": "%Root",
+          "Type": null,
+          "Children": [
+            {
+              "Name": "bird",
+              "Id": "bird",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "keyboard-hand",
+              "Id": "ArtMesh",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "mouse-hand",
+              "Id": "ArtMesh0",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "sleeve-roots",
+              "Id": "ArtMesh1",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "mouse",
+              "Id": "mouse",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "keyboard",
+              "Id": "keyboard",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "lid-right",
+              "Id": "ArtMesh2",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "lid-left",
+              "Id": "ArtMesh3",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "iris-right",
+              "Id": "ArtMesh4",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "iris-left",
+              "Id": "ArtMesh5",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "eye-right",
+              "Id": "ArtMesh6",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "eye-left",
+              "Id": "ArtMesh7",
+              "Type": "ArtMesh"
+            },
+            {
+              "Name": "head-body",
+              "Id": "ArtMesh8",
+              "Type": "ArtMesh"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "objects": {
+    "bird": {
+      "keys": [],
+      "forms": [
+        {
+          "parameters": [],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "bird",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "bird",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 235
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh": {
+      "keys": [
+        {
+          "Id": "ParamBodyAngleX",
+          "KeyValues": [
+            -10.0,
+            0.0,
+            10.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleX",
+              "Value": -10.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "keyboard-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 114
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleX",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "keyboard-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 114
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleX",
+              "Value": 10.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "keyboard-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 114
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh0": {
+      "keys": [
+        {
+          "Id": "ParamBodyAngleY",
+          "KeyValues": [
+            -10.0,
+            0.0,
+            10.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleY",
+              "Value": -10.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh0",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "mouse-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 93
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleY",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh0",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "mouse-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 93
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamBodyAngleY",
+              "Value": 10.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh0",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "mouse-hand",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 93
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh1": {
+      "keys": [],
+      "forms": [
+        {
+          "parameters": [],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh1",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "sleeve-roots",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 135
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "mouse": {
+      "keys": [],
+      "forms": [
+        {
+          "parameters": [],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "mouse",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "mouse",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 159
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "keyboard": {
+      "keys": [],
+      "forms": [
+        {
+          "parameters": [],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "keyboard",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "keyboard",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 50
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh2": {
+      "keys": [
+        {
+          "Id": "ParamEyeROpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 503,
+              "Id": "ArtMesh2",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "lid-right",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 39
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 503,
+              "Id": "ArtMesh2",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "lid-right",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 39
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh3": {
+      "keys": [
+        {
+          "Id": "ParamEyeLOpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 503,
+              "Id": "ArtMesh3",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "lid-left",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 39
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 503,
+              "Id": "ArtMesh3",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "lid-left",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 39
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh4": {
+      "keys": [
+        {
+          "Id": "ParamEyeROpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [
+                "ArtMesh6"
+              ],
+              "ColorBlend": "normal",
+              "DrawOrder": 502,
+              "Id": "ArtMesh4",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "iris-right",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 26
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [
+                "ArtMesh6"
+              ],
+              "ColorBlend": "normal",
+              "DrawOrder": 502,
+              "Id": "ArtMesh4",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "iris-right",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 26
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh5": {
+      "keys": [
+        {
+          "Id": "ParamEyeLOpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [
+                "ArtMesh7"
+              ],
+              "ColorBlend": "normal",
+              "DrawOrder": 502,
+              "Id": "ArtMesh5",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "iris-left",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 24
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [
+                "ArtMesh7"
+              ],
+              "ColorBlend": "normal",
+              "DrawOrder": 502,
+              "Id": "ArtMesh5",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "iris-left",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 24
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh6": {
+      "keys": [
+        {
+          "Id": "ParamEyeROpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 501,
+              "Id": "ArtMesh6",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "eye-right",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 22
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeROpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 501,
+              "Id": "ArtMesh6",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "eye-right",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 22
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh7": {
+      "keys": [
+        {
+          "Id": "ParamEyeLOpen",
+          "KeyValues": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 0.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 501,
+              "Id": "ArtMesh7",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "eye-left",
+              "Opacity": 0.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 27
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        },
+        {
+          "parameters": [
+            {
+              "Id": "ParamEyeLOpen",
+              "Value": 1.0
+            }
+          ],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 501,
+              "Id": "ArtMesh7",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "eye-left",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 27
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    },
+    "ArtMesh8": {
+      "keys": [],
+      "forms": [
+        {
+          "parameters": [],
+          "object": {
+            "Data": {
+              "AlphaBlend": "over",
+              "ClippingIds": [],
+              "ColorBlend": "normal",
+              "DrawOrder": 500,
+              "Id": "ArtMesh8",
+              "IsCulling": false,
+              "IsReverseMask": false,
+              "LabelColorType": "undefined",
+              "LabelCustomColor": "#FFFFFF",
+              "MultiplyColor": "#FFFFFF",
+              "Name": "head-body",
+              "Opacity": 100.0,
+              "ParentDeformerId": "%Root",
+              "ParentId": "%Root",
+              "ScreenColor": "#000000",
+              "Vertices": 445
+            },
+            "Result": true,
+            "Type": "ArtMesh"
+          }
+        }
+      ]
+    }
+  }
+}
