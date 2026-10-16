@@ -1,33 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {InputState} from '../src/state.mjs';
-const frame=(overrides={})=>({keysHeld:0,mouseDown:false,newPress:false,newMousePress:false,reach:0,keyLabel:'',...overrides});
-test('keyboard and mouse drive independent hands',()=>{
-  const s=new InputState();s.update(frame({keysHeld:1,newPress:true}),100);
-  assert.equal(s.snapshot(150).keyboardPress,1);assert.equal(s.snapshot(150).mousePress,0);
-  s.update(frame({mouseDown:true,newMousePress:true}),200);
-  assert.equal(s.snapshot(400).keyboardPress,0);assert.equal(s.snapshot(400).mousePress,1);
+import {Spring,keyTarget} from '../src/key-target.mjs';
+const frame=(x={})=>({keysHeld:0,mouseDown:false,newPress:false,newMousePress:false,reach:0,keyLabel:'',...x});
+const near=(a,b,tol=.002)=>assert.ok(Math.abs(a-b)<tol,`${a} != ${b}`);
+function settle(s,start,end){for(let t=start;t<=end;t+=1000/60)s.snapshot(t);return s.snapshot(end);}
+test('independent springs settle into held poses and return on release',()=>{
+ const s=new InputState();s.update(frame({keysHeld:1,newPress:true}),0);let r=settle(s,0,1200);near(r.keyboardPress,1);near(r.mousePress,0);
+ s.update(frame({mouseDown:true,newMousePress:true}),1200);r=settle(s,1200,2400);near(r.keyboardPress,0);near(r.mousePress,1);
+ s.update(frame(),2400);r=settle(s,2400,3600);near(r.mousePress,0);
 });
-test('held-key repeats maintain press without restarting bounce; a real re-press restarts',()=>{
-  const s=new InputState();s.update(frame({keysHeld:1,newPress:true}),100);
-  s.update(frame({keysHeld:1}),900);assert.equal(s.keyboardStarted,100);assert.equal(s.snapshot(900).keyboardBounce,0);
-  s.update(frame(),950);s.update(frame({keysHeld:1,newPress:true}),1000);assert.equal(s.keyboardStarted,1000);
-  assert.notEqual(s.snapshot(1050).keyboardBounce,0);
+test('autorepeat does not restart or accumulate energy; repress adds one impulse',()=>{
+ const s=new InputState();s.update(frame({keysHeld:1,newPress:true}),0);settle(s,0,1000);
+ s.update(frame({keysHeld:1,repeats:['A']}),1000);near(s.snapshot(1100).keyboardBounce,0);assert.equal(s.keyboardStarted,0);
+ s.update(frame(),1200);s.update(frame({keysHeld:1,newPress:true}),1250);assert.equal(s.keyboardStarted,1250);assert.ok(s.snapshot(1300).keyboardBounce>.05);
 });
-test('one key releasing while another stays held keeps the hand down',()=>{
-  const s=new InputState();s.update(frame({keysHeld:2,newPress:true}),100);s.update(frame({keysHeld:1}),200);
-  assert.equal(s.snapshot(300).keyboardPress,1);s.update(frame(),400);assert.equal(s.snapshot(550).keyboardPress,0);
+test('four physical zones, mirrored screen reach, and distinct Space',()=>{
+ assert.deepEqual(['KeyQ','KeyA','KeyU','KeyH','Space'].map(k=>keyTarget(k).zone),['left-far','left-near','right-far','right-near','space']);
+ assert.ok(keyTarget('KeyQ').x>keyTarget('KeyU').x);assert.ok(keyTarget('KeyQ').y>keyTarget('KeyA').y);assert.equal(keyTarget('Space').y,0);
 });
-test('rapid keyboard presses after a mouse release never retrigger the mouse hand',()=>{
-  const s=new InputState();s.update(frame({mouseDown:true,newMousePress:true}),0);
-  s.update(frame(),40);
-  for(let now=200;now<800;now+=30){
-    s.update(frame({keysHeld:1,newPress:true}),now);
-    assert.equal(s.snapshot(now+5).mousePress,0);
-    assert.equal(s.snapshot(now+5).keyboardPress,1);
-    assert.equal(s.mouseStarted,0);
-    s.update(frame(),now+10);
-  }
-  assert.equal(s.snapshot(1000).keyboardPress,0);
-  assert.equal(s.snapshot(1000).mousePress,0);
+test('spring overshoots then rests and is invariant to frame subdivision',()=>{
+ const a=new Spring(),b=new Spring();a.step(1,.2);for(let i=0;i<12;i++)b.step(1,1/60);near(a.x,b.x,1e-10);assert.ok(a.x>1);
+ a.step(1,5);near(a.x,1);near(a.v,0);
+});
+test('rapid keyboard after mouse release never injects new mouse energy',()=>{
+ const s=new InputState();s.update(frame({mouseDown:true,newMousePress:true}),0);s.update(frame(),100);settle(s,100,1200);
+ for(let t=1200;t<1700;t+=40){s.update(frame({keysHeld:1,newPress:true}),t);near(s.snapshot(t+10).mousePress,0);s.update(frame(),t+20);}
+ assert.equal(s.mouseStarted,0);near(settle(s,1700,3000).keyboardPress,0);
 });

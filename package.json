@@ -1,6 +1,6 @@
 {
   "name": "yangyang-xuanling-companion",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,12 @@
     "package:windows": "tauri build --bundles nsis",
     "tauri": "tauri"
   },
-  "dependencies": {"@tauri-apps/api": "2.11.1"},
-  "devDependencies": {"@tauri-apps/cli": "2.11.5", "typescript": "5.9.3", "vite": "8.3.0"}
+  "dependencies": {
+    "@tauri-apps/api": "2.11.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.11.5",
+    "typescript": "5.9.3",
+    "vite": "8.3.0"
+  }
 }

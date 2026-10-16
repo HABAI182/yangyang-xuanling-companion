@@ -1,0 +1,10 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "YangyangXuanling.moc3",
+		"Textures": [
+			"YangyangXuanling.4096/texture_00.png"
+		],
+		"DisplayInfo": "YangyangXuanling.cdi3.json"
+	}
+}

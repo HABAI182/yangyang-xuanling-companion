@@ -8,7 +8,7 @@ pub struct AppState{
  pub saved:Mutex<desktop::SavedDesktop>,pub visibility:Mutex<desktop::Visibility>,pub dragging:AtomicBool,pub menu_dragging:AtomicBool,pub ready:AtomicBool,pub gamepad_connected:AtomicBool,
 }
 #[derive(Clone,Serialize,Default,PartialEq)]#[serde(rename_all="camelCase")]
-struct InputFrame{keys_held:u16,mouse_down:bool,new_press:bool,new_mouse_press:bool,key_label:String,reach:f32,cursor_x:f32,cursor_y:f32,presses:Vec<String>,repeats:Vec<String>,hovering:bool}
+struct InputFrame{keys_held:u16,mouse_down:bool,new_press:bool,new_mouse_press:bool,key_label:String,reach:f32,target_x:f32,target_y:f32,target_zone:String,cursor_x:f32,cursor_y:f32,presses:Vec<String>,repeats:Vec<String>,hovering:bool}
 fn prefs_path(app:&tauri::AppHandle)->Result<std::path::PathBuf,String>{Ok(app.path().app_data_dir().map_err(|e|e.to_string())?.join("preferences.json"))}
 fn apply_preferences(app:&tauri::AppHandle,p:&Preferences)->Result<(),String>{
  if let Some(w)=app.get_webview_window("pet"){w.set_always_on_top(p.always_on_top).map_err(|e|e.to_string())?;w.set_ignore_cursor_events(p.click_through).map_err(|e|e.to_string())?;w.set_size(LogicalSize::new(p.size,p.size*1.025)).map_err(|e|e.to_string())?;let pos=w.outer_position().map_err(|e|e.to_string())?;desktop::place(app,Some(desktop::Position{x:pos.x,y:pos.y}))?;}Ok(())
@@ -56,23 +56,24 @@ fn request_panel(app:&tauri::AppHandle,kind:&'static str){let handle=app.clone()
 #[cfg(windows)]fn reach(code:usize)->f32{match code{32=>0.,65..=71|81..=84|90|88|86|49..=53=>0.6,72..=80|85|87|89|54..=57=>-0.6,_=>0.}}
 #[cfg(windows)]fn start_input(app:tauri::AppHandle){std::thread::spawn(move||{
  use windows_sys::Win32::UI::{Input::KeyboardAndMouse::GetAsyncKeyState,WindowsAndMessaging::GetCursorPos};
- let mut held=[false;256];let mut last=InputFrame::default();let mut position=0.;let mut recover_held=false;let mut last_emit=std::time::Instant::now();let mut pad_before=0u16;
+ let mut key_order=vec![];let mut held=[false;256];let mut last=InputFrame::default();let mut position=0.;let mut recover_held=false;let mut last_emit=std::time::Instant::now();let mut pad_before=0u16;
  loop{
   let prefs=read_preferences(app.state());let editing=platform::own_editor_foreground();let allowed=prefs.input_enabled&&!editing;
   let mut now=[false;256];for k in 1..256{now[k]=unsafe{GetAsyncKeyState(k as i32)} as u16&0x8000!=0;}
-  let mut presses=vec![];let mut repeats=vec![];let mut count=0u16;let mut new_press=false;
+  let mut pressed_codes=vec![];let mut presses=vec![];let mut repeats=vec![];let mut count=0u16;let mut new_press=false;
   for k in 8..256{let edge=crate::keyboard_edges::take_press(k);let repeated=crate::keyboard_edges::take_repeat(k);if matches!(k,16|17|18|229){continue;}
-   if allowed{if now[k]||(edge&&!held[k]){count+=1;}if edge||(!crate::keyboard_edges::active()&&now[k]&&!held[k]){new_press=true;let label=key_label(k);if !label.is_empty(){presses.push(label);}position=reach(k);
+   if allowed{if now[k]||(edge&&!held[k]){count+=1;}if edge||(!crate::keyboard_edges::active()&&now[k]&&!held[k]){new_press=true;pressed_codes.push(k);let label=key_label(k);if !label.is_empty(){presses.push(label);}position=reach(k);
     for slot in prefs.shortcuts.iter().filter(|s|s.enabled){if let Some((code,ctrl,alt,shift))=shortcut_key(&slot.chord){if k==code&&ctrl==(now[162]||now[163])&&alt==(now[164]||now[165])&&shift==(now[160]||now[161]){let _=app.emit_to("pet","pet-action",&slot.action);}}}
    }if repeated&&prefs.repeat_keys{let label=key_label(k);if !label.is_empty(){repeats.push(label);}}}
   }
+  if !allowed{key_order.clear();}let selected=crate::key_target::update_order(&mut key_order,&now,&pressed_codes);let mut landing=crate::key_target::target(selected.unwrap_or(32));
   let mouse_enabled=allowed&&prefs.input_mode=="keyboard_mouse";let mut mouse_down=mouse_enabled&&(now[1]||now[2]||now[4]);let mut new_mouse_press=mouse_enabled&&((now[1]&&!held[1])||(now[2]&&!held[2])||(now[4]&&!held[4]));
-  let state=app.state::<AppState>();if prefs.gamepad_enabled{if let Some((buttons,x,_y))=platform::controller(){state.gamepad_connected.store(true,Ordering::Relaxed);if allowed{if buttons&0x1000!=0{count+=1;position=x as f32/32768.;}if buttons&0x1000!=0&&pad_before&0x1000==0{new_press=true;presses.push("A".into());}if buttons&0x2000!=0&&prefs.input_mode=="keyboard_mouse"{mouse_down=true;new_mouse_press|=pad_before&0x2000==0;}}pad_before=buttons;}else{state.gamepad_connected.store(false,Ordering::Relaxed);pad_before=0;}}else{state.gamepad_connected.store(false,Ordering::Relaxed);pad_before=0;}
+  let state=app.state::<AppState>();if prefs.gamepad_enabled{if let Some((buttons,x,_y))=platform::controller(){state.gamepad_connected.store(true,Ordering::Relaxed);if allowed{if buttons&0x1000!=0{count+=1;position=x as f32/32768.;if selected.is_none(){landing=crate::key_target::Target{x:position,y:0.35,zone:if position>=0.{"left-near"}else{"right-near"}};}}if buttons&0x1000!=0&&pad_before&0x1000==0{new_press=true;presses.push("A".into());}if buttons&0x2000!=0&&prefs.input_mode=="keyboard_mouse"{mouse_down=true;new_mouse_press|=pad_before&0x2000==0;}}pad_before=buttons;}else{state.gamepad_connected.store(false,Ordering::Relaxed);pad_before=0;}}else{state.gamepad_connected.store(false,Ordering::Relaxed);pad_before=0;}
   state.samples.fetch_add(1,Ordering::Relaxed);if new_press{state.keyboard_presses.fetch_add(1,Ordering::Relaxed);}if new_mouse_press{state.mouse_presses.fetch_add(1,Ordering::Relaxed);}
   let mut pt=windows_sys::Win32::Foundation::POINT{x:0,y:0};unsafe{GetCursorPos(&mut pt);}let mut cursor_x=0.;let mut cursor_y=0.;let mut hovering=false;
   if let Some(pet)=app.get_webview_window("pet"){if let (Ok(p),Ok(s))=(pet.outer_position(),pet.outer_size()){let w=s.width.max(1) as f32;let h=s.height.max(1) as f32;cursor_x=((pt.x-p.x) as f32/w*2.-1.).clamp(-1.,1.);cursor_y=((pt.y-p.y) as f32/h*2.-1.).clamp(-1.,1.);hovering=pt.x>=p.x&&pt.y>=p.y&&pt.x<p.x+s.width as i32&&pt.y<p.y+s.height as i32;}}
   if (now[1]&&!held[1]||now[2]&&!held[2])&&!state.menu_dragging.load(Ordering::Acquire){if let Some(menu)=app.get_webview_window("menu"){if let (Ok(p),Ok(s))=(menu.outer_position(),menu.outer_size()){if pt.x<p.x||pt.y<p.y||pt.x>=p.x+s.width as i32||pt.y>=p.y+s.height as i32{let _=menu.close();}}}}
-  presses.truncate(6);repeats.truncate(6);let frame=InputFrame{keys_held:count,mouse_down,new_press,new_mouse_press,key_label:presses.last().cloned().unwrap_or_default(),reach:position,cursor_x,cursor_y,presses,repeats,hovering};
+  presses.truncate(6);repeats.truncate(6);let frame=InputFrame{keys_held:count,mouse_down,new_press,new_mouse_press,key_label:presses.last().cloned().unwrap_or_default(),reach:position,target_x:landing.x,target_y:landing.y,target_zone:landing.zone.into(),cursor_x,cursor_y,presses,repeats,hovering};
   let recover=(now[162]||now[163])&&(now[164]||now[165])&&now[89];if recover&&!recover_held{let handle=app.clone();tauri::async_runtime::spawn_blocking(move||{let _=reset_pet(handle);});}recover_held=recover;
   if frame!=last||last_emit.elapsed().as_millis()>100{let _=app.emit_to("pet","native-input",&frame);last_emit=std::time::Instant::now();}last=frame;held=now;std::thread::sleep(std::time::Duration::from_millis(8));
  }
