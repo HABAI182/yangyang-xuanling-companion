@@ -3,7 +3,7 @@ import {loadImage} from './renderer';
 
 type Point={x:number,y:number};
 type Bind={indices:number[],weights:number[]};
-type Patch={image:HTMLImageElement,box:number[],always:boolean,points:Point[],binds:Bind[],triangles:number[][]};
+type Patch={image:HTMLImageElement,box:number[],show:string,points:Point[],binds:Bind[],triangles:number[][]};
 export const VIEW_WIDTH=1584,VIEW_HEIGHT=1360,VIEW_PADDING=24;
 
 /** Supplementary art is attached to actual native head vertices, including
@@ -22,12 +22,12 @@ export class MeshDetails{
   this.indices=model.getDrawableVertexIndices(this.index);
  }
  async load(){
-  const data=await(await fetch('/assets/detail-v12/patches.json')).json();
+  const data=await(await fetch('/assets/detail-v13/patches.json')).json();
   for(const p of data.patches){
-   const [x,y,x1,y1]=p.box,cols=3,rows=p.always?10:4,points:Point[]=[],binds:Bind[]=[],triangles:number[][]=[];
+   const [x,y,x1,y1]=p.box,cols=p.show?.endsWith('Closed')?8:3,rows=p.always?10:p.show?.endsWith('Closed')?8:4,points:Point[]=[],binds:Bind[]=[],triangles:number[][]=[];
    for(let j=0;j<=rows;j++)for(let i=0;i<=cols;i++){const q={x:x+(x1-x)*i/cols,y:y+(y1-y)*j/rows};points.push(q);binds.push(this.bind(q.x,q.y));}
    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){const a=j*(cols+1)+i,b=a+1,c=a+cols+1,d=c+1;triangles.push([a,b,c],[b,d,c]);}
-   this.patches.push({image:await loadImage(p.file),box:p.box,always:p.always,points,binds,triangles});
+   this.patches.push({image:await loadImage(p.file),box:p.box,show:p.show??(p.always?'always':'mouth'),points,binds,triangles});
   }
  }
  private bind(x:number,y:number){
@@ -55,9 +55,10 @@ export class MeshDetails{
   const a=qx.x-p.x,b=qx.y-p.y,c=qy.x-p.x,d=qy.y-p.y;
   return `matrix(${a} ${b} ${c} ${d} ${p.x-a*x-c*y} ${p.y-b*x-d*y})`;
  }
- draw(expression:string){
+ draw(expression:string,eyes:{leftOpen:number,rightOpen:number}){
   const ctx=this.ctx;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,VIEW_WIDTH,VIEW_HEIGHT);ctx.translate(VIEW_PADDING,0);
-  for(const p of this.patches){if(!p.always&&expression==='default')continue;
+  for(const p of this.patches){
+   if(p.show==='mouth'&&expression==='default'||p.show==='leftClosed'&&eyes.leftOpen!==0||p.show==='rightClosed'&&eyes.rightOpen!==0)continue;
    const projected=p.binds.map(b=>this.project(b));
    for(const t of p.triangles){
     const [a,b,c]=t.map(i=>p.points[i]),[A,B,C]=t.map(i=>projected[i]);

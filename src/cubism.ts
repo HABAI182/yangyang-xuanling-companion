@@ -63,7 +63,7 @@ export class CubismRenderer implements PetRenderer {
     if(options)deform(this.model,this.restored,now,s,smooth,intensity,idle,options);
     const gl=this.gl;gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     const m=new CubismMatrix44();const aspect=this.canvas.width/this.canvas.height;if(aspect>=1)m.scale(1/aspect,1);else m.scale(1,aspect);m.multiplyByMatrix(this.matrix);
-    this.renderer.setMvpMatrix(m);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,this.canvas.width,this.canvas.height]);this.renderer.drawModel(shaderUrl);this.details.draw(options?.expression??'default');
+    this.renderer.setMvpMatrix(m);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,this.canvas.width,this.canvas.height]);this.renderer.drawModel(shaderUrl);this.details.draw(options?.expression??'default',face);
   }
   faceTransform(sourceY:number,sourceX=760){return this.details.transform(sourceX,sourceY);}
   diagnostics(){

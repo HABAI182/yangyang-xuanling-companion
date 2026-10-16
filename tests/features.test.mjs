@@ -4,7 +4,7 @@ import {KeyOverlay} from '../src/key-overlay.mjs';import {Companion,lines} from 
 import {expressionPose} from '../src/face-pose.mjs';
 test('new overlay and gaze preferences migrate independently and clamp invalid values',()=>{
  const old=normalizePreferences({size:445.2,showKeys:false});
- assert.equal(old.size,445.2);assert.equal(old.showKeys,false);assert.equal(old.keyBubbleScale,1.3);assert.equal(old.speechBubbleScale,1);assert.equal(old.gazeScale,1.65);
+ assert.equal(old.size,445.2);assert.equal(old.showKeys,false);assert.equal(old.keyBubbleScale,1.3);assert.equal(old.speechBubbleScale,1);assert.equal(old.gazeScale,2.1);
  const bounded=normalizePreferences({keyBubbleScale:9,speechBubbleScale:NaN,gazeScale:-1});
  assert.equal(bounded.keyBubbleScale,1.8);assert.equal(bounded.speechBubbleScale,1);assert.equal(bounded.gazeScale,.5);
 });
