@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.PET_PLAYWRIGHT_PACKAGE||'playwright');
 const exe=process.env.PET_NATIVE_EXE;if(!exe)throw new Error('PET_NATIVE_EXE required');
 const out=path.resolve(process.env.PET_QA_OUTPUT||'../../work/refinement-native-smoke');await fs.mkdir(out,{recursive:true});
-const child=spawn(exe,[],{windowsHide:true,stdio:'ignore',env:{...process.env,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:'--remote-debugging-port=9237 --remote-debugging-address=127.0.0.1'}});child.unref();
+const child=spawn(exe,[],{windowsHide:true,detached:true,stdio:'ignore',env:{...process.env,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:'--remote-debugging-port=9237 --remote-debugging-address=127.0.0.1'}});child.unref();
 const delay=ms=>new Promise(r=>setTimeout(r,ms));let browser,page;
 const report={passed:false,physicalInputVerified:false,exeSha256:createHash('sha256').update(await fs.readFile(exe)).digest('hex'),errors:[]};
 const ipc=(name,args={})=>page.evaluate(({name,args})=>window.__TAURI_INTERNALS__.invoke(name,args),{name,args});

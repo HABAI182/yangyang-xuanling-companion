@@ -29,6 +29,10 @@
     "manual audio listening"
   ],
   "nextExactTask": "User visual feedback on final v10 native build; optional fine native expressions or hardware acceptance only as requested.",
-  "ordinaryPetRunning": "will restart delivered EXE after packaging",
-  "debugListenerClosed": false
+  "ordinaryPetRunning": true,
+  "debugListenerClosed": true,
+  "sourceCommit": "b8e41bc0efad4d9e8fe553743896b9df9e9371a1",
+  "finalOrdinaryExe": "deliveries/20261016-windows-0.3.0/秧秧玄翎.exe",
+  "finalOrdinaryPid": 46012,
+  "repositorySourceTagVerified": true
 }

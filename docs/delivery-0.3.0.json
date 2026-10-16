@@ -1,0 +1,39 @@
+{
+  "version": "0.3.0",
+  "sourceCommit": "b8e41bc0efad4d9e8fe553743896b9df9e9371a1",
+  "sourceRef": "v0.3.0",
+  "privateRepository": "https://github.com/HABAI182/yangyang-xuanling-companion",
+  "directory": "deliveries/20261016-windows-0.3.0",
+  "architecture": "Windows x64",
+  "sourceZipEntriesVerified": 56,
+  "sourceMatchesTag": true,
+  "textComparison": "41 exact byte matches; 15 LF/CRLF normalized matches; binary bytes exact",
+  "checksumsPassed": true,
+  "artifacts": {
+    "使用说明.txt": {
+      "bytes": 2067,
+      "sha256": "cc1b71a8e655cb4d553911b6b46bb6297249bfeee7438fc0c868cc8f5bf923e7"
+    },
+    "秧秧玄翎-模型源文件-v10.zip": {
+      "bytes": 53360356,
+      "sha256": "055ac5485aebf8d372ff698c2ac194a1832196e48141bb943c32afc49b86c356"
+    },
+    "秧秧玄翎.exe": {
+      "bytes": 82133504,
+      "sha256": "69741a9080c5437e6a1522781263d19e23434dc02235665725412ef41998b8fd"
+    },
+    "秧秧玄翎_0.3.0_x64-setup.exe": {
+      "bytes": 71985035,
+      "sha256": "d1ce55d635d531fdeebd9469be0298ce8dc5805224696095f34420202f55c0a2"
+    }
+  },
+  "manifestSha256": "31497b7428348ba8a6b63d61b55df0e29f45e16838a1995c6ab422f20b5a7be3",
+  "validation": "docs/validation-0.3.0.json",
+  "packagedPayloadHashesVerified": "docs/evidence/refinement-native-v10/payload.json",
+  "ordinaryPetStarted": true,
+  "ordinaryPid": 46012,
+  "debugPort9237Closed": true,
+  "privateTagVerified": true,
+  "publicReleaseCreated": false,
+  "testToolFollowup": "Diagnostic children now start detached, so ending the observer does not end the companion. Does not change compiled app sources."
+}
