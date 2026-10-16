@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "input": "art/source/composition-neutral-v6.png",
+  "output": "art/source/occlusion-underpaint-ai-v7.png",
+  "prompt": "Use case: precise-object-edit. Occlusion underpaint from composition-neutral-v6.png only: remove both hands/cuffs, mouse and bird, fill hidden clothing/hair/keyboard; remove colored irises, retain pale sclera and original eyelashes. Preserve character, geometry, palette and transparency. Generated image is masked beneath original occluders only; never used as whole-image replacement.",
+  "integration": "scripts/refine_layers_v7.py",
+  "wholeImageReplacement": false
+}

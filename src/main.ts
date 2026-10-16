@@ -1,6 +1,7 @@
 import './style.css';
 import {listen} from '@tauri-apps/api/event';
 import {InputState} from './state.mjs';
+import {keyTarget} from './key-target.mjs';
 import {KeyOverlay} from './key-overlay.mjs';
 import {Companion} from './companion.mjs';
 import {PetRenderer} from './renderer';
@@ -8,7 +9,7 @@ import {settingsPage,menuPage} from './settings';
 import {renderEmotion} from './effects';
 import {desktop,prefs,call,notify,onPreferences,initializePreferences,onAction,escapeHtml} from './bridge';
 
-type Frame={keysHeld:number,mouseDown:boolean,newPress:boolean,newMousePress:boolean,keyLabel:string,reach:number,cursorX:number,cursorY:number,presses?:string[],repeats?:string[],hovering?:boolean};
+type Frame={keysHeld:number,mouseDown:boolean,newPress:boolean,newMousePress:boolean,keyLabel:string,reach:number,targetX?:number,targetY?:number,targetZone?:string,cursorX:number,cursorY:number,presses?:string[],repeats?:string[],hovering?:boolean};
 const app=document.querySelector<HTMLDivElement>('#app')!;
 async function petPage(){
  if(!desktop)document.body.className='browser-preview';
@@ -36,14 +37,14 @@ async function petPage(){
  if(desktop)await listen<Frame>('native-input',e=>input(e.payload));
  else{
   const held=new Set<string>();let mouseHeld=false,reach=0;
-  const local=(extra:Partial<Frame>={})=>input({...empty,keysHeld:held.size,mouseDown:mouseHeld,reach,cursorX:gaze.x,cursorY:gaze.y,...extra});
-  window.addEventListener('keydown',e=>{if(e.repeat){local({repeats:[e.code==='Space'?'Space':e.key.length===1?e.key.toUpperCase():e.key]});return;}held.add(e.code);reach=/Key[QWERTASDFGZXCVB]|Digit[1-5]/.test(e.code)?.6:-.6;local({newPress:true,keyLabel:e.code==='Space'?'Space':e.key.length===1?e.key.toUpperCase():e.key});});
+  const local=(extra:Partial<Frame>={})=>{const t=keyTarget([...held].at(-1)??"Space");input({...empty,keysHeld:held.size,mouseDown:mouseHeld,reach,targetX:t.x,targetY:t.y,targetZone:t.zone,cursorX:gaze.x,cursorY:gaze.y,...extra});};
+  window.addEventListener('keydown',e=>{if(e.repeat){local({repeats:[e.code==='Space'?'Space':e.key.length===1?e.key.toUpperCase():e.key]});return;}held.delete(e.code);held.add(e.code);reach=/Key[QWERTASDFGZXCVB]|Digit[1-5]/.test(e.code)?.6:-.6;local({newPress:true,keyLabel:e.code==='Space'?'Space':e.key.length===1?e.key.toUpperCase():e.key});});
   window.addEventListener('keyup',e=>{held.delete(e.code);local();});window.addEventListener('blur',()=>{held.clear();mouseHeld=false;local();});
   canvas.addEventListener('pointerdown',e=>{if(e.button===0){mouseHeld=true;local({newMousePress:true});}});window.addEventListener('pointerup',()=>{mouseHeld=false;local();});
   canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();local({cursorX:Math.max(-1,Math.min(1,(e.clientX-r.left)/r.width*2-1)),cursorY:Math.max(-1,Math.min(1,(e.clientY-r.top)/r.height*2-1)),hovering:true});});canvas.addEventListener('pointerleave',()=>local({hovering:false}));
   function demo(kind:string){local({keysHeld:kind!=='mouse'?1:0,mouseDown:kind!=='keyboard',newPress:kind!=='mouse',newMousePress:kind!=='keyboard',keyLabel:'A',reach:.6});setTimeout(()=>local(),650);}
   for(const [id,kind] of [['demoKeyboard','keyboard'],['demoMouse','mouse'],['demoBoth','both']])document.getElementById(id)!.onclick=()=>demo(kind);
-  document.getElementById('demoSleepy')!.onclick=()=>perform('sleepy');document.getElementById('demoCheer')!.onclick=()=>perform('cheer');document.getElementById('demoReset')!.onclick=()=>perform('default');document.getElementById('toggleGround')!.onclick=()=>document.body.classList.toggle('dark');document.getElementById('rendererMode')!.textContent='Cubism 运行预览 · v6';
+  document.getElementById('demoSleepy')!.onclick=()=>perform('sleepy');document.getElementById('demoCheer')!.onclick=()=>perform('cheer');document.getElementById('demoReset')!.onclick=()=>perform('default');document.getElementById('toggleGround')!.onclick=()=>document.body.classList.toggle('dark');document.getElementById('rendererMode')!.textContent='Cubism 运行预览 · 精修版';
  }
  document.getElementById('settings')!.onclick=()=>{if(desktop)void call('show_settings').catch(e=>notify(String(e)));else window.open('?settings','yangyang-settings');};
  const openMenu=()=>{if(desktop)void call('show_menu').catch(e=>notify(String(e)));else window.open('?menu','yangyang-menu','width=356,height=670');};
@@ -53,7 +54,7 @@ async function petPage(){
  function draw(now:number){
   if(!active)return;frameRequest=requestAnimationFrame(draw);if(now-lastDraw<1000/prefs.fps-.7)return;lastDraw=now;
   const snapshot=state.snapshot(now,prefs.handSpeed),mood=companion.read(now,prefs),level=prefs.motion==='off'?0:prefs.motion==='low'?.35:1;
-  const mouseEnabled=prefs.inputEnabled&&prefs.inputMode==='keyboard_mouse';const look=prefs.cursorFollow&&mouseEnabled?gaze:{x:0,y:0};renderer.draw(now,snapshot,look,prefs.intensity,prefs.idleEnabled,{keyboardScale:prefs.keyboardScale,mouseScale:mouseEnabled?prefs.mouseScale:0,headElasticity:prefs.headElasticity,motionLevel:level,expression:mood.expression,motion:mood.motion,motionAge:mood.age});
+  const mouseEnabled=prefs.inputEnabled&&prefs.inputMode==='keyboard_mouse';const look=prefs.cursorFollow?gaze:{x:0,y:0};renderer.draw(now,snapshot,look,prefs.intensity,prefs.idleEnabled,{keyboardScale:prefs.keyboardScale,mouseScale:mouseEnabled?prefs.mouseScale:0,headElasticity:prefs.headElasticity,motionLevel:level,expression:mood.expression,motion:mood.motion,motionAge:mood.age});
   if(lastExpression!==mood.expression){renderEmotion(emotion,mood.expression);lastExpression=mood.expression;}speech.textContent=mood.bubble;speech.classList.toggle('shown',Boolean(mood.bubble));
   const badges=overlay.read(now,prefs),ids=badges.map(x=>x.id).join(',');if(ids!==lastKeyIds){key.innerHTML=badges.map(x=>`<kbd>${escapeHtml(x.label)}</kbd>`).join('');lastKeyIds=ids;}
   shell.style.opacity=prefs.hoverFade&&hovering&&now-hoverSince>prefs.hoverDelay?String(prefs.hoverOpacity):'1';shell.dataset.motion=prefs.motion;frames++;

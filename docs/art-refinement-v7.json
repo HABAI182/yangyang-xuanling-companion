@@ -1,0 +1,27 @@
+{
+  "canvas": [
+    1536,
+    1360
+  ],
+  "neutralChangesOutsideAuthorizedEdgeAndHairMask": 0,
+  "fringePixels": 5698,
+  "hairTrimPixels": 66,
+  "movingHandBounds": {
+    "mouse-hand": [
+      237,
+      989,
+      423,
+      1102
+    ],
+    "keyboard-hand": [
+      854,
+      1010,
+      1027,
+      1137
+    ]
+  },
+  "originalIrisRgbPreserved": true,
+  "aiRestrictedToHiddenAreas": true,
+  "nativeImport": "pending",
+  "visualAcceptance": "pending"
+}

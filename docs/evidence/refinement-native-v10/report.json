@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "physicalInputVerified": false,
+  "exeSha256": "69741a9080c5437e6a1522781263d19e23434dc02235665725412ef41998b8fd",
+  "errors": [],
+  "windows": {
+    "pet": {
+      "alwaysOnTop": true,
+      "height": 684,
+      "minimized": false,
+      "visible": true,
+      "width": 668,
+      "work": {
+        "height": 1528,
+        "scale": 1.5,
+        "width": 2560,
+        "x": 0,
+        "y": 0
+      },
+      "x": 1778,
+      "y": 376
+    }
+  },
+  "visibleNativeWindow": true,
+  "modelConfig": {
+    "entry": "/models/yangyang-v10/YangyangXuanling.model3.json",
+    "stage": "cubism-refinement-candidate",
+    "parameters": {
+      "keyboardPress": "ParamBodyAngleX",
+      "mousePress": "ParamBodyAngleY",
+      "eyeLeftOpen": "ParamEyeLOpen",
+      "eyeRightOpen": "ParamEyeROpen",
+      "eyeBallX": "ParamEyeBallX"
+    },
+    "parameterScale": {
+      "keyboardPress": 10,
+      "mousePress": 10
+    },
+    "notes": "Official v10 Editor export: traced palm mattes, keyboard cuff separated from hair, transparent ribbon/hair-loop gaps, fixed eye rims above independent moving irises, complete closed-eye skin patches and separate authored presses. Bounded XY reach, spring deformation, vertical gaze and bird secondary movement are runtime SDK vertex transforms."
+  },
+  "realCoreFramesAdvance": true,
+  "blinkReopens": true,
+  "birdMoves": true,
+  "preferencesUnchanged": true
+}

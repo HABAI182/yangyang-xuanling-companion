@@ -1,55 +1,46 @@
-# 秧秧玄翎 0.2.0 模型与运行时交接
+# 秧秧玄翎 0.3.0 模型与运行时交接
 
-本轮按长离0.7.15补齐功能，用户选择保留独立键鼠手部归属。v6源模型与贴图的哈希均未变；点头、轻微头部回摆、小鸟随动、鼠标联动及17种情绪装饰位于 `src/cubism.ts`、`src/effects.ts`、`src/companion.mjs`，属于运行时效果，并非新的CMO3/MOC3绑定。
+2026-10-16。当前可编辑源 `art/source/YangyangXuanling-v10-rig.cmo3`；分层源 `art/source/YangyangXuanling-Separated-v10.psd`；官方导出入口 `public/models/yangyang-v10/YangyangXuanling.model3.json`。1536×1360，13个独立ArtMesh，4096×2048贴图。保留原图比例与v4灰蓝瞳色。
 
-0.2.0 新功能、最终EXE验收与用户物理测试候选的精确范围见 `validation-0.2.0.json`、`changli-parity.md`。本轮已补齐全屏/例外、设置/菜单、位置和穿透恢复命令检查；物理按键/鼠标、4333ms长按和1秒4次新敲击由用户完成。以下保留v6模型制作与早期验收说明；原生高级美术限制依然适用。
+源CMO3 SHA256：`28d9ae9bf9f2050569fc242e5f42462e21182ccaed70eca9504d01c8df19367b`。
 
-2026-10-15。美术沿用 v4 灰蓝瞳色，当前源与导出为 v6。仅眼睛后的隐藏皮肤底层补绘；10 层名称、位置、alpha 保留，睁眼原始图层合成的 RGBA 变化为 0。没有整体缩窄或提高饱和度。详见 `eye-underpaint-v6.json`。
+MOC3 SHA256：`2f9b253711c608d74d4ee6868298668829dd196961521c3455039695add7a83a`。
 
-0.1.1 修复主体可见性：测试恢复偏好后再等待输入，启动/找回时移到当前显示器工作区右下角，设置根据主体位置放在旁边。已在 150% DPI 的真实桌面观察到主体与设置同时可见、无重叠；旧包保留。详见 `visibility-fix-20261015.json`。本次没有修改美术、CMO3 或 MOC3。
+贴图 SHA256：`9d15c30627e8bb77e3f5053e5e739befb15dbf1b74918b78ee7ae578e0245ca1`。
 
-用户实际操作的 0.1.1 已通过键盘、鼠标独立、鼠标→键盘、稳定长按 3561 ms 及 1 秒 5 次新敲击检查，见 `native-input-20261015.json`。0.1.2 输入逻辑相同；新版桌面显示单独检查，不冒充再次完成物理输入。v6 已完成 PSD 替换、CMO3 保存重开、官方导出及 SDK 用例，见 `native-authoring-v6.json`。
+## 源模型中已有的绑定
 
-## 当前入口
+| 语义 | 网格ID | 参数/内容 |
+| --- | --- | --- |
+| 屏幕右键盘手掌 | ArtMesh | ParamBodyAngleX -10/0/10，正向按下 |
+| 屏幕左鼠标手掌 | ArtMesh0 | ParamBodyAngleY -10/0/10，正向按下 |
+| 袖根 | ArtMesh1 | 独立透明裁片；只保留衣料和毛边，脸与头发属于固定头层 |
+| 双闭眼皮肤补片 | ArtMesh3 / ArtMesh2 | 完整隐藏皮肤和连续细弧；EyeLOpen/ROpen 0时显示 |
+| 双虹膜 | ArtMesh5 / ArtMesh4 | 原始可见RGB与隐藏周边补全，EyeLOpen/ROpen透明度；EyeBallX -1/0/1横向几何键 |
+| 双眼底 | ArtMesh7 / ArtMesh6 | EyeLOpen/ROpen 1时显示，绘制顺序501，固定眼眶遮住移动瞳孔边界 |
+| 头身 / 玄翎雀 | ArtMesh8 / bird | 原生分层，运行时运动 |
+| 设备 | keyboard / mouse | 完整遮挡底层，键盘静止 |
 
-- 分层 PSD：`art/source/YangyangXuanling-EyeUnderpaint-v6.psd`，1536×1360，10 层。
-- 真实 Cubism 源：`art/source/YangyangXuanling-v6-rig.cmo3`。
-- 官方运行模型：`public/models/yangyang-v6/YangyangXuanling.model3.json`，配套 MOC3、CDI3 和 2048×2048 贴图。
-- 程序配置：`public/assets/model-config.json`。运行中使用官方 Core/Framework。
-- 自动化证据：`automation-integration-20261015.json`，记录新增 skill、17 个 MCP 工具、绑定、保存重开、导出与 SDK 检查。
+其余标准参数可能仍存在但没有几何绑定，不将创建参数说成制作完成。眨眼为独立开眼/闭眼图层切换，没有连续眼皮几何闭合；尚无独立口形与发丝物理。
 
-用户桌面附件的原始字节当前不可读取；输入像素来自已记录的同构图 1536 方图副本。没有把该副本冒充为原附件文件。可见区域使用原图像素拆层，AI 只补遮挡底层；虹膜是按用户要求局部重新调色，掩码外 RGB、alpha 和图像比例不变。源像素报告与提示词分别位于 `pixel-preservation-v4.json`、`iris-correction-v4.json` 和 `image-prompts.json`。
+## 运行时中的效果
 
-## 已制作的绑定
+`src/cubism.ts` 加载官方Core/Framework，设置原生手掌、眨眼及水平视线参数；`src/model-motion.ts` 在每帧Core输出上执行有界顶点变形，下帧精确恢复，不修改CMO3/MOC3。
 
-| 行为 | 原生参数 | 网格 | 范围与用途 |
-| --- | --- | --- | --- |
-| 键盘，画面右手 | ParamBodyAngleX | ArtMesh / keyboard-hand | -10..10；程序将 0..1 按压映射为 0..10 |
-| 鼠标，画面左手 | ParamBodyAngleY | ArtMesh0 / mouse-hand | -10..10；与键盘独立 |
-| 左眼闭合 | ParamEyeLOpen | ArtMesh4 + ArtMesh2 | 0 为眼睛隐藏、闭眼线显示；1 相反 |
-| 右眼闭合 | ParamEyeROpen | ArtMesh3 + ArtMesh1 | 与左眼同理 |
+- 单手四个物理键区与独立Space，左右镜像和前后映射位于 `src/key-target.mjs` / `src-tauri/src/key_target.rs`。Space松开回当前仍按住的键；短按不丢失，系统重复不重新弹头。
+- 袖口以肩侧锚定的连续线性权重随手掌伸出；脸与头发不进入移动袖口。角色右手/屏幕左手与鼠标共享23px横向、10px纵向源图范围。
+- 精确阻尼弹簧提供按压、快速跨区、头部压缩与回弹；冲量有界，长按会稳定，桌边袖根减弱头部弹动。
+- 水平视线为原生几何键，垂直视线为独立瞳孔顶点位移，均经过阻尼平滑。关闭鼠标按压反馈不关闭视线。
+- 小鸟独立呼吸、跳跃、倾斜和尾部波动，也能由互动菜单触发；部分眼形和瞳孔缩放为运行时表情。17种情绪仍有SVG装饰，不宣称17套原生脸部绑定。
 
-BodyAngleX/Y 的显示名称已改为键鼠按压用途，ID 保留。这里没有把它们当成真正的身体转动。手部顶点在编辑器内制作；新 skill 的 API 完成透明度眨眼绑定、参数名称、保存与原生导出。纹理图集和闭眼线压缩通过编辑器完成。
+## 图像与来源边界
 
-半闭眼透明度插值会重影，因此程序使用 130 ms 的短闭眼状态切换。该版本尚无精细眼皮形变、转头、视线跟随、呼吸、发丝物理或小鸟独立弹动。小鸟保持静止，避免未补全的遮挡区域露出。
+`scripts/refine_layers_v7.py` 保留原像素拆层，只在旧遮挡下使用冻结的AI补绘。外缘纸白清理5698像素，左发尖66个可见像素；全部未授权RGBA差异为0。`build_closed_lids_v8.py` 只提取两条新闭眼墨线；`refine_hidden_v9.py` 仅补完整键盘/鼠标原遮挡内像素，静止合成与v8相同。源布局、提示词、PNG和报告均保留。
 
-## 检查边界
+v10 进一步重抠双掌，修复粗遮罩漏掉的原手掌红色外轮廓；从角色左袖排除蓝白头发和脸部碎片。用户红圈的飘带/发环间隙清为透明，白色发梢和羽饰保留。仅在明确掌部、眼部、袖口与间隙遮罩内修补，未授权RGBA差异0，见 `palms-eyes-v10.json`。原生贴图100%不旋转、48px间距，重叠检查无选中项。
 
-- 输入状态单元检查通过：独立键鼠、长按不重启弹动、再次按下、多个键部分松开。
-- Rust 按键边沿检查通过：同一次采样间隔内的按下/松开仍保留一次事件，自动重复不重触发。
-- Cubism 保存重开及官方导出通过。Core 6.0.1 检查 MOC 一致性、27 参数、10 drawable、WebGL 渲染通过。键盘、鼠标、同时按下及闭眼用例均改变实际顶点/画面。
-- 浏览器检查通过：真实 Cubism 渲染、持续绘制、独立两手、长按、按键提示及设置页，无页面错误。浏览器语义输入不能证明 Windows 全局键盘正常。
-- Windows 实机检查已确认真实 MOC3 可见渲染、持续绘制、设置显示与保存恢复。用户物理操作已通过独立键鼠、稳定长按 3561 ms、1 秒 5 次新敲击及鼠标→键盘切换；以 `native-input-20261015.json` 为准。早期工具模拟键未被观测的记录保留为历史失败证据，不能覆盖这次实际用户输入结果。
-- Windows 设置创建白屏已修复：WebView2 创建移到后台任务，重复打开通过锁串行处理。依据 [Tauri WebviewWindowBuilder 文档](https://docs.rs/tauri/latest/tauri/webview/struct.WebviewWindowBuilder.html)。快速键事件由独立线程的低级键盘回调保留；回调只更新原子状态并转交输入，不拦截、不保存文本。依据 [Microsoft LowLevelKeyboardProc](https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc)。
+## 验证与恢复
 
-测试时改变的偏好会恢复为大小 420、幅度 1、置顶开、穿透关、按键显示开、眨眼开。自动化没有输入历史，诊断只记录计数和语义状态。
+最终源通过Cubism 5.4.00 alpha2保存、关闭并从磁盘重开；新UID `8facf3ade83c41f191f2e5ba258bed3b`。官方导出 `ui-b5a258f32abc4cb3aef8a6c837ed84dd`；官方Core/WebGL `runtime-e535e19969a74703a711fff80f2852e4` 全部用例通过。最终SDK和浏览器证据见 `docs/evidence/runtime-v10` / `refinement-browser-v10`；Windows与物理输入的精确结果见 `validation-0.3.0.json`。
 
-## 待精修与待验收
-
-抠图有少量白边；闭眼底层平涂色块已改善，闭眼线仍是压缩的基础形状，可见细碎睫毛；手部按压目前为基础网格位移。下一轮可精修透明边缘与闭眼线、制作连续眼皮变形。发丝、转头及小鸟动作需另行制作真实形变与遮挡补全，不能仅添加空参数后宣称已绑定。
-
-物理多键/键鼠同时、穿透恢复热键、托盘菜单全路径及安装流程仍需实测。独立物理键盘、鼠标、长按与快速输入已在 0.1.1 通过。当前作为可运行制作预览交付，保留其余未验收项。
-
-## 操作
-
-双击便携 EXE 运行；右键桌宠或点托盘打开设置，拖动手柄移动。穿透后可通过托盘“找回桌宠 / 关闭穿透”恢复；快捷键 Ctrl + Alt + Y 已实现但未在本次自动化中完成原生验收。托盘“退出”关闭程序。
+旧0.2.0模型说明完整保存在 `MODEL-HANDOFF-0.2.0.md`。本地v7/v8施工源保留但不重复上传大二进制；Git保留旧v6和当前v10以恢复。新交付与旧交付独立，不移动历史标签。仓库保持Private，未创建公开Release。

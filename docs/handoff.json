@@ -1,60 +1,23 @@
 {
   "schema": 1,
-  "savedAt": "2026-10-15",
-  "projectVersion": "0.2.0",
-  "sourceCommit": "5c350c4303c24109fc56072051a8bb424c9c4fe4",
-  "sourceRef": "v0.2.0",
-  "activeModelEntry": "/models/yangyang-v6/YangyangXuanling.model3.json",
-  "editableSource": "art/source/YangyangXuanling-v6-rig.cmo3",
-  "editablePsd": "art/source/YangyangXuanling-EyeUnderpaint-v6.psd",
-  "runtimeRepairsSeparateFromSource": [
-    "small head rotation and damped input pulse",
-    "small bird vertex offsets",
-    "keyboard reach and linked mouse movement",
-    "17 SVG mood decorations, including existing blink parameter closure",
-    "3 timed motions and 36 local speech bubbles"
-  ],
-  "referenceAndBaseProvenance": [
-    "docs/character-contract.json",
-    "docs/eye-underpaint-v6.json",
-    "docs/changli-parity.md",
-    "THIRD-PARTY-NOTICES.md"
-  ],
-  "completed": [
-    "Changli 0.7.15 functionality comparison",
-    "four settings pages and independent interaction window",
-    "bounded multi-key badges and separate repeat option",
-    "17 mood feedback states, 3 runtime motions, 36 local bubbles",
-    "native fullscreen hide/exceptions, manual visibility, position presets and recovery",
-    "7 frontend and 8 Rust unit checks",
-    "final browser and Windows feature suites",
-    "user physical input candidate acceptance"
-  ],
-  "verification": {
-    "files": "passed",
-    "core": "unchanged v6 MOC; final browser and native Core/WebGL passed",
-    "browser": "passed",
-    "windowsNative": "final software suite passed; physical candidate default input path passed by user",
-    "macNative": "not targeted",
-    "userReportedTests": [
-      "independent keyboard/mouse",
-      "mouse-to-keyboard",
-      "4333ms stable held key",
-      "4 new presses in one second"
-    ]
-  },
-  "validation": "docs/validation-0.2.0.json",
-  "deliveryDirectory": "deliveries/20261015-windows-0.2.0",
-  "checksumManifest": "deliveries/20261015-windows-0.2.0/SHA256SUMS.txt",
+  "savedAt": "2026-10-16",
+  "projectVersion": "0.3.0",
+  "sourceRef": "v0.3.0",
+  "activeModelEntry": "/models/yangyang-v10/YangyangXuanling.model3.json",
+  "editableSource": "art/source/YangyangXuanling-v10-rig.cmo3",
+  "editablePsd": "art/source/YangyangXuanling-Separated-v10.psd",
+  "verification": "docs/validation-0.3.0.json",
+  "deliveryDirectory": "deliveries/20261016-windows-0.3.0",
   "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
-  "releaseUrl": null,
   "visibility": "private",
-  "settingsRestoredAndChecked": true,
+  "releaseUrl": null,
+  "userSizePreserved": true,
+  "modelReopenedAndExported": true,
+  "modelUid": "8facf3ade83c41f191f2e5ba258bed3b",
   "knownLimitations": [
-    "minor cutout fringe",
-    "basic compressed closed-eye line",
-    "continuous eyelid morph and independent fine expressions not authored",
-    "hair physics not authored",
+    "blink uses separate closed-eye image rather than continuous eyelid morph",
+    "17 mood entries include SVG decorations, not 17 native face rigs",
+    "independent mouth shapes and hair physics not authored",
     "physical gamepad",
     "full-screen game input",
     "UAC elevated restart",
@@ -65,7 +28,7 @@
     "physical recovery and custom shortcut chords",
     "manual audio listening"
   ],
-  "nextExactTask": "Further refinement only as requested: native expression/eyelid art, then optional hardware/game and installer acceptance. Model geometry and palette remain v6.",
-  "ordinaryPetRunning": true,
-  "debugListenerClosed": true
+  "nextExactTask": "User visual feedback on final v10 native build; optional fine native expressions or hardware acceptance only as requested.",
+  "ordinaryPetRunning": "will restart delivered EXE after packaging",
+  "debugListenerClosed": false
 }

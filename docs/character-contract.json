@@ -1,20 +1,75 @@
 {
   "schema": 1,
   "targetCharacter": "秧秧玄翎（按用户底稿）",
-  "targetPlatforms": ["Windows x64"],
-  "artMode": "preserve-reference-and-underpaint",
-  "currentBaseImage": "art/source/composition-original-v4.png",
-  "baseApproval": "original pixels and geometry retained; iris-only palette correction requested by user; pose QA pending",
-  "identityAnchors": ["蓝黑发色渐变至蓝白发梢", "按用户反馈保留柔和灰蓝瞳色、去青绿，保留原图眼形和脸角度", "蓝色菱形额纹", "画面左侧羽饰、金花与红穗", "黑白蓝服装与金饰", "画面右侧蓝白小鸟"],
-  "referenceRoles": [
-    {"source":"user attachment 微信图片_20261014141845_297_2.png", "role":"identity and composition", "localOriginalAvailable":false},
-    {"source":"art/source/skill-layout-reference.png", "role":"visually corresponding skill example; different resolution, not exact original bytes"},
-    {"source":"https://wutheringwaves.kurogames.com/en/main/news/detail/5007", "role":"official Yangyang Xuanling iris identity reference; portrait downloaded directly from article JSON"},
-    {"source":"public/assets/reference-cutout-v1.png", "role":"rejected whole-image redraw; never active"}
+  "targetPlatforms": [
+    "Windows x64"
   ],
-  "preserveRegions": ["角色辨识度", "原图鼠标/键盘手部归属", "小鸟"],
-  "composition": {"view":"front-facing-pet", "keyboardLayout":"mirrored 60% with one upper spacebar", "mouseCable":"wireless reference", "companion":"reference blue-white bird; no independent identity invented"},
-  "inputPolicy": {"keyboardHands":"character left / screen right", "mouseOwnership":"character right / screen left", "autorepeat":"no retrigger", "spaceLanding":"center", "physicalToScreenMirroring":"physical left maps screen right"},
-  "publicationAuthorization":"GitHub private development repository authorized by user on 2026-10-14; public release not authorized",
-  "acceptanceCriteria": ["independent keyboard/mouse presses", "hold once and release smoothly", "real transparent native window and tray", "recoverable click-through", "real Cubism source/export separated from drafts"]
+  "artMode": "preserve-reference-and-underpaint",
+  "currentBaseImage": "art/source/composition-neutral-v10.png",
+  "baseApproval": "Original proportions and muted iris RGB retained; local cutout repairs in user-marked gaps, palms, eye rims and left cuff; hidden underpaint only.",
+  "identityAnchors": [
+    "蓝黑发色渐变至蓝白发梢",
+    "按用户反馈保留柔和灰蓝瞳色、去青绿，保留原图眼形和脸角度",
+    "蓝色菱形额纹",
+    "画面左侧羽饰、金花与红穗",
+    "黑白蓝服装与金饰",
+    "画面右侧蓝白小鸟"
+  ],
+  "referenceRoles": [
+    {
+      "source": "user attachment 微信图片_20261014141845_297_2.png",
+      "role": "identity and composition",
+      "localOriginalAvailable": false
+    },
+    {
+      "source": "art/source/skill-layout-reference.png",
+      "role": "visually corresponding skill example; different resolution, not exact original bytes"
+    },
+    {
+      "source": "https://wutheringwaves.kurogames.com/en/main/news/detail/5007",
+      "role": "official Yangyang Xuanling iris identity reference; portrait downloaded directly from article JSON"
+    },
+    {
+      "source": "public/assets/reference-cutout-v1.png",
+      "role": "rejected whole-image redraw; never active"
+    }
+  ],
+  "preserveRegions": [
+    "角色辨识度",
+    "原图鼠标/键盘手部归属",
+    "小鸟"
+  ],
+  "composition": {
+    "view": "front-facing-pet",
+    "keyboardLayout": "mirrored 60% with one upper spacebar",
+    "mouseCable": "wireless reference",
+    "companion": "reference blue-white bird; no independent identity invented"
+  },
+  "inputPolicy": {
+    "keyboardHands": "character left / screen right",
+    "mouseOwnership": "character right / screen left",
+    "autorepeat": "no retrigger",
+    "spaceLanding": "center",
+    "physicalToScreenMirroring": "physical left maps screen right"
+  },
+  "publicationAuthorization": "GitHub private development repository authorized by user on 2026-10-14; public release not authorized",
+  "acceptanceCriteria": [
+    "independent keyboard/mouse presses",
+    "hold once and release smoothly",
+    "real transparent native window and tray",
+    "recoverable click-through",
+    "real Cubism source/export separated from drafts",
+    "four keyboard regions and separate Space",
+    "bounded mouse/palm linked sliding",
+    "continuous cursor gaze XY",
+    "independent bird secondary motion",
+    "no changes outside authorized pixel masks"
+  ],
+  "allowedLocalRepairs": [
+    "red-circle ribbon and hair-loop paper gaps",
+    "both original palm silhouettes and hidden outlines",
+    "fixed eye rims and hidden iris perimeter",
+    "character-left keyboard cuff excludes hair and face",
+    "v7 screen-left hair trim limited to 66 visible pixels"
+  ]
 }

@@ -22,3 +22,16 @@ docs/evidence/parity-browser-0.2.0/
 docs/evidence/parity-windows-0.2.0-retry/
 docs/evidence/parity-windows-0.2.0/*
 !docs/evidence/parity-windows-0.2.0/report.json
+# Locally preserved construction checkpoints; active v10 source is tracked.
+art/source/YangyangXuanling-v7-rig.cmo3
+art/source/YangyangXuanling-v7b-gaze.cmo3
+art/source/YangyangXuanling-v8-rig.cmo3
+art/source/YangyangXuanling-Separated-v7.psd
+art/source/YangyangXuanling-Separated-v8.psd
+public/models/yangyang-v7/
+public/models/yangyang-v8/
+
+# Preserve intermediate v9 binaries locally; v10 is the delivered source.
+art/source/YangyangXuanling-v9-rig.cmo3
+art/source/YangyangXuanling-Separated-v9.psd
+public/models/yangyang-v9/
