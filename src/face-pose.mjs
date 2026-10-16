@@ -27,11 +27,13 @@ export function expressionPose(id,now=0,age=0,idle=false){
 // A local, shared field shapes the actual lid/lash pixels on the head and the
 // sclera mask together. It never scales a coarse eye rectangle containing hair.
 // Zero outside a small eye neighbourhood; default is an exact identity.
+const eyeWarpByMood={smile:[6,0,2],think:[5,-4,0],surprised:[-3,0,-1],resigned:[17,0,0],blush:[6,0,1],serious:[18,7,0],angry:[24,11,1],pout:[8,0,4],shy:[6,0,1],wronged:[-1,-7,3],proud:[12,0,0],confused:[7,-8,0],starry:[-4,0,-2],wind:[9,0,1]};
+const eyeAnchors=[[592,751,858,1],[930,831,941,-1]];
 export function expressionEyeWarp(x,y,id){
- const config={smile:[6,0,2],think:[5,-4,0],surprised:[-3,0,-1],resigned:[17,0,0],blush:[6,0,1],serious:[18,7,0],angry:[24,11,1],pout:[8,0,4],shy:[6,0,1],wronged:[-1,-7,3],proud:[12,0,0],confused:[7,-8,0],starry:[-4,0,-2],wind:[9,0,1]}[id];
+ const config=eyeWarpByMood[id];
  if(!config)return 0;
  let dy=0;
- for(const [cx,top,bottom,sign] of [[592,751,858,1],[930,831,941,-1]]){
+ for(const [cx,top,bottom,sign] of eyeAnchors){
   const horizontal=Math.exp(-(((x-cx)/87)**4));
   const upper=Math.exp(-(((y-top)/34)**2)),lower=Math.exp(-(((y-bottom)/23)**2));
   let depth=config[0]+config[1]*sign*(x-cx)/67;

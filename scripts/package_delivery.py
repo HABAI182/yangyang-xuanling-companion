@@ -52,6 +52,10 @@ def main():
         ROOT / "docs/eye-masks-v11.json",
         ROOT / "docs/detail-patches-v12.json",
         ROOT / "art/source/YangyangXuanling-Details-v12.psd",
+        ROOT / "art/source/YangyangXuanling-Details-v13.psd",
+        ROOT / "art/source/closed-lids-ai-v8.png",
+        ROOT / "docs/closed-eyes-v13.json",
+        ROOT / "scripts/build_closed_eyes_v13.py",
         ROOT / f"docs/refinement-{version}.md",
         ROOT / "LICENSE.txt",
         ROOT / "LICENSE-CHANG-LI-MIT.txt",
@@ -59,6 +63,8 @@ def main():
         ROOT / "docs/changli-parity.md",
     ]
     source_files += sorted((ROOT / "public/assets/detail-v12").rglob("*"))
+    source_files += sorted((ROOT / "public/assets/detail-v13").rglob("*"))
+    source_files += sorted((ROOT / "public/assets/ui").rglob("*"))
     source_files += sorted((ROOT / "src").rglob("*"))
     source_files += sorted((ROOT / "src-tauri/src").rglob("*.rs"))
     source_files += sorted((ROOT / f"public/models/yangyang-{revision}").rglob("*"))
@@ -75,43 +81,34 @@ def main():
             assert hashlib.sha256(bundle.read(p.relative_to(ROOT).as_posix())).hexdigest() == digest(p)
     readme = f"""秧秧玄翎 {version} / Windows x64 精修预览
 
-双击“秧秧玄翎.exe”即可运行；带 setup 的文件为安装程序。
-右键桌宠或点击托盘打开设置，拖动手柄移动，托盘菜单可退出。
-默认大小420、按键显示开、置顶开、鼠标穿透关、自动眨眼开。
-启动位于屏幕右下角，设置窗口会放在主体旁边；旧版已交付文件保留。
+双击“秧秧玄翎.exe”运行；setup 为安装程序。右键角色或点击托盘打开互动菜单。
+底部六点按钮拖动，星形按钮互动，齿轮进入设置。Ctrl + Alt + Y 找回桌宠。
+画面左手控制鼠标，右手操作键盘四区和独立Space；长按保持，不重复弹头。
 
-本版按长离0.7.15补齐设置和互动功能，保留画面左手鼠标、右手键盘。
-右键或点击托盘打开独立互动菜单：17种情绪反馈、3段小动作与36条气泡。
-设置分外观/互动/桌面/高级；支持主题、字号、动效、手速、1至6个浮显及长按重复开关。
-桌面功能包括全屏避让及程序例外、磁吸、3个常用位置、靠近淡化、穿透与找回。
-支持可编辑动作快捷键、手柄反馈、轻音、登录启动及高权限兼容手动重启。
-本版双眼以固定眼白作原生遮罩，完整瞳孔独立移动；睫毛、皮肤和头发不跟着瞳孔缩放。
-保留原有手掌/袖根拆分与外缘纸白清理。
-键盘四区加独立Space；鼠标和手掌有界联动；头部强弹簧、小鸟跳跃摆尾、二维视线持续跟随。
-静止画面保留比例及低饱和灰蓝瞳色，未授权区域RGBA差异为零。
-原生模型含双手按压、眨眼、双眼剪贴遮罩及连续闭眼线；二维伸手、二维视线、弹性、
-小鸟和部分眼形/情绪装饰属于SDK运行时效果，未冒充原生绑定。
-增强按下压缩与松开拉伸回弹；长按不反复弹动。按键浮显高度保留，文字气泡与其齐平、略向左移。
-脸红改为渐隐晕染与细笔触，跟随脸部弹动；仍属于运行时表情装饰。
-实际Windows及物理输入验收范围以manifest.json中的verification为准。
-本版修复左发梢直切边，左右增加透明余量，原图重合区域RGBA不变。
-文字泡和按键框采用雾蓝边框；按键默认130%，两者可在互动设置中独立调整大小。
-视线默认165%，可独立调整50%–250%，仍受原生眼白遮罩限制。
-右键菜单17种情绪细化嘴形、眼睑、单侧眨眼与泪光，不是只加外部符号。
-原生模型仍为v11；发梢/口形补片贴合真实头部三角形，运行时矢量源随包保留。
-Details-v12.psd是补充素材，并未冒充新CMO3导出。
-连续闭合眼皮、完整原生口形参数和发丝物理尚未制作。
-手柄实机、游戏输入、UAC兼容重启、Windows登录启动及安装流程未验收。
+本版改动：
+- 眼睛幅度默认210%，可调50%–320%；保持低饱和灰蓝瞳色和原生眼白剪贴遮罩。
+- 外观设置中可开关“鼠标静止后视线回正”，等待1–15秒，默认3秒；平滑回正后，移动或点击重新跟随。
+- 鼠标在角色外移动也算活动；回正不会带动独立鼠标和手掌。
+- 可见角色轮廓接收点击，透明洞与下方留白自动穿透；三个工具按钮保留，拖动过程中保持鼠标捕获。
+- 桌面设置中的“整只桌宠鼠标穿透”会让角色和按钮也穿透，可从托盘关闭或使用找回快捷键。
+- 困倦、大笑和单眼闭合补片盖住完整原睁眼轮廓；Q版描边符号加大。
+- 文字泡和按键框使用相同的加粗雾蓝边框、羽毛金花红绳装饰，大小仍可独立调节；高度保持原位置。
+- 互动菜单随内容收高，展开“更多情绪”才增加高度；17种情绪、3段动作及原功能保留。
 
-模型源文件压缩包保留项目内目录结构，包含真实CMO3、分层PSD、官方模型和运行时效果源码。
-完整可构建工程及依赖锁文件在私有GitHub仓库。
-展开后参阅 docs/MODEL-HANDOFF.md；manifest.json 和 SHA256SUMS.txt 可用于核对版本。
-本交付供用户私有开发测试，未公开发布。
+原生模型仍为v11，CMO3和MOC3未修改。Details-v13.psd及SDK网格附着闭眼/口形补片、
+矢量情绪、二维视线和弹性为运行时效果，不冒充新原生绑定。闭眼仍是开闭图层切换。
+静止中性画面保留原图比例与颜色，旧版交付保留。现有用户设置仅按本次要求更新视线相关值。
+
+模型源文件ZIP保留项目内目录，包含真实CMO3、分层PSD、官方模型与运行时源码。
+完整可构建工程在私有GitHub仓库。查看docs/MODEL-HANDOFF.md、manifest.json和SHA256SUMS.txt。
+验收范围以manifest.json内verification为准；本次Windows穿透测试为本机合成输入，非用户物理输入记录。
+安装流程、游戏/手柄、UAC兼容重启、登录启动和完整多屏DPI未重新验收。
+本交付仅供用户私有开发测试，未公开发布。
 """
     (out / "使用说明.txt").write_text(readme, encoding="utf-8")
     checks = json.loads(validation.read_text(encoding="utf-8"))
     manifest = {
-        "date": "2026-10-16", "version": version, "stage": "refinement-preview",
+        "date": checks["date"], "version": version, "stage": "refinement-preview",
         "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
         "sourceCommit": subprocess.check_output(["git", "rev-parse", f"{args.source_ref}^{{commit}}"], cwd=ROOT, text=True).strip(),
         "sourceRef": args.source_ref,

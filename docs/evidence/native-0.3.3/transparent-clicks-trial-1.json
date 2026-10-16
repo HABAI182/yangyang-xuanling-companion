@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "syntheticNativeInput": true,
+  "results": [
+    {
+      "name": "upper transparent corner",
+      "x": 0.08,
+      "y": 0.08,
+      "through": true,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": true
+    },
+    {
+      "name": "ahoge interior hole",
+      "x": 0.645,
+      "y": 0.23,
+      "through": true,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": true
+    },
+    {
+      "name": "blank below keyboard",
+      "x": 0.4,
+      "y": 0.98,
+      "through": true,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": true
+    },
+    {
+      "name": "gap between mouse and keyboard",
+      "x": 0.2,
+      "y": 0.89,
+      "through": true,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": true
+    },
+    {
+      "name": "opaque face",
+      "x": 0.5,
+      "y": 0.65,
+      "through": false,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": false
+    },
+    {
+      "name": "toolbar drag",
+      "x": 0.7369275403765714,
+      "y": 0.9682320441988951,
+      "through": false,
+      "click": false,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": null
+    },
+    {
+      "name": "toolbar interact",
+      "x": 0.8219134192966537,
+      "y": 0.9682320441988951,
+      "through": false,
+      "click": false,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": null
+    },
+    {
+      "name": "toolbar settings",
+      "x": 0.9068992549907047,
+      "y": 0.9682320441988951,
+      "through": false,
+      "click": false,
+      "rootMatches": true,
+      "pointerStayedAtProbe": true,
+      "receiverClick": null
+    }
+  ]
+}
