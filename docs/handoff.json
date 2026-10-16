@@ -33,5 +33,6 @@
   "debugListenerClosed": true,
   "finalOrdinaryExe": "deliveries/20261016-windows-0.3.1/秧秧玄翎.exe",
   "finalOrdinaryPid": 44800,
-  "repositorySourceTagVerified": false
+  "repositorySourceTagVerified": true,
+  "sourceCommit": "748bfff35f706b54fc551d7e9d3decda0fa44f97"
 }
