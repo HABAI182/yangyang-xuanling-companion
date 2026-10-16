@@ -1,5 +1,6 @@
 import type {CubismModel} from '../vendor/live2d/src/model/cubismmodel';
 import type {AnimationSnapshot,AnimationOptions} from './renderer';
+import {expressionPose,expressionEyeWarp} from './face-pose.mjs';
 export function deform(model:CubismModel,restored:Map<number,Float32Array>,now:number,s:AnimationSnapshot,g:{x:number,y:number},intensity:number,idle:boolean,o:AnimationOptions){
  const cw=model.getCanvasWidth(),ch=model.getCanvasHeight(),level=o.motionLevel;
  const toX=(px:number)=>(px/1536-.5)*cw,toY=(py:number)=>(.5-py/1360)*ch;
@@ -15,7 +16,7 @@ export function deform(model:CubismModel,restored:Map<number,Float32Array>,now:n
  const keyX=Math.max(-145,Math.min(115,s.reach*160*o.keyboardScale*intensity)),keyY=Math.max(-8,Math.min(69,(s.depth*44+s.keyboardPress*21)*o.keyboardScale*intensity));
  const mouseX=g.x*23*o.mouseScale,mouseY=g.y*10*o.mouseScale;
  const face=['ArtMesh8','ArtMesh2','ArtMesh3','ArtMesh4','ArtMesh5','ArtMesh6','ArtMesh7','ArtMesh1'];
- const closed=['sleepy','laugh','shy'].includes(o.expression)||idle&&now%5700>5460&&now%5700<5590;
+ const pose=expressionPose(o.expression,now,o.motionAge,idle),gazeScale=o.gazeScale??1.65;
  for(let i=0;i<model.getDrawableCount();i++){
   const id=model.getDrawableId(i).getString(),head=face.includes(id),bird=id==='bird',mouse=id==='mouse'||id==='ArtMesh0',key=id==='ArtMesh';
   if(!head&&!bird&&!mouse&&!key)continue;
@@ -36,22 +37,14 @@ export function deform(model:CubismModel,restored:Map<number,Float32Array>,now:n
     }
     // Original-pixel pupils share a bounded, smoothly damped gaze.
     if(id==='ArtMesh4'||id==='ArtMesh5'){
+     const closed=(id==='ArtMesh5'?pose.leftOpen:pose.rightOpen)===0;
      const cx=toX(id==='ArtMesh5'?610:920),cy=toY(id==='ArtMesh5'?810:890);
-     x=cx+(x-cx)*(closed?.02:1);
-     y=cy+(y-cy)*(closed?.02:1)-g.y*ch*(closed?0:.0036);
-     x+=closed?0:g.x*9.5/1536*cw;
+     x=cx+(x-cx)*(closed?.02:pose.irisX);
+     y=cy+(y-cy)*(closed?.02:pose.irisY)-(g.y*gazeScale+pose.gazeY)*ch*(closed?0:.0036);
+     x+=closed?0:g.x*gazeScale*9.5/1536*cw;
     }
-    // Eye rims contain fixed eyelashes and nearby hair. Only the pupil changes
-    // shape for an expression; moving the coarse rim duplicates those lines.
-    if(['ArtMesh4','ArtMesh5'].includes(id)&&!closed){
-     const left=id==='ArtMesh5'||id==='ArtMesh7',cx=toX(left?592:930),cy=toY(left?811:891);
-     const narrow=({serious:.96,angry:.93,proud:.97,wronged:.98,surprised:1.02} as Record<string,number>)[o.expression]??1;
-     y=cy+(y-cy)*narrow;
-     if(id==='ArtMesh4'||id==='ArtMesh5'){
-      const pupil=o.expression==='surprised'?.88:o.expression==='starry'?1.06:1;
-      x=cx+(x-cx)*pupil;y=cy+(y-cy)*pupil;
-     }
-    }
+    const eyeDy=expressionEyeWarp((x/cw+.5)*1536,(.5-y/ch)*1360,o.expression);
+    y-=eyeDy/1360*ch;
     const dx=x-pivotX,hy=y-pivotY;
     // The face bounces strongly while the cuff attachment eases to zero at
     // the desk. This avoids tearing wrists away from stationary palms.

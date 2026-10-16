@@ -1,6 +1,19 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {defaults,normalizePreferences,expressions} from '../src/preferences.mjs';
 import {KeyOverlay} from '../src/key-overlay.mjs';import {Companion,lines} from '../src/companion.mjs';
+import {expressionPose} from '../src/face-pose.mjs';
+test('new overlay and gaze preferences migrate independently and clamp invalid values',()=>{
+ const old=normalizePreferences({size:445.2,showKeys:false});
+ assert.equal(old.size,445.2);assert.equal(old.showKeys,false);assert.equal(old.keyBubbleScale,1.3);assert.equal(old.speechBubbleScale,1);assert.equal(old.gazeScale,1.65);
+ const bounded=normalizePreferences({keyBubbleScale:9,speechBubbleScale:NaN,gazeScale:-1});
+ assert.equal(bounded.keyBubbleScale,1.8);assert.equal(bounded.speechBubbleScale,1);assert.equal(bounded.gazeScale,.5);
+});
+test('menu eye poses distinguish laughter, shyness, pride and surprise; default stays neutral',()=>{
+ assert.deepEqual(expressionPose('default'),{leftOpen:1,rightOpen:1,irisX:1,irisY:1,gazeY:0});
+ const laugh=expressionPose('laugh'),shy=expressionPose('shy'),proud=expressionPose('proud');
+ assert.equal(laugh.leftOpen+laugh.rightOpen,0);assert.equal(shy.leftOpen,0);assert.equal(shy.rightOpen,1);assert.equal(proud.rightOpen,0);assert.equal(proud.leftOpen,1);
+ assert.ok(expressionPose('surprised').irisX<1);assert.equal(expressionPose('default',5500,0,true).leftOpen,0);
+});
 test('old preferences retain explicit choices and gain bounded new defaults',()=>{
  const p=normalizePreferences({showKeys:false,alwaysOnTop:false,size:420,maxKeys:99,theme:'invalid'});
  assert.equal(p.showKeys,false);assert.equal(p.alwaysOnTop,false);assert.equal(p.maxKeys,6);assert.equal(p.theme,'system');assert.equal(p.repeatKeys,false);
