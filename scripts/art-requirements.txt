@@ -1,3 +1,0 @@
-Pillow>=11
-psd-tools>=1.12
-numpy>=2

@@ -6,4 +6,4 @@
 
 Live2D Core / Framework 保留原供应商许可，位于 `public/vendor/live2d` 与 `vendor/live2d`。Tauri、serde、windows-sys 按各自 MIT/Apache-2.0 许可使用，Vite 使用 MIT、TypeScript 使用 Apache-2.0。没有添加下载式更新器或外部输入数据传输。
 
-0.3.3 对照同一长离提交中的 `FaceEffects.ts`、`UnderpaintMesh.ts`，参考完整局部底层覆盖、附着原生三角形及描边符号的处理原则。闭眼素材来自本项目已冻结的 `closed-lids-ai-v8.png`，Q版矢量符号与羽毛金花装饰为本次编写；没有复制长离的美术。Windows穿透按微软层叠窗口机制实现，参考 [Layered Windows](https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features#layered-windows)。
+0.3.3 对照同一长离提交中的 `FaceEffects.ts`、`UnderpaintMesh.ts`，参考完整局部底层覆盖、附着原生三角形及描边符号的处理原则。闭眼素材来自本项目冻结的补绘，原制作素材现保存在私有历史镜像；Q版矢量符号与羽毛金花装饰为项目编写，没有复制长离的美术。Windows穿透按微软层叠窗口机制实现，参考 [Layered Windows](https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features#layered-windows)。
