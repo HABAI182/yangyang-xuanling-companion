@@ -53,5 +53,9 @@
   "debugListenerClosed": true,
   "remoteSourceTag": "feeedbf1da5cfff4b9569dda3813b926faae4aee",
   "ordinaryWindowVisible": true,
-  "ordinaryScreenReviewed": true
+  "ordinaryScreenReviewed": true,
+  "privateReleaseCreated": true,
+  "releaseUrl": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3",
+  "releaseAssetsVerified": true,
+  "githubReleasesIndex": "docs/github-releases-20261017.json"
 }

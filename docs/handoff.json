@@ -10,7 +10,7 @@
   "deliveryDirectory": "deliveries/20261017-windows-0.3.3",
   "repository": "https://github.com/HABAI182/yangyang-xuanling-companion",
   "visibility": "private",
-  "releaseUrl": null,
+  "releaseUrl": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3",
   "userSizePreserved": true,
   "modelReopenedAndExported": false,
   "modelUid": "9ed543f419ff4076bcb76a2e8cd46893",
@@ -37,5 +37,16 @@
   "runtimeSupplementPsd": "art/source/YangyangXuanling-Details-v13.psd",
   "ordinaryLaunchStatus": "Verified ordinary delivery EXE visible and responding; debug listener closed. Exact package/source audit in delivery-0.3.3.json.",
   "finalOrdinaryPid": 29480,
-  "sourceCommit": "feeedbf1da5cfff4b9569dda3813b926faae4aee"
+  "sourceCommit": "feeedbf1da5cfff4b9569dda3813b926faae4aee",
+  "githubReleasesIndex": "docs/github-releases-20261017.json",
+  "githubReleasesUploadedVersions": [
+    "0.1.0",
+    "0.1.1",
+    "0.1.2",
+    "0.2.0",
+    "0.3.0",
+    "0.3.1",
+    "0.3.2",
+    "0.3.3"
+  ]
 }

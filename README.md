@@ -14,6 +14,23 @@
 
 闭眼时补上原眼眶/外眼角，符号改为更大的Q版描边；消息与按键采用相同的雾蓝粗边框、羽毛金花红绳元素。菜单高度跟随内容，不再留大片底部空白。效果见 [表情预览](art/mood-review-0.3.3.png)。
 
+## 下载与历史版本
+
+Windows程序和模型源文件在私有仓库的 [GitHub Releases](https://github.com/HABAI182/yangyang-xuanling-companion/releases) 附件区，需使用有仓库权限的账号登录。当前推荐 [v0.3.3 Windows x64 精修预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3)。
+
+| 版本 | 主要变化 | 下载 |
+| --- | --- | --- |
+| 0.3.3 | 透明空白穿透、可调静止回正、闭眼及统一气泡修整 | [推荐预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3) |
+| 0.3.2 | 发梢补齐、菜单表情、气泡独立缩放 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.2) |
+| 0.3.1 | 双眼原生剪贴遮罩、增强按下和松开回弹 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.1) |
+| 0.3.0 | 独立手掌、四键区和Space、鼠标联动及鸟动作 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.0) |
+| 0.2.0 | 设置和互动功能对齐长离通用设计 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.2.0) |
+| 0.1.2 | v6眼部隐藏底层和贴图 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.2) |
+| 0.1.1 | 主体显示与设置窗口位置修复 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.1) |
+| 0.1.0 | 首个Windows基础预览 | [历史预览](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.0) |
+
+每版附件包括便携EXE、安装程序、模型源文件ZIP、使用说明、manifest、原校验单和下载名对应的校验单；保留原文件与原源码标签，不重新打包旧版本。便携运行下载 `Yangyang-Xuanling-版本号-Windows-x64.exe`，需要安装则下载相应 `setup.exe`。各版实际验收范围见其manifest，历史预览不代表当时问题已全部修复。
+
 ## 本版功能
 
 - 外观/互动/桌面/高级四分页设置，系统/深浅主题、强调色、密度、字号和50%–200%大小；动效、手速、独立键鼠幅度可调。

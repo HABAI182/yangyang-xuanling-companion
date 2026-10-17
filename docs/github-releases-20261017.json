@@ -1,0 +1,585 @@
+{
+  "repository": "HABAI182/yangyang-xuanling-companion",
+  "date": "2026-10-17",
+  "private": true,
+  "releases": [
+    {
+      "tag": "v0.1.0",
+      "version": "0.1.0",
+      "releaseId": 415476865,
+      "sourceCommit": "b1c8d6fffe82ff3ee2d47af932d3fa34ac1e7d57",
+      "sourceArchiveVerified": {
+        "exactEntries": 11,
+        "crlfNormalizedTextEntries": 0
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.0",
+      "assets": [
+        {
+          "id": 649010510,
+          "name": "manifest.json",
+          "bytes": 4506,
+          "digest": "sha256:d7b844eefe62fc625e193597a33f5b223271a3233eeba6152d001ea05ad1ae00",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649010512,
+          "name": "README-zh-CN.txt",
+          "bytes": 964,
+          "digest": "sha256:8757cea6017b1919874a22f889f6ee80312b687a9e078fe693891d1900107849",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649014671,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:f8f2b524ec741fc07ed4adbbd2872347a5639a0fc7a147ce43de3d93e290f01e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649010520,
+          "name": "SHA256SUMS.txt",
+          "bytes": 452,
+          "digest": "sha256:db963cced3366ea945d1b27efb9026d2c72b4e4bf7d0b072e48fdb0fa3e6d14e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649010508,
+          "name": "Yangyang-Xuanling-0.1.0-model-source.zip",
+          "bytes": 22228058,
+          "digest": "sha256:23122d8b9da9bd0d8875db9c5c8c4e0a18740cacc772741adf8cc93843bf2f6a",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/Yangyang-Xuanling-0.1.0-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v5.zip"
+        },
+        {
+          "id": 649010567,
+          "name": "Yangyang-Xuanling-0.1.0-Windows-x64-setup.exe",
+          "bytes": 13176240,
+          "digest": "sha256:6475ef6dbfc834152164b96e5bb00b5f142800dddc14b7becc02afa2faa9259d",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/Yangyang-Xuanling-0.1.0-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.1.0_x64-setup.exe"
+        },
+        {
+          "id": 649010523,
+          "name": "Yangyang-Xuanling-0.1.0-Windows-x64.exe",
+          "bytes": 20285952,
+          "digest": "sha256:4af142af96befbbce8cdb83fbaf8cc3e184c7575163254e4ba62af9a97715dd2",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.0/Yangyang-Xuanling-0.1.0-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.1.1",
+      "version": "0.1.1",
+      "releaseId": 415478641,
+      "sourceCommit": "6a0a17438e1fb9f09b778babf21cf727960eaa2a",
+      "sourceArchiveVerified": {
+        "exactEntries": 11,
+        "crlfNormalizedTextEntries": 0
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.1",
+      "assets": [
+        {
+          "id": 649015151,
+          "name": "manifest.json",
+          "bytes": 5025,
+          "digest": "sha256:62ca63ceb43016b9f5ecbaf54a07635dfd1c927dc620bb771be8908012f55607",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649015141,
+          "name": "README-zh-CN.txt",
+          "bytes": 1062,
+          "digest": "sha256:4f92e0d2e58b95186076b692e8de2cd0426a332ecafe4cda6c7f08709225fae1",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649015237,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:16e3c44baa149bbf579f458fd98290dc2bdf681301d77b7715bc3376a3d79ecb",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649015146,
+          "name": "SHA256SUMS.txt",
+          "bytes": 452,
+          "digest": "sha256:75df948a6b0d85a1f5c69851a662ab8c3442c6d36415f70d29545dc075bf1fac",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649015152,
+          "name": "Yangyang-Xuanling-0.1.1-model-source.zip",
+          "bytes": 22228253,
+          "digest": "sha256:e736bc769193bd2064e7f3d013298a075e36165fe9b26f895f788a4adbcc435d",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/Yangyang-Xuanling-0.1.1-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v5.zip"
+        },
+        {
+          "id": 649015239,
+          "name": "Yangyang-Xuanling-0.1.1-Windows-x64-setup.exe",
+          "bytes": 13187258,
+          "digest": "sha256:ec35a872c0520378c6dbe356fdbe933d697905007973062d805da63b08a2f849",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/Yangyang-Xuanling-0.1.1-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.1.1_x64-setup.exe"
+        },
+        {
+          "id": 649015138,
+          "name": "Yangyang-Xuanling-0.1.1-Windows-x64.exe",
+          "bytes": 20322816,
+          "digest": "sha256:81c5963a8098bbdd6f85f3ea1971482134abb2714ed0636bd904bf5b3a2684a0",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.1/Yangyang-Xuanling-0.1.1-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.1.2",
+      "version": "0.1.2",
+      "releaseId": 415478932,
+      "sourceCommit": "d823e0224187c763ad9301fbeb7d1a8fcf8da7fb",
+      "sourceArchiveVerified": {
+        "exactEntries": 11,
+        "crlfNormalizedTextEntries": 1
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.1.2",
+      "assets": [
+        {
+          "id": 649016254,
+          "name": "manifest.json",
+          "bytes": 6111,
+          "digest": "sha256:82aae25b9ce7935ab3e010e2f323989fb34154cea95da41bd999f5da5b0bc343",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649016238,
+          "name": "README-zh-CN.txt",
+          "bytes": 1324,
+          "digest": "sha256:7a268ca480f461daf9b494de1984cb650eb4e3f68d99f3a992178fe43af66674",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649016294,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:25bf9e60c7ce0c6e4c8f75b0c4bf3c9cda5538e3e937464524d0c8307f6c5adc",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649016230,
+          "name": "SHA256SUMS.txt",
+          "bytes": 452,
+          "digest": "sha256:638592208082a8faf2e3f4bb4b8eebee59de1c65f430fcc73bb6fb6dc9904622",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649016229,
+          "name": "Yangyang-Xuanling-0.1.2-model-source.zip",
+          "bytes": 25419174,
+          "digest": "sha256:bf3cdfff7e0c17b2e215235e8cc8a56de5baac105ada3ac26b97c5fb88103701",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/Yangyang-Xuanling-0.1.2-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v6.zip"
+        },
+        {
+          "id": 649016293,
+          "name": "Yangyang-Xuanling-0.1.2-Windows-x64-setup.exe",
+          "bytes": 15958947,
+          "digest": "sha256:e38bb5ee3b7c59c9c6284d196d6e38e4f7d582c8fc29168f1628019933455820",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/Yangyang-Xuanling-0.1.2-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.1.2_x64-setup.exe"
+        },
+        {
+          "id": 649016236,
+          "name": "Yangyang-Xuanling-0.1.2-Windows-x64.exe",
+          "bytes": 25392640,
+          "digest": "sha256:2ae2dfb41585fb110eaac2d48669ebcd3b56eac8d4fb831811618d6a066dc073",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.1.2/Yangyang-Xuanling-0.1.2-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.2.0",
+      "version": "0.2.0",
+      "releaseId": 415479280,
+      "sourceCommit": "5c350c4303c24109fc56072051a8bb424c9c4fe4",
+      "sourceArchiveVerified": {
+        "exactEntries": 32,
+        "crlfNormalizedTextEntries": 4
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.2.0",
+      "assets": [
+        {
+          "id": 649017227,
+          "name": "manifest.json",
+          "bytes": 8887,
+          "digest": "sha256:d5ce62456cba1a98511f5863f269a4eeb75b1ef3643d05e650ece3b20d2ce773",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649017247,
+          "name": "README-zh-CN.txt",
+          "bytes": 1839,
+          "digest": "sha256:93c6c2eb1db9e8a7ba15dfc699c46909859f84a5746b3f8b0c689c71abff71e6",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649017322,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:ce4403d3fff2cf56d41c385cd89ad8fdcc8534ca4b1fdb4d3e596238124a5a76",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649017253,
+          "name": "SHA256SUMS.txt",
+          "bytes": 452,
+          "digest": "sha256:72e62476edbd75aecebb35aea56145622dc3a231ff42249bf0b2f105537ecbc7",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649017234,
+          "name": "Yangyang-Xuanling-0.2.0-model-source.zip",
+          "bytes": 25465180,
+          "digest": "sha256:0ed9e30bea828fe313bbe462b950b8d367dd71ecb58866246990f4aa53fe6e4e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/Yangyang-Xuanling-0.2.0-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v6.zip"
+        },
+        {
+          "id": 649017290,
+          "name": "Yangyang-Xuanling-0.2.0-Windows-x64-setup.exe",
+          "bytes": 29943961,
+          "digest": "sha256:8f08393beb6c91d41eb5028ba64f09d00aa61f6859e7f1c2c435cbe3334e4139",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/Yangyang-Xuanling-0.2.0-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.2.0_x64-setup.exe"
+        },
+        {
+          "id": 649017230,
+          "name": "Yangyang-Xuanling-0.2.0-Windows-x64.exe",
+          "bytes": 42743296,
+          "digest": "sha256:000531457c9029c68d4aac59453a0ef513030e93fe1557e057b54e9113b16a2d",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.2.0/Yangyang-Xuanling-0.2.0-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.3.0",
+      "version": "0.3.0",
+      "releaseId": 415479684,
+      "sourceCommit": "b8e41bc0efad4d9e8fe553743896b9df9e9371a1",
+      "sourceArchiveVerified": {
+        "exactEntries": 41,
+        "crlfNormalizedTextEntries": 15
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.0",
+      "assets": [
+        {
+          "id": 649018805,
+          "name": "manifest.json",
+          "bytes": 10927,
+          "digest": "sha256:31497b7428348ba8a6b63d61b55df0e29f45e16838a1995c6ab422f20b5a7be3",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649018803,
+          "name": "README-zh-CN.txt",
+          "bytes": 2067,
+          "digest": "sha256:cc1b71a8e655cb4d553911b6b46bb6297249bfeee7438fc0c868cc8f5bf923e7",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649018856,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:86ae3b99f14480fe889f72eee0c70eaafeb7dd41824ac2d08c6faa9549bd417e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649018809,
+          "name": "SHA256SUMS.txt",
+          "bytes": 453,
+          "digest": "sha256:78336bb618b5ba8f4e8aaf6cb1b9a841b02045c5ea910340b0e31db7c895e3a0",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649018814,
+          "name": "Yangyang-Xuanling-0.3.0-model-source.zip",
+          "bytes": 53360356,
+          "digest": "sha256:055ac5485aebf8d372ff698c2ac194a1832196e48141bb943c32afc49b86c356",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/Yangyang-Xuanling-0.3.0-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v10.zip"
+        },
+        {
+          "id": 649018854,
+          "name": "Yangyang-Xuanling-0.3.0-Windows-x64-setup.exe",
+          "bytes": 71985035,
+          "digest": "sha256:d1ce55d635d531fdeebd9469be0298ce8dc5805224696095f34420202f55c0a2",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/Yangyang-Xuanling-0.3.0-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.3.0_x64-setup.exe"
+        },
+        {
+          "id": 649018813,
+          "name": "Yangyang-Xuanling-0.3.0-Windows-x64.exe",
+          "bytes": 82133504,
+          "digest": "sha256:69741a9080c5437e6a1522781263d19e23434dc02235665725412ef41998b8fd",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.0/Yangyang-Xuanling-0.3.0-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.3.1",
+      "version": "0.3.1",
+      "releaseId": 415480321,
+      "sourceCommit": "748bfff35f706b54fc551d7e9d3decda0fa44f97",
+      "sourceArchiveVerified": {
+        "exactEntries": 41,
+        "crlfNormalizedTextEntries": 16
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.1",
+      "assets": [
+        {
+          "id": 649021774,
+          "name": "manifest.json",
+          "bytes": 10935,
+          "digest": "sha256:91af68ab4f98efd3d335d76ff0de68999747007a4ec164c4df10b2661dbbfbee",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649021768,
+          "name": "README-zh-CN.txt",
+          "bytes": 2398,
+          "digest": "sha256:019aa399400223b96a04cdd784cac71d8bce5e53c1ef2398e615b70200097764",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649021837,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:adc4dcf506d0f6142b735bcc4e32d0841da4fabb46d2c1788cb180f0e6ef02ba",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649021765,
+          "name": "SHA256SUMS.txt",
+          "bytes": 453,
+          "digest": "sha256:c08823349ca945f1d1ace9525b4eb8ca33f0fe294909c0cda004e5790949d558",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649021773,
+          "name": "Yangyang-Xuanling-0.3.1-model-source.zip",
+          "bytes": 59354279,
+          "digest": "sha256:e459bfb715b5894f431b41f593b5e38395174efe6cb29ef0c4a6e637ba7f6247",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/Yangyang-Xuanling-0.3.1-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-v11.zip"
+        },
+        {
+          "id": 649021838,
+          "name": "Yangyang-Xuanling-0.3.1-Windows-x64-setup.exe",
+          "bytes": 79615333,
+          "digest": "sha256:f68172b64ac844042e7569c4e625ce8808b3ce9310f498c3c31ad7429afd5a8a",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/Yangyang-Xuanling-0.3.1-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.3.1_x64-setup.exe"
+        },
+        {
+          "id": 649021760,
+          "name": "Yangyang-Xuanling-0.3.1-Windows-x64.exe",
+          "bytes": 92350464,
+          "digest": "sha256:ed2b6f727c8626aae173755fa90f333aa89655388896b1dd42708b443062aec0",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.1/Yangyang-Xuanling-0.3.1-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.3.2",
+      "version": "0.3.2",
+      "releaseId": 415480914,
+      "sourceCommit": "407e1deb691a58f4f098008ac759402f8ad69445",
+      "sourceArchiveVerified": {
+        "exactEntries": 44,
+        "crlfNormalizedTextEntries": 21
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.2",
+      "assets": [
+        {
+          "id": 649024898,
+          "name": "manifest.json",
+          "bytes": 12066,
+          "digest": "sha256:b51d7854cb5cfef888d30fd9d67dbd03b794188303c026c1a4898a66e0ff72de",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649024892,
+          "name": "README-zh-CN.txt",
+          "bytes": 2934,
+          "digest": "sha256:1c685f85d127697b49846e4f9c55273a426ce019dea8ad2a6d48027710df8a1c",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649024987,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:8bd24dae8a2b5f9ee5c920daa21197a661bbc922a5a173ad5d25d968473140de",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649024893,
+          "name": "SHA256SUMS.txt",
+          "bytes": 455,
+          "digest": "sha256:2112ea0ba49253773246c35cab59ba305a4c28451343157747f6fff276e4d84e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649024895,
+          "name": "Yangyang-Xuanling-0.3.2-model-source.zip",
+          "bytes": 64887966,
+          "digest": "sha256:eac84422a3a2c871fe38937134647fb291861994f13f8e85ddbdd590fad076d8",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/Yangyang-Xuanling-0.3.2-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-0.3.2.zip"
+        },
+        {
+          "id": 649024976,
+          "name": "Yangyang-Xuanling-0.3.2-Windows-x64-setup.exe",
+          "bytes": 82501407,
+          "digest": "sha256:d4fac661079974681548e102dba1ed698258075e8e304289522f5b7ae78f5dad",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/Yangyang-Xuanling-0.3.2-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.3.2_x64-setup.exe"
+        },
+        {
+          "id": 649024891,
+          "name": "Yangyang-Xuanling-0.3.2-Windows-x64.exe",
+          "bytes": 92431872,
+          "digest": "sha256:de8ca37eae997d463587e373417b75ac079c217a977436a9036bd9ec93fd3901",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.2/Yangyang-Xuanling-0.3.2-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    },
+    {
+      "tag": "v0.3.3",
+      "version": "0.3.3",
+      "releaseId": 415481530,
+      "sourceCommit": "feeedbf1da5cfff4b9569dda3813b926faae4aee",
+      "sourceArchiveVerified": {
+        "exactEntries": 53,
+        "crlfNormalizedTextEntries": 27
+      },
+      "published": true,
+      "prerelease": true,
+      "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3",
+      "assets": [
+        {
+          "id": 649028026,
+          "name": "manifest.json",
+          "bytes": 15140,
+          "digest": "sha256:469a906680473a5bf81caa669f87a2beb48c62ec02f8d96d4b58c6552c1225ec",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/manifest.json",
+          "originalName": "manifest.json"
+        },
+        {
+          "id": 649028030,
+          "name": "README-zh-CN.txt",
+          "bytes": 2210,
+          "digest": "sha256:dd2f48b74e74577f41364e5292e75b62b302b70b1633b23d9d4d818510e7f34e",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/README-zh-CN.txt",
+          "originalName": "使用说明.txt"
+        },
+        {
+          "id": 649028107,
+          "name": "RELEASE-SHA256SUMS.txt",
+          "bytes": 575,
+          "digest": "sha256:d1959dbbd9f7f49847127d833c689fad65ae415dd8436c67f7ad0414e6580aa6",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/RELEASE-SHA256SUMS.txt",
+          "originalName": null
+        },
+        {
+          "id": 649028037,
+          "name": "SHA256SUMS.txt",
+          "bytes": 455,
+          "digest": "sha256:dc68151b9afde0646b1d00fe96dc7f12318a24629bed3fefcfcdd7b8aa20a4f7",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/SHA256SUMS.txt",
+          "originalName": "SHA256SUMS.txt"
+        },
+        {
+          "id": 649028014,
+          "name": "Yangyang-Xuanling-0.3.3-model-source.zip",
+          "bytes": 72405610,
+          "digest": "sha256:18ffc85bb33c911eb848a6d60b6590f8475a1108b191d3b42c59674e3c8b961f",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/Yangyang-Xuanling-0.3.3-model-source.zip",
+          "originalName": "秧秧玄翎-模型源文件-0.3.3.zip"
+        },
+        {
+          "id": 649028108,
+          "name": "Yangyang-Xuanling-0.3.3-Windows-x64-setup.exe",
+          "bytes": 84702484,
+          "digest": "sha256:af8ac3059592077e40b32a76a43291e53feb06ad15ea0988c41c77745f95e5e7",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/Yangyang-Xuanling-0.3.3-Windows-x64-setup.exe",
+          "originalName": "秧秧玄翎_0.3.3_x64-setup.exe"
+        },
+        {
+          "id": 649028013,
+          "name": "Yangyang-Xuanling-0.3.3-Windows-x64.exe",
+          "bytes": 92905984,
+          "digest": "sha256:d57302753177264ba9b197fb4ff12b74f3338ea916e0ccd7381463b5b793dade",
+          "url": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.3/Yangyang-Xuanling-0.3.3-Windows-x64.exe",
+          "originalName": "秧秧玄翎.exe"
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "assetCount": 56,
+  "totalBytes": 1205082688,
+  "repositoryVisibility": "PRIVATE",
+  "currentRecommendedVersion": "0.3.3",
+  "currentRecommendedUrl": "https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.3",
+  "downloadIndexUrl": "https://github.com/HABAI182/yangyang-xuanling-companion/releases",
+  "originalDeliveriesUnmodified": true,
+  "assetNaming": "ASCII versioned download names with Chinese labels; original file bytes preserved; RELEASE-SHA256SUMS.txt maps downloaded filenames",
+  "verificationReused": "Upload worker compared every remote SHA-256 and size with the locally verified plan; source ZIPs matched original source commits. Final lightweight API check confirms private visibility, published state and asset counts."
+}
