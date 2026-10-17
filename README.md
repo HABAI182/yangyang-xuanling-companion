@@ -45,6 +45,8 @@ Windows程序和模型源文件在私有仓库的 [GitHub Releases](https://gith
 
 2026-10-14 用户指出第一版重绘偏窄、偏艳，已选择“原图像素抠图、拆层，仅补绘隐藏区域”。第一版生成的头部、设备和组合图作为 rejected visual candidate 保留；后续以可读取的同构图参考副本的原始像素为准，保留比例与 RGB，不整体重绘。用户消息中的桌面原文件当前不可读取，同构图 skill 副本为 1536×1536，来源在 `docs/character-contract.json` 中区分记录。
 
+维护验收与隐私边界见 [ACCEPTANCE-STATUS.md](docs/ACCEPTANCE-STATUS.md)；CI 不发布模型、截图或 Release。
+
 ## 开发
 
 ```powershell
