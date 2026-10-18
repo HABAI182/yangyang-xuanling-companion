@@ -2,6 +2,21 @@
 
 Windows x64 Q 版 Live2D 桌宠，当前为 **0.3.4 精修预览**。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
 
+## 0.3.5 分版候选
+
+`codex/bilibili-editions` 为本地发行准备：免费基础版 0 元，保留日常键鼠、四区与 Space、视线与桌面设置；表情完整版拟定 15 元，增加 16 种情绪与日常状态、3 段互动、台词和动作快捷键。基础版在前端与原生层分别限制付费功能，两个版本使用独立配置与登录启动项。
+
+作者已确认底稿自有、可商用改编；库洛对营利发行的书面同意尚未取得。此候选不代表获准公开销售，暂不提供 VTS、面捕或工程商品。现有私有 Release、历史附件与 0.3.4 用户配置保留。
+
+```powershell
+npm run build:basic
+npm run build:full
+npm run package:basic
+npm run package:full
+```
+
+分版脚本只嵌入当前运行资源，产物写入相邻的 `yangyang-bilibili-launch/packages`；不含 PSD、CMO3、旧模型或个人设置。Tauri 使用相对 `frontendDist` 和 `custom-protocol`，确保 Windows 独立程序嵌入页面而非引用开发机路径。
+
 ## 下载与使用
 
 [v0.3.4 Windows 便携程序 / 安装包](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.4) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)

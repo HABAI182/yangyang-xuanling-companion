@@ -36,6 +36,7 @@ pub fn shortcut_key(chord:&str)->Option<(usize,bool,bool,bool)>{
 }
 impl Preferences{
  pub fn validate(&mut self)->Result<(),String>{
+  crate::edition::restrict(self);
   for (value,lo,hi) in [(&mut self.size,210.,840.),(&mut self.intensity,0.,1.6),(&mut self.text_scale,0.85,1.3),(&mut self.keyboard_scale,0.,1.6),(&mut self.mouse_scale,0.,1.6),(&mut self.hand_speed,0.5,2.),(&mut self.head_elasticity,0.,1.5),(&mut self.gaze_scale,0.5,3.2),(&mut self.gaze_idle_seconds,1.,15.),(&mut self.key_bubble_scale,0.8,1.8),(&mut self.speech_bubble_scale,0.8,1.6),(&mut self.bubble_seconds,2.,12.),(&mut self.hover_opacity,0.2,0.8),(&mut self.sfx_volume,0.,1.)]{if !value.is_finite(){return Err("设置数值无效".into());}*value=value.clamp(lo,hi);}
   self.max_keys=self.max_keys.clamp(1,6);self.hover_delay=self.hover_delay.clamp(250,1500);
   for (s,allowed,default) in [(&mut self.theme,&["system","light","dark"][..],"system"),(&mut self.accent,&["blue","violet","sage","coral"][..],"blue"),(&mut self.density,&["comfortable","compact"][..],"comfortable"),(&mut self.motion,&["full","low","off"][..],"full"),(&mut self.input_mode,&["keyboard_mouse","keyboard_only"][..],"keyboard_mouse")]{if !allowed.contains(&s.as_str()){*s=default.into();}}
@@ -51,6 +52,6 @@ impl Preferences{
 #[cfg(test)]mod tests{
  use super::*;
  #[test]fn migration_preserves_explicit_old_settings(){let mut p:Preferences=serde_json::from_str(r#"{"showKeys":false,"alwaysOnTop":false,"size":420}"#).unwrap();p.validate().unwrap();assert!(!p.show_keys);assert!(!p.always_on_top);assert_eq!(p.shortcuts.len(),25);assert!(!p.repeat_keys);}
- #[test]fn shortcut_conflicts_and_recovery_chord_are_rejected(){assert!(shortcut_key("Ctrl+Alt+Y").is_none());let mut p=Preferences::default();p.shortcuts[0]=Shortcut{enabled:true,chord:"Ctrl+Alt+1".into(),action:"smile".into()};p.shortcuts[1]=p.shortcuts[0].clone();assert!(p.validate().is_err());assert!(shortcut_key("Alt+F12").is_some());}
+ #[test]fn shortcut_conflicts_and_recovery_chord_are_rejected(){assert!(shortcut_key("Ctrl+Alt+Y").is_none());let mut p=Preferences::default();p.shortcuts[0]=Shortcut{enabled:true,chord:"Ctrl+Alt+1".into(),action:"smile".into()};p.shortcuts[1]=p.shortcuts[0].clone();if crate::edition::BASIC{assert!(p.validate().is_ok());assert!(p.shortcuts.iter().all(|s|!s.enabled));}else{assert!(p.validate().is_err());}assert!(shortcut_key("Alt+F12").is_some());}
  #[test]fn overlay_preferences_migrate_and_round_trip(){let mut p:Preferences=serde_json::from_str(r#"{"size":445.2,"showKeys":false}"#).unwrap();p.validate().unwrap();assert_eq!(p.gaze_scale,2.1);assert_eq!(p.key_bubble_scale,1.3);assert_eq!(p.speech_bubble_scale,1.);p.key_bubble_scale=1.8;p.speech_bubble_scale=0.9;let q:Preferences=serde_json::from_str(&serde_json::to_string(&p).unwrap()).unwrap();assert_eq!(q.size,445.2);assert!(!q.show_keys);assert_eq!(q.key_bubble_scale,1.8);assert_eq!(q.speech_bubble_scale,0.9);}
 }

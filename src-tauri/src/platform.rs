@@ -33,7 +33,8 @@ use crate::preferences::Preferences;
 #[cfg(windows)]pub fn set_autostart(enabled:bool)->Result<(),String>{unsafe{
  use windows_sys::Win32::{System::Registry::*,Foundation::ERROR_SUCCESS};
  let mut key=std::ptr::null_mut();let status=RegCreateKeyExW(HKEY_CURRENT_USER,wide("Software\\Microsoft\\Windows\\CurrentVersion\\Run").as_ptr(),0,std::ptr::null(),0,KEY_SET_VALUE,std::ptr::null(),&mut key,std::ptr::null_mut());if status!=ERROR_SUCCESS{return Err("无法更新开机启动设置".into());}
- let result=if enabled{let path=std::env::current_exe().map_err(|e|e.to_string())?;let value=wide(&format!("\"{}\"",path.display()));RegSetValueExW(key,wide("YangyangXuanling").as_ptr(),0,REG_SZ,value.as_ptr() as *const u8,(value.len()*2) as u32)}else{let code=RegDeleteValueW(key,wide("YangyangXuanling").as_ptr());if code==2{ERROR_SUCCESS}else{code}};
+ let entry=wide(if crate::edition::BASIC{"YangyangXuanlingBasic"}else{"YangyangXuanlingFull"});
+ let result=if enabled{let path=std::env::current_exe().map_err(|e|e.to_string())?;let value=wide(&format!("\"{}\"",path.display()));RegSetValueExW(key,entry.as_ptr(),0,REG_SZ,value.as_ptr() as *const u8,(value.len()*2) as u32)}else{let code=RegDeleteValueW(key,entry.as_ptr());if code==2{ERROR_SUCCESS}else{code}};
  RegCloseKey(key);if result!=ERROR_SUCCESS{return Err("开机启动设置未保存".into());}Ok(())
 }}
 #[cfg(not(windows))]pub fn set_autostart(_:bool)->Result<(),String>{Err("当前仅支持Windows".into())}

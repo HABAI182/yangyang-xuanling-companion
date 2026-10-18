@@ -1,5 +1,6 @@
 import {prefs,desktop,call,updatePreferences,onPreferences,notify,action,escapeHtml as esc} from './bridge';
 import {expressions,motions} from './preferences.mjs';
+import {APP_VERSION,EDITION_LABEL,HAS_COMPANION} from './edition';
 const toggles=(id:string,title:string,help='')=>`<label class="setting-row"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><input id="${id}" data-field="${id}" type="checkbox"></label>`;
 const range=(id:string,title:string,min:number,max:number,step:number=0.05,help='',unit='%')=>`<div class="range-row"><label for="${id}"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><output data-output="${id}"></output></label><input id="${id}" data-field="${id}" data-unit="${unit}" type="range" min="${min}" max="${max}" step="${step}"></div>`;
 const select=(id:string,title:string,items:(string|number)[][],help='')=>`<label class="setting-row"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><select id="${id}" data-field="${id}">${items.map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select></label>`;
@@ -22,6 +23,12 @@ export async function settingsPage(app:HTMLElement){
  ${group('动作快捷键',`<p class="hint">使用 Ctrl / Alt 加字母、数字或 F 键；不拦截其他程序输入</p><details id="shortcutEditor"><summary>编辑 25 个动作槽</summary><div class="shortcut-list"></div><button class="secondary" id="saveShortcuts">保存快捷键</button></details>`)}
  ${group('项目与版本',`<div class="button-row"><button class="secondary" id="projectLink">项目主页</button><button class="secondary" id="updateLink">GitHub 版本</button></div><p class="hint">打开固定 GitHub 页面，不会自动下载或安装更新</p><details class="about-model"><summary>模型与效果说明</summary><p>当前精修模型含独立手掌与瞳孔、开闭眼图层。双手按压和开闭眼切换有原生绑定；四区与空格伸手、二维视线、弹性和小鸟动作由 SDK 运行时变形。闭眼轮廓补片贴合真实头部网格。尚未加入独立语音素材。</p><p>角色与 Live2D SDK 适用各自权利和许可，仅供私有开发测试。</p></details>`)}</div>
  <footer><span>0.3.4 · Live2D 桌面伴侣</span><span id="saved" role="status">设置已载入</span></footer><p id="notice" role="alert"></p></div>`;
+ app.querySelector('footer span')!.textContent=`${APP_VERSION} · ${EDITION_LABEL}`;
+ app.querySelector('.settings-heading p')!.textContent=`让风捎来一点陪伴 · ${EDITION_LABEL}`;
+ if(!HAS_COMPANION){
+  app.querySelector<HTMLInputElement>('[data-field="bubblesEnabled"]')!.closest<HTMLElement>('section')!.hidden=true;
+  app.querySelector<HTMLElement>('#shortcutEditor')!.closest<HTMLElement>('section')!.hidden=true;
+ }
  let currentPage='appearance';
  for(const button of app.querySelectorAll<HTMLButtonElement>('[data-tab]'))button.onclick=()=>{currentPage=button.dataset.tab!;for(const panel of app.querySelectorAll<HTMLElement>('[data-page]'))panel.hidden=panel.dataset.page!==currentPage;for(const b of app.querySelectorAll('[data-tab]'))b.setAttribute('aria-selected',String((b as HTMLElement).dataset.tab===currentPage));};
  function output(input:HTMLInputElement){const out=app.querySelector<HTMLOutputElement>(`[data-output="${input.id}"]`);if(!out)return;const n=Number(input.value);out.textContent=input.id==='size'?`${Math.round(n/420*100)}%`:input.dataset.unit==='%'?`${Math.round(n*100)}%`:`${n} ${input.dataset.unit}`;input.setAttribute('aria-valuetext',out.textContent);}
@@ -54,6 +61,13 @@ export async function settingsPage(app:HTMLElement){
 }
 export function menuPage(app:HTMLElement){
  document.body.className='menu-page';app.innerHTML=`<div class="interaction-menu"><header class="menu-heading" id="menuDrag"><div><span class="eyebrow">A LITTLE BREEZE</span><h1>秧秧 · 互动</h1></div><button id="closeMenu" class="icon-button" aria-label="关闭互动菜单">×</button></header><p class="menu-caption">今天想和我说些什么</p><div class="expression-grid">${expressions.slice(0,8).map(([id,t])=>`<button data-action="${id}">${t}</button>`).join('')}</div><h2>小动作</h2><div class="motion-grid">${motions.map(([id,t])=>`<button data-action="${id}">${t}</button>`).join('')}</div><details class="more-expressions"><summary>更多情绪</summary><div class="expression-grid">${expressions.slice(8).map(([id,t])=>`<button data-action="${id}">${t}</button>`).join('')}</div></details><button class="menu-settings" id="menuSettings">设置与个性化 <span>›</span></button><div class="menu-footer"><button id="menuHide">隐藏桌宠</button><button id="menuQuit">退出</button></div><p id="notice" role="alert"></p></div>`;
+ app.querySelector('h1')!.textContent=`秧秧 · ${EDITION_LABEL}`;
+ if(!HAS_COMPANION){
+  for(const node of app.querySelectorAll('.expression-grid,.motion-grid,.more-expressions,h2'))node.remove();
+  app.querySelector('.menu-caption')!.textContent='键盘与鼠标一起陪你工作';
+  const detail=document.createElement('p');detail.className='hint';detail.textContent='基础版保留四区与空格按压、鼠标滑动、视线跟随和回正。表情切换、小动作与陪伴台词属于表情完整版。';
+  document.getElementById('menuSettings')!.before(detail);
+ }
  const close=()=>desktop?call('close_panel',{label:'menu'}):window.close();
  for(const b of app.querySelectorAll<HTMLButtonElement>('[data-action]'))b.onclick=()=>{void action(b.dataset.action!).then(close).catch(e=>notify(String(e)));};
  document.getElementById('closeMenu')!.onclick=()=>void close();document.getElementById('menuSettings')!.onclick=()=>{if(desktop)void call('show_settings');else location.assign('?settings');};

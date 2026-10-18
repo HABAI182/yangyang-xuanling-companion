@@ -52,7 +52,7 @@ fn request_panel(app:&tauri::AppHandle,kind:&'static str){let handle=app.clone()
 #[tauri::command]fn hide_pet(app:tauri::AppHandle)->Result<(),String>{desktop::show(&app,false)}
 #[tauri::command]fn show_pet(app:tauri::AppHandle)->Result<(),String>{desktop::show(&app,true)}
 #[tauri::command]pub fn reset_pet(app:tauri::AppHandle)->Result<(),String>{let mut p=read_preferences(app.state());p.click_through=false;save_preferences(app.clone(),app.state(),p)?;desktop::place(&app,None)?;desktop::show(&app,true)?;desktop::save_current(&app)}
-#[tauri::command]fn pet_action(app:tauri::AppHandle,action:String)->Result<(),String>{if !ACTIONS.contains(&action.as_str()){return Err("动作无效".into());}app.emit_to("pet","pet-action",action).map_err(|e|e.to_string())}
+#[tauri::command]fn pet_action(app:tauri::AppHandle,action:String)->Result<(),String>{if !ACTIONS.contains(&action.as_str()){return Err("动作无效".into());}if !crate::edition::action_allowed(&action){return Err("此动作属于表情完整版".into());}app.emit_to("pet","pet-action",action).map_err(|e|e.to_string())}
 #[tauri::command]fn open_project_link(page:String)->Result<(),String>{platform::open_link(&page)}
 #[tauri::command]fn restart_elevated(app:tauri::AppHandle)->Result<(),String>{platform::elevated_restart()?;app.exit(0);Ok(())}
 #[tauri::command]fn quit_app(app:tauri::AppHandle){app.exit(0)}
@@ -60,7 +60,7 @@ fn request_panel(app:&tauri::AppHandle,kind:&'static str){let handle=app.clone()
 #[tauri::command]fn test_sound(state:tauri::State<AppState>){let volume=state.prefs.lock().unwrap_or_else(|x|x.into_inner()).sfx_volume;crate::sound::play(volume);}
 #[tauri::command]fn input_metrics(state:tauri::State<AppState>)->serde_json::Value{
  #[cfg(windows)]let active=crate::keyboard_edges::active();#[cfg(not(windows))]let active=false;
- serde_json::json!({"samples":state.samples.load(Ordering::Relaxed),"keyboardPresses":state.keyboard_presses.load(Ordering::Relaxed),"mousePresses":state.mouse_presses.load(Ordering::Relaxed),"keyboardHookActive":active,"gamepadConnected":state.gamepad_connected.load(Ordering::Relaxed),"ownEditorForeground":platform::own_editor_foreground(),"transparentCursor":state.cursor_ignored.load(Ordering::Acquire),"hitMaskUpdates":state.hit_mask.lock().unwrap_or_else(|x|x.into_inner()).updates})
+ serde_json::json!({"edition":crate::edition::NAME,"samples":state.samples.load(Ordering::Relaxed),"keyboardPresses":state.keyboard_presses.load(Ordering::Relaxed),"mousePresses":state.mouse_presses.load(Ordering::Relaxed),"keyboardHookActive":active,"gamepadConnected":state.gamepad_connected.load(Ordering::Relaxed),"ownEditorForeground":platform::own_editor_foreground(),"transparentCursor":state.cursor_ignored.load(Ordering::Acquire),"hitMaskUpdates":state.hit_mask.lock().unwrap_or_else(|x|x.into_inner()).updates})
 }
 #[tauri::command]fn window_diagnostics(app:tauri::AppHandle)->Result<serde_json::Value,String>{let mut result=serde_json::Map::new();for label in ["pet","settings","menu"]{if let Some(w)=app.get_webview_window(label){let p=w.outer_position().map_err(|e|e.to_string())?;let s=w.outer_size().map_err(|e|e.to_string())?;let work=desktop::work(&w)?.map(|(r,scale)|serde_json::json!({"x":r.x,"y":r.y,"width":r.width,"height":r.height,"scale":scale}));result.insert(label.into(),serde_json::json!({"x":p.x,"y":p.y,"width":s.width,"height":s.height,"visible":w.is_visible().map_err(|e|e.to_string())?,"minimized":w.is_minimized().map_err(|e|e.to_string())?,"alwaysOnTop":w.is_always_on_top().map_err(|e|e.to_string())?,"work":work}));}}Ok(result.into())}
 

@@ -9,6 +9,7 @@ import {HitTesting} from './hit-testing';
 import {PetRenderer} from './renderer';
 import {settingsPage,menuPage} from './settings';
 import {renderEmotion} from './effects';
+import {EDITION,HAS_COMPANION,EDITION_LABEL} from './edition';
 import {desktop,prefs,call,notify,onPreferences,initializePreferences,onAction,escapeHtml} from './bridge';
 
 type Frame={keysHeld:number,mouseDown:boolean,newPress:boolean,newMousePress:boolean,keyLabel:string,reach:number,targetX?:number,targetY?:number,targetZone?:string,cursorX:number,cursorY:number,presses?:string[],repeats?:string[],hovering?:boolean,cursorMoved?:boolean};
@@ -16,7 +17,7 @@ const app=document.querySelector<HTMLDivElement>('#app')!;
 async function petPage(){
  if(!desktop)document.body.className='browser-preview';
  app.innerHTML=`<div class="pet-shell"><canvas id="pet" aria-label="秧秧玄翎桌宠"></canvas><div id="emotion" class="emotion-layer"></div><div id="speech" class="speech-bubble" role="status"></div><div id="key" class="key-bubbles" aria-hidden="true"></div><div class="pet-tools"><button id="drag" title="拖动桌宠" aria-label="拖动桌宠">⠿</button><button id="interact" title="互动菜单" aria-label="互动菜单">✧</button><button id="settings" title="设置" aria-label="设置">⚙</button></div><p id="notice" role="alert"></p></div>${desktop?'':`<aside class="preview-bar"><span class="eyebrow">A LITTLE BREEZE</span><h1>秧秧玄翎</h1><p id="rendererMode">正在载入 Live2D</p><div class="demo-actions"><button id="demoKeyboard">键盘</button><button id="demoMouse">鼠标</button><button id="demoBoth">同时按下</button><button id="demoSleepy">困倦</button><button id="demoCheer">加油</button><button id="demoReset">日常</button><button id="toggleGround">切换背景</button><a href="?settings" target="yangyang-settings">设置</a><a href="?menu" target="yangyang-menu">互动菜单</a></div><p>在此页按键或点击可预览<br>Windows 程序使用原生全局输入</p></aside>`}`;
- const canvas=document.getElementById('pet') as HTMLCanvasElement,state=new InputState(),overlay=new KeyOverlay(),companion=new Companion();
+ const canvas=document.getElementById('pet') as HTMLCanvasElement,state=new InputState(),overlay=new KeyOverlay(),companion=new Companion(HAS_COMPANION);
  const gaze={x:0,y:0},gazeController=new GazeController();let renderer:PetRenderer;const config=await(await fetch('/assets/model-config.json')).json();
  if(typeof (window as any).Live2DCubismCore==='undefined')await new Promise<void>((resolve,reject)=>{const s=document.createElement('script');s.src='/vendor/live2d/live2dcubismcore.min.js';s.onload=()=>resolve();s.onerror=()=>reject(new Error('Core 加载失败'));document.head.append(s);});
  const {CubismRenderer}=await import('./cubism');const live=new CubismRenderer(canvas,config);await live.load();renderer=live;
@@ -48,7 +49,8 @@ async function petPage(){
   canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();local({cursorX:Math.max(-1,Math.min(1,(e.clientX-r.left)/r.width*2-1)),cursorY:Math.max(-1,Math.min(1,(e.clientY-r.top)/r.height*2-1)),hovering:true});});canvas.addEventListener('pointerleave',()=>local({hovering:false}));
   function demo(kind:string){local({keysHeld:kind!=='mouse'?1:0,mouseDown:kind!=='keyboard',newPress:kind!=='mouse',newMousePress:kind!=='keyboard',keyLabel:'A',reach:.6});setTimeout(()=>local(),650);}
   for(const [id,kind] of [['demoKeyboard','keyboard'],['demoMouse','mouse'],['demoBoth','both']])document.getElementById(id)!.onclick=()=>demo(kind);
-  document.getElementById('demoSleepy')!.onclick=()=>perform('sleepy');document.getElementById('demoCheer')!.onclick=()=>perform('cheer');document.getElementById('demoReset')!.onclick=()=>perform('default');document.getElementById('toggleGround')!.onclick=()=>document.body.classList.toggle('dark');document.getElementById('rendererMode')!.textContent='Cubism 运行预览 · 精修版';
+  document.getElementById('demoSleepy')!.onclick=()=>perform('sleepy');document.getElementById('demoCheer')!.onclick=()=>perform('cheer');document.getElementById('demoReset')!.onclick=()=>perform('default');document.getElementById('toggleGround')!.onclick=()=>document.body.classList.toggle('dark');document.getElementById('rendererMode')!.textContent=`Cubism 运行预览 · ${EDITION_LABEL}`;
+  if(!HAS_COMPANION)for(const id of ['demoSleepy','demoCheer','demoReset'])document.getElementById(id)!.remove();
  }
  document.getElementById('settings')!.onclick=()=>{if(desktop)void call('show_settings').catch(e=>notify(String(e)));else window.open('?settings','yangyang-settings');};
  const openMenu=()=>{if(desktop)void call('show_menu').catch(e=>notify(String(e)));else window.open('?menu','yangyang-menu','width=356,height=670');};
@@ -67,7 +69,7 @@ async function petPage(){
  }
  frameRequest=requestAnimationFrame(draw);if(desktop)await call('pet_ready');
  if(import.meta.env.DEV)(window as any).__petDebug={input,snapshot:()=>state.snapshot(performance.now(),prefs.handSpeed),frames:()=>frames,mode:'cubism',preferences:()=>({...prefs}),action:perform,companion:()=>companion.read(performance.now(),prefs),badges:()=>overlay.read(performance.now(),prefs),gaze:()=>gazeController.read(performance.now(),prefs),geometry:()=>live.diagnostics()};
- Object.defineProperty(window,'__petStatus',{value:Object.freeze({mode:'cubism',read:()=>({frames,snapshot:state.snapshot(performance.now(),prefs.handSpeed),preferences:{...prefs},expression:companion.read(performance.now(),prefs).expression,gaze:gazeController.read(performance.now(),prefs),hitMask:hitTesting.read(),model:live.diagnostics(),canvas:{width:canvas.width,height:canvas.height}})}),writable:false});
+ Object.defineProperty(window,'__petStatus',{value:Object.freeze({mode:'cubism',edition:EDITION,read:()=>({edition:EDITION,frames,snapshot:state.snapshot(performance.now(),prefs.handSpeed),preferences:{...prefs},expression:companion.read(performance.now(),prefs).expression,gaze:gazeController.read(performance.now(),prefs),hitMask:hitTesting.read(),model:live.diagnostics(),canvas:{width:canvas.width,height:canvas.height}})}),writable:false});
  window.addEventListener('beforeunload',()=>{active=false;cancelAnimationFrame(frameRequest);renderer.dispose();});
 }
 (async()=>{await initializePreferences();const query=new URLSearchParams(location.search);if(query.has('settings'))await settingsPage(app);else if(query.has('menu'))menuPage(app);else await petPage();})().catch(async e=>{notify(String(e));if(desktop)await call('pet_ready').catch(()=>{});});

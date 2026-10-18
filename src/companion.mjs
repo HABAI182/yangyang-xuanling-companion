@@ -8,11 +8,12 @@ export const lines=[
  '再试一次，我陪你','别忘了给自己一点奖励','正在认真听你说话','一起迎接下一阵风','愿今天有温柔的相遇','就这样，慢慢往前走',
 ];
 export class Companion {
+ constructor(premium=true){this.premium=premium;}
  expression='default';actionStarted=0;motion='';until=0;lastInput=0;lastBubble=-Infinity;bubble='';bubbleUntil=0;index=0;lastTouch=-Infinity;autoSleeping=false;
  activity(now){this.lastInput=now;if(this.autoSleeping){this.expression='default';this.autoSleeping=false;}}
- say(now,p,text){if(!p.bubblesEnabled)return;this.bubble=text??lines[this.index++%lines.length];this.bubbleUntil=now+p.bubbleSeconds*1000;this.lastBubble=now;}
+ say(now,p,text){if(!this.premium||!p.bubblesEnabled)return;this.bubble=text??lines[this.index++%lines.length];this.bubbleUntil=now+p.bubbleSeconds*1000;this.lastBubble=now;}
  action(id,now,p){
-  if(!actionIds.has(id))return false;
+  if(!actionIds.has(id)||!this.premium&&id!=='default')return false;
   this.activity(now);this.motion=['nod','bird','cheer'].includes(id)?id:'';
   this.expression=this.motion?this.motion==='cheer'?'smile':'default':id;
   this.actionStarted=now;this.until=this.motion?now+2400:0;
@@ -21,6 +22,7 @@ export class Companion {
  }
  touch(now,p){if(!p.touchEnabled||now-this.lastTouch<2500)return;this.lastTouch=now;this.action('blush',now,p);}
  read(now,p){
+  if(!this.premium)return {expression:'default',motion:'',age:0,bubble:''};
   if(this.until&&now>this.until){this.motion='';this.expression='default';this.until=0;}
   if(p.sleepMinutes&&now-this.lastInput>=p.sleepMinutes*60000&&this.expression==='default'){this.expression='sleepy';this.autoSleeping=true;}
   if(!p.sleepMinutes&&this.autoSleeping){this.expression='default';this.autoSleeping=false;}
