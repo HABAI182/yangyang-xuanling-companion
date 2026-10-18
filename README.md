@@ -1,8 +1,10 @@
 # 秧秧玄翎桌面伴侣
 
-Windows x64 Q 版 Live2D 桌宠，当前为 **0.3.6 两版候选**。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
+Windows x64 Q 版桌面伴侣。新增 **0.3.7 静态桌面版**，已有免费基础版、表情完整版仍保留 **0.3.6** 原始程序。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
 
-当前仅保留**免费基础版0元**和**表情完整版15元**，已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[两版说明](docs/distribution/two-editions.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
+当前提供**静态桌面版0元**、**免费基础版0元**和**表情完整版15元**，已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[版本说明](docs/distribution/two-editions.md) · [静态版与EXE入口](docs/distribution/0.3.7-static.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
+
+静态版固定显示现有日常透明画面，不加载Live2D Core/模型、不运行动画循环或全局键盘钩子。保留拖动、缩放、置顶、穿透、位置预设、托盘和开机启动；三个版本的配置和开机启动项彼此独立。已有两个互动版不重新打包或覆盖。
 
 ## 0.3.5 分版候选
 
@@ -15,15 +17,23 @@ Windows x64 Q 版 Live2D 桌宠，当前为 **0.3.6 两版候选**。本仓库�
 ```powershell
 npm run build:basic
 npm run build:full
+npm run build:static
 npm run package:basic
 npm run package:full
+npm run package:static
 ```
 
 分版脚本只嵌入当前运行资源，产物写入相邻的 `yangyang-bilibili-launch/packages`；不含 PSD、CMO3、旧模型或个人设置。Tauri 使用相对 `frontendDist` 和 `custom-protocol`，确保 Windows 独立程序嵌入页面而非引用开发机路径。
 
 ## 下载与使用
 
-[v0.3.6 两版 Windows 便携程序 / 安装包](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6) · [v0.3.4](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.4) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
+直接下载无需安装的 EXE（均需要系统 WebView2）：
+
+- [静态桌面版 0.3.7 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.7/YangyangXuanling-0.3.7-static-win-x64-portable.exe)
+- [免费基础版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-basic-win-x64-portable.exe)
+- [表情完整版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-full-win-x64-portable.exe)
+
+[v0.3.6 ZIP / 安装包备份](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
 
 使用有权限的 GitHub 账号下载并核对附件校验单。旧 Tag、Release 和附件原样保留。私有GitHub是作者备份，爱发电买家的领取入口另行配置，不向买家提供仓库凭据。
 

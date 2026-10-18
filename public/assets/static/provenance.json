@@ -1,0 +1,9 @@
+{
+  "asset": "yangyang-neutral.png",
+  "sha256": "7acdf7ff47c063823146997879dd0719b6fa8d9b48ddec824f52af10b572aeac",
+  "source": "Existing 0.3.6 basic edition neutral runtime render, hero-basic.png",
+  "sourceSoftwareCommit": "988d4a3889f60046b4ecd5924fd2a56c33d6430a",
+  "model": "v11 with v14 runtime detail patches",
+  "processing": "Original PNG bytes reused, no recoloring, reshaping or AI repaint",
+  "purpose": "Static desktop edition raster"
+}

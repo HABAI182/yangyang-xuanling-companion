@@ -9,7 +9,7 @@ import {HitTesting} from './hit-testing';
 import {PetRenderer} from './renderer';
 import {settingsPage,menuPage} from './settings';
 import {renderEmotion} from './effects';
-import {EDITION,HAS_COMPANION,EDITION_LABEL} from './edition';
+import {EDITION,HAS_COMPANION,EDITION_LABEL,IS_STATIC} from './edition';
 import {desktop,prefs,call,notify,onPreferences,initializePreferences,onAction,escapeHtml} from './bridge';
 
 type Frame={keysHeld:number,mouseDown:boolean,newPress:boolean,newMousePress:boolean,keyLabel:string,reach:number,targetX?:number,targetY?:number,targetZone?:string,cursorX:number,cursorY:number,presses?:string[],repeats?:string[],hovering?:boolean,cursorMoved?:boolean};
@@ -72,4 +72,4 @@ async function petPage(){
  Object.defineProperty(window,'__petStatus',{value:Object.freeze({mode:'cubism',edition:EDITION,read:()=>({edition:EDITION,frames,snapshot:state.snapshot(performance.now(),prefs.handSpeed),preferences:{...prefs},expression:companion.read(performance.now(),prefs).expression,gaze:gazeController.read(performance.now(),prefs),hitMask:hitTesting.read(),model:live.diagnostics(),canvas:{width:canvas.width,height:canvas.height}})}),writable:false});
  window.addEventListener('beforeunload',()=>{active=false;cancelAnimationFrame(frameRequest);renderer.dispose();});
 }
-(async()=>{await initializePreferences();const query=new URLSearchParams(location.search);if(query.has('settings'))await settingsPage(app);else if(query.has('menu'))menuPage(app);else await petPage();})().catch(async e=>{notify(String(e));if(desktop)await call('pet_ready').catch(()=>{});});
+(async()=>{await initializePreferences();const query=new URLSearchParams(location.search);if(query.has('settings'))await settingsPage(app);else if(query.has('menu'))menuPage(app);else if(IS_STATIC){const {staticPetPage}=await import('./static-pet');await staticPetPage(app);}else await petPage();})().catch(async e=>{notify(String(e));if(desktop)await call('pet_ready').catch(()=>{});});

@@ -1,6 +1,6 @@
 [package]
 name = "yangyang-xuanling-companion"
-version = "0.3.6"
+version = "0.3.7"
 description = "秧秧玄翎桌面伴侣制作预览"
 authors = ["HABAI182"]
 edition = "2021"
@@ -8,6 +8,7 @@ edition = "2021"
 [features]
 custom-protocol = ["tauri/custom-protocol"]
 edition-basic = []
+edition-static = []
 
 [build-dependencies]
 tauri-build = { version = "=2.6.3", features = [] }

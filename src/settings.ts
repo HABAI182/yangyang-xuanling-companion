@@ -1,6 +1,6 @@
 import {prefs,desktop,call,updatePreferences,onPreferences,notify,action,escapeHtml as esc} from './bridge';
 import {expressions,motions} from './preferences.mjs';
-import {APP_VERSION,EDITION_LABEL,HAS_COMPANION} from './edition';
+import {APP_VERSION,EDITION_LABEL,HAS_COMPANION,IS_STATIC} from './edition';
 const toggles=(id:string,title:string,help='')=>`<label class="setting-row"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><input id="${id}" data-field="${id}" type="checkbox"></label>`;
 const range=(id:string,title:string,min:number,max:number,step:number=0.05,help='',unit='%')=>`<div class="range-row"><label for="${id}"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><output data-output="${id}"></output></label><input id="${id}" data-field="${id}" data-unit="${unit}" type="range" min="${min}" max="${max}" step="${step}"></div>`;
 const select=(id:string,title:string,items:(string|number)[][],help='')=>`<label class="setting-row"><span><b>${title}</b>${help?`<small>${help}</small>`:''}</span><select id="${id}" data-field="${id}">${items.map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select></label>`;
@@ -29,6 +29,15 @@ export async function settingsPage(app:HTMLElement){
   app.querySelector<HTMLInputElement>('[data-field="bubblesEnabled"]')!.closest<HTMLElement>('section')!.hidden=true;
   app.querySelector<HTMLElement>('#shortcutEditor')!.closest<HTMLElement>('section')!.hidden=true;
  }
+ if(IS_STATIC){
+  app.querySelector('[data-tab="interaction"]')!.remove();app.querySelector('[data-page="interaction"]')!.remove();
+  app.querySelector<HTMLElement>('.settings-tabs')!.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+  app.querySelector('[data-field="motion"]')!.closest<HTMLElement>('section')!.hidden=true;
+  for(const id of ['fps','hoverFade','hoverDelay','hoverOpacity'])app.querySelector(`[data-field="${id}"]`)!.closest<HTMLElement>('.setting-row,.range-row')!.hidden=true;
+  document.getElementById('restartElevated')!.hidden=true;document.getElementById('restartElevated')!.nextElementSibling!.setAttribute('hidden','');
+  app.querySelector('.about-model')!.innerHTML='<summary>画面与版本说明</summary><p>静态版使用当前角色的透明日常画面，保留拖动、缩放、置顶、穿透和位置设置。画面不会眨眼、跟随鼠标、敲击键鼠或切换表情。</p>';
+  document.getElementById('openInteraction')!.title='打开桌面菜单';
+ }
  let currentPage='appearance';
  for(const button of app.querySelectorAll<HTMLButtonElement>('[data-tab]'))button.onclick=()=>{currentPage=button.dataset.tab!;for(const panel of app.querySelectorAll<HTMLElement>('[data-page]'))panel.hidden=panel.dataset.page!==currentPage;for(const b of app.querySelectorAll('[data-tab]'))b.setAttribute('aria-selected',String((b as HTMLElement).dataset.tab===currentPage));};
  function output(input:HTMLInputElement){const out=app.querySelector<HTMLOutputElement>(`[data-output="${input.id}"]`);if(!out)return;const n=Number(input.value);out.textContent=input.id==='size'?`${Math.round(n/420*100)}%`:input.dataset.unit==='%'?`${Math.round(n*100)}%`:`${n} ${input.dataset.unit}`;input.setAttribute('aria-valuetext',out.textContent);}
@@ -45,7 +54,7 @@ export async function settingsPage(app:HTMLElement){
  async function positions(){if(!desktop)return;const saved=await call<boolean[]>('list_positions');saved.forEach((v,n)=>{document.getElementById(`positionState${n}`)!.textContent=v?'已保存':'未保存';(app.querySelector(`[data-restore-position="${n}"]`) as HTMLButtonElement).disabled=!v;});}
  for(const b of app.querySelectorAll<HTMLButtonElement>('[data-save-position]'))b.onclick=async()=>{if(!desktop){notify('位置预设在 Windows 程序中可用');return;}try{await call('save_position',{slot:Number(b.dataset.savePosition)});await positions();}catch(e){notify(String(e));}};
  for(const b of app.querySelectorAll<HTMLButtonElement>('[data-restore-position]'))b.onclick=async()=>{try{if(desktop)await call('restore_position',{slot:Number(b.dataset.restorePosition)});}catch(e){notify(String(e));}};
- const bind=(id:string,fn:()=>unknown)=>document.getElementById(id)!.addEventListener('click',()=>Promise.resolve(fn()).catch(e=>notify(String(e))));
+ const bind=(id:string,fn:()=>unknown)=>document.getElementById(id)?.addEventListener('click',()=>Promise.resolve(fn()).catch(e=>notify(String(e))));
  bind('openInteraction',()=>desktop?call('show_menu'):window.open('?menu','yangyang-menu','width=356,height=670'));
  bind('reset',()=>desktop?call('reset_pet'):notify('浏览器预览中无需找回窗口'));bind('hidePet',()=>desktop?call('hide_pet'):notify('隐藏功能在 Windows 程序中可用'));
  bind('testSound',()=>desktop?call('test_sound'):notify('声音在 Windows 程序中播放'));
@@ -56,7 +65,7 @@ export async function settingsPage(app:HTMLElement){
  document.querySelector('.shortcut-list')!.innerHTML=slots.map((s:any,n)=>`<div class="shortcut-row"><label><input type="checkbox" data-shortcut-enabled="${n}" ${s.enabled?'checked':''}><span>${n+1}</span></label><input aria-label="快捷键 ${n+1}" data-shortcut-chord="${n}" value="${esc(s.chord)}" placeholder="Ctrl+Alt+1" maxlength="48"><select aria-label="快捷键动作 ${n+1}" data-shortcut-action="${n}">${[...expressions,...motions].map(([id,title])=>`<option value="${id}" ${s.action===id?'selected':''}>${title}</option>`).join('')}</select></div>`).join('');
  bind('saveShortcuts',async()=>{const shortcuts=slots.map((_:unknown,n:number)=>({enabled:(app.querySelector(`[data-shortcut-enabled="${n}"]`) as HTMLInputElement).checked,chord:(app.querySelector(`[data-shortcut-chord="${n}"]`) as HTMLInputElement).value.trim(),action:(app.querySelector(`[data-shortcut-action="${n}"]`) as HTMLSelectElement).value}));const enabled=shortcuts.filter(x=>x.enabled);if(enabled.some(s=>!/^(?:(?:Ctrl|Alt|Shift)\+)+(?:[A-Z0-9]|F(?:[1-9]|1[0-9]|2[0-4]))$/i.test(s.chord))){notify('请使用 Ctrl / Alt 加字母、数字或 F 键');return;}if(await updatePreferences({shortcuts}))document.getElementById('saved')!.textContent='快捷键已保存';});
  let timer:ReturnType<typeof setInterval>;
- async function status(){if(!desktop){document.getElementById('runtimeStatus')!.textContent='浏览器预览 · 全局输入与窗口功能请运行 Windows 程序';return;}if(currentPage!=='advanced')return;const s=await call<any>('input_metrics');document.getElementById('runtimeStatus')!.textContent=`键盘反馈 ${s.keyboardHookActive?'就绪':'状态采样'} · 手柄${s.gamepadConnected?'已连接':'未连接'} · 本次键盘 ${s.keyboardPresses} / 鼠标 ${s.mousePresses}`;}
+ async function status(){if(IS_STATIC){document.getElementById('runtimeStatus')!.textContent='静态画面 · 未启用键鼠动作、眨眼和视线跟随';return;}if(!desktop){document.getElementById('runtimeStatus')!.textContent='浏览器预览 · 全局输入与窗口功能请运行 Windows 程序';return;}if(currentPage!=='advanced')return;const s=await call<any>('input_metrics');document.getElementById('runtimeStatus')!.textContent=`键盘反馈 ${s.keyboardHookActive?'就绪':'状态采样'} · 手柄${s.gamepadConnected?'已连接':'未连接'} · 本次键盘 ${s.keyboardPresses} / 鼠标 ${s.mousePresses}`;}
  timer=setInterval(()=>void status().catch(e=>notify(String(e))),2000);window.addEventListener('beforeunload',()=>clearInterval(timer));await status();await positions();
 }
 export function menuPage(app:HTMLElement){
@@ -64,8 +73,8 @@ export function menuPage(app:HTMLElement){
  app.querySelector('h1')!.textContent=`秧秧 · ${EDITION_LABEL}`;
  if(!HAS_COMPANION){
   for(const node of app.querySelectorAll('.expression-grid,.motion-grid,.more-expressions,h2'))node.remove();
-  app.querySelector('.menu-caption')!.textContent='键盘与鼠标一起陪你工作';
-  const detail=document.createElement('p');detail.className='hint';detail.textContent='基础版保留四区与空格按压、鼠标滑动、视线跟随和回正。表情切换、小动作与陪伴台词属于表情完整版。';
+  app.querySelector('.menu-caption')!.textContent=IS_STATIC?'安静待在桌面，陪你度过日常':'键盘与鼠标一起陪你工作';
+  const detail=document.createElement('p');detail.className='hint';detail.textContent=IS_STATIC?'画面保持静止，可拖动、缩放、置顶或调整穿透。':'基础版保留四区与空格按压、鼠标滑动、视线跟随和回正。表情切换、小动作与陪伴台词属于表情完整版。';
   document.getElementById('menuSettings')!.before(detail);
  }
  const close=()=>desktop?call('close_panel',{label:'menu'}):window.close();

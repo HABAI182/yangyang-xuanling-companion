@@ -1,6 +1,6 @@
 {
   "name": "yangyang-xuanling-companion",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,8 +11,10 @@
     "package:windows": "tauri build --bundles nsis",
     "build:basic": "node scripts/build-edition.mjs basic --web-only",
     "build:full": "node scripts/build-edition.mjs full --web-only",
+    "build:static": "node scripts/build-edition.mjs static --web-only",
     "package:basic": "node scripts/build-edition.mjs basic",
     "package:full": "node scripts/build-edition.mjs full",
+    "package:static": "node scripts/build-edition.mjs static --portable-only",
     "tauri": "tauri"
   },
   "dependencies": {

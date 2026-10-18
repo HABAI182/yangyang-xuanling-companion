@@ -57,7 +57,7 @@ fn request_panel(app:&tauri::AppHandle,kind:&'static str){let handle=app.clone()
 #[tauri::command]fn restart_elevated(app:tauri::AppHandle)->Result<(),String>{platform::elevated_restart()?;app.exit(0);Ok(())}
 #[tauri::command]fn quit_app(app:tauri::AppHandle){app.exit(0)}
 #[tauri::command]fn play_sound(state:tauri::State<AppState>){let p=state.prefs.lock().unwrap_or_else(|x|x.into_inner());if p.sfx_enabled{crate::sound::play(p.sfx_volume);}}
-#[tauri::command]fn test_sound(state:tauri::State<AppState>){let volume=state.prefs.lock().unwrap_or_else(|x|x.into_inner()).sfx_volume;crate::sound::play(volume);}
+#[tauri::command]fn test_sound(state:tauri::State<AppState>){if crate::edition::STATIC{return;}let volume=state.prefs.lock().unwrap_or_else(|x|x.into_inner()).sfx_volume;crate::sound::play(volume);}
 #[tauri::command]fn input_metrics(state:tauri::State<AppState>)->serde_json::Value{
  #[cfg(windows)]let active=crate::keyboard_edges::active();#[cfg(not(windows))]let active=false;
  serde_json::json!({"edition":crate::edition::NAME,"samples":state.samples.load(Ordering::Relaxed),"keyboardPresses":state.keyboard_presses.load(Ordering::Relaxed),"mousePresses":state.mouse_presses.load(Ordering::Relaxed),"keyboardHookActive":active,"gamepadConnected":state.gamepad_connected.load(Ordering::Relaxed),"ownEditorForeground":platform::own_editor_foreground(),"transparentCursor":state.cursor_ignored.load(Ordering::Acquire),"hitMaskUpdates":state.hit_mask.lock().unwrap_or_else(|x|x.into_inner()).updates})
@@ -93,14 +93,35 @@ fn request_panel(app:&tauri::AppHandle,kind:&'static str){let handle=app.clone()
  }
 });}
 
+// Static artwork only needs desktop hit testing, menu dismissal and recovery.
+// Do not install the keyboard hook, scan the keyboard or emit animation input.
+#[cfg(windows)]fn start_static_desktop(app:tauri::AppHandle){std::thread::spawn(move||{
+ use windows_sys::Win32::UI::{Input::KeyboardAndMouse::GetAsyncKeyState,WindowsAndMessaging::GetCursorPos};
+ let down=|key|unsafe{GetAsyncKeyState(key)} as u16&0x8000!=0;
+ let mut previous=[false;3];let mut recover_before=false;
+ loop{
+  let p=read_preferences(app.state());let state=app.state::<AppState>();let mouse=[down(1),down(2),down(4)];
+  let mut pt=windows_sys::Win32::Foundation::POINT{x:0,y:0};unsafe{GetCursorPos(&mut pt);}
+  if let Some(pet)=app.get_webview_window("pet"){if let (Ok(pos),Ok(size))=(pet.outer_position(),pet.outer_size()){
+   let hit=state.hit_mask.lock().unwrap_or_else(|x|x.into_inner()).contains(pt.x-pos.x,pt.y-pos.y,size.width,size.height);
+   let before=state.cursor_ignored.load(Ordering::Acquire);
+   let ignore=crate::hit_test::ignore_cursor(p.click_through,hit,state.dragging.load(Ordering::Acquire),previous.iter().any(|x|*x),before);
+   if before!=ignore&&pet.set_ignore_cursor_events(ignore).is_ok(){state.cursor_ignored.store(ignore,Ordering::Release);}
+  }}
+  if (mouse[0]&&!previous[0]||mouse[1]&&!previous[1])&&!state.menu_dragging.load(Ordering::Acquire){if let Some(menu)=app.get_webview_window("menu"){if let (Ok(pos),Ok(size))=(menu.outer_position(),menu.outer_size()){if pt.x<pos.x||pt.y<pos.y||pt.x>=pos.x+size.width as i32||pt.y>=pos.y+size.height as i32{let _=menu.close();}}}}
+  let recover=down(17)&&down(18)&&down(89);if recover&&!recover_before{let handle=app.clone();tauri::async_runtime::spawn_blocking(move||{let _=reset_pet(handle);});}recover_before=recover;previous=mouse;
+  std::thread::sleep(std::time::Duration::from_millis(16));
+ }
+});}
+
 pub fn run(){tauri::Builder::default().invoke_handler(tauri::generate_handler![read_preferences,save_preferences,preview_size,show_settings,show_menu,fit_menu,close_panel,update_hit_mask,pet_ready,drag_pet,drag_menu,hide_pet,show_pet,reset_pet,pet_action,open_project_link,restart_elevated,quit_app,play_sound,test_sound,input_metrics,window_diagnostics,desktop::list_positions,desktop::save_position,desktop::restore_position])
  .setup(|app|{
   let mut p=prefs_path(app.handle()).ok().and_then(|f|fs::read(f).ok()).and_then(|s|serde_json::from_slice::<Preferences>(&s).ok()).unwrap_or_default();if p.validate().is_err(){p.shortcuts=Preferences::default().shortcuts;p.fullscreen_exceptions.clear();p.validate().map_err(std::io::Error::other)?;}
   let saved=desktop::load(app.handle());let last=saved.last;app.manage(AppState{prefs:Mutex::new(p.clone()),hit_mask:Mutex::new(crate::hit_test::HitMask::default()),cursor_ignored:AtomicBool::new(false),window_gate:Mutex::new(()),keyboard_presses:AtomicU64::new(0),mouse_presses:AtomicU64::new(0),samples:AtomicU64::new(0),saved:Mutex::new(saved),visibility:Mutex::new(desktop::Visibility::default()),dragging:AtomicBool::new(false),menu_dragging:AtomicBool::new(false),ready:AtomicBool::new(false),gamepad_connected:AtomicBool::new(false)});
   apply_preferences(app.handle(),&p)?;desktop::place(app.handle(),last)?;if p.autostart{platform::set_autostart(true)?;}
-  let show=MenuItem::with_id(app,"show","显示桌宠",true,None::<&str>)?;let hide=MenuItem::with_id(app,"hide","隐藏桌宠",true,None::<&str>)?;let settings=MenuItem::with_id(app,"settings","设置与个性化",true,None::<&str>)?;let interact=MenuItem::with_id(app,"interact","和秧秧互动",true,None::<&str>)?;let through=MenuItem::with_id(app,"through","切换鼠标穿透",true,None::<&str>)?;let reset=MenuItem::with_id(app,"reset","找回桌宠 / 关闭穿透",true,None::<&str>)?;let quit=MenuItem::with_id(app,"quit","退出",true,None::<&str>)?;
+  let show=MenuItem::with_id(app,"show","显示桌宠",true,None::<&str>)?;let hide=MenuItem::with_id(app,"hide","隐藏桌宠",true,None::<&str>)?;let settings=MenuItem::with_id(app,"settings","设置与个性化",true,None::<&str>)?;let interact=MenuItem::with_id(app,"interact",if crate::edition::STATIC{"桌面菜单"}else{"和秧秧互动"},true,None::<&str>)?;let through=MenuItem::with_id(app,"through","切换鼠标穿透",true,None::<&str>)?;let reset=MenuItem::with_id(app,"reset","找回桌宠 / 关闭穿透",true,None::<&str>)?;let quit=MenuItem::with_id(app,"quit","退出",true,None::<&str>)?;
   let menu=Menu::with_items(app,&[&show,&hide,&interact,&settings,&through,&reset,&quit])?;
   TrayIconBuilder::new().icon(app.default_window_icon().unwrap().clone()).tooltip("秧秧玄翎 · 右键互动").menu(&menu).show_menu_on_left_click(false).on_menu_event(|app,e|{match e.id.as_ref(){"settings"=>request_panel(app,"settings"),"interact"=>request_panel(app,"menu"),"show"=>{let _=desktop::show(app,true);},"hide"=>{let _=desktop::show(app,false);},"reset"=>{let _=reset_pet(app.clone());},"through"=>{let mut p=read_preferences(app.state());p.click_through=!p.click_through;let _=save_preferences(app.clone(),app.state(),p);},"quit"=>app.exit(0),_=>{}}}).on_tray_icon_event(|tray,e|{if let TrayIconEvent::Click{button:MouseButton::Left,button_state:MouseButtonState::Up,..}=e{request_panel(tray.app_handle(),"menu");}}).build(app)?;
-  #[cfg(windows)]{crate::keyboard_edges::start();start_input(app.handle().clone());}desktop::watch(app.handle().clone());
+  #[cfg(windows)]{if crate::edition::STATIC{start_static_desktop(app.handle().clone());}else{crate::keyboard_edges::start();start_input(app.handle().clone());}}desktop::watch(app.handle().clone());
   let handle=app.handle().clone();std::thread::spawn(move||{std::thread::sleep(std::time::Duration::from_secs(8));let _=desktop::renderer_ready(&handle);});Ok(())
  }).run(tauri::generate_context!()).expect("秧秧玄翎启动失败");}
