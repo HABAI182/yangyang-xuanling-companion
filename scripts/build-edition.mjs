@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const version=JSON.parse(await fs.readFile(path.join(root,'package.json'),'utf8')).version;
 const edition=process.argv[2];
 if(!['basic','full'].includes(edition))throw Error('Usage: node scripts/build-edition.mjs basic|full [--web-only]');
 const webOnly=process.argv.includes('--web-only');
@@ -25,7 +26,7 @@ if(edition==='basic')details.patches=details.patches.filter(p=>!p.moods||p.moods
 for(const patch of details.patches)await copy(patch.file.replace(/^\//,''));
 await fs.mkdir(path.join(publicDir,'assets/detail-v14'),{recursive:true});
 await fs.writeFile(path.join(publicDir,'assets/detail-v14/patches.json'),JSON.stringify(details,null,2));
-await fs.writeFile(path.join(publicDir,'assets/edition.json'),JSON.stringify({edition,version:'0.3.5',priceCny:edition==='full'?15:0,status:'local-release-candidate',publicSaleApproved:false},null,2));
+await fs.writeFile(path.join(publicDir,'assets/edition.json'),JSON.stringify({edition,version,priceCny:edition==='full'?15:0,status:'local-release-candidate',publicSaleApproved:false},null,2));
 const env={...process.env,VITE_APP_EDITION:edition,YANGYANG_PUBLIC_DIR:publicDir,YANGYANG_DIST_DIR:dist};
 const run=(args)=>{
  const r=spawnSync(process.execPath,args,{cwd:root,env,stdio:'inherit'});
@@ -44,12 +45,12 @@ const cfg=path.join(stage,'tauri-edition.json');await fs.writeFile(cfg,JSON.stri
 const args=['node_modules/@tauri-apps/cli/tauri.js','build','--config',cfg,'--bundles','nsis','--features',edition==='basic'?'custom-protocol,edition-basic':'custom-protocol'];
 run(args);
 const target=process.env.CARGO_TARGET_DIR?path.resolve(process.env.CARGO_TARGET_DIR):path.join(root,'src-tauri/target');
-const delivery=path.resolve(root,'../yangyang-bilibili-launch/packages',edition);
+const delivery=path.resolve(root,'../yangyang-bilibili-launch/packages',version,edition);
 await fs.mkdir(delivery,{recursive:true});
 await fs.copyFile(path.join(target,'release/yangyang-xuanling-companion.exe'),path.join(delivery,`秧秧玄翎${label}.exe`));
 const nsis=path.join(target,'release/bundle/nsis');
-for(const name of await fs.readdir(nsis))if(name.startsWith(`秧秧玄翎${label}_`)&&name.endsWith('.exe'))await fs.copyFile(path.join(nsis,name),path.join(delivery,`YangyangXuanling-0.3.5-${edition}-win-x64-setup-candidate.exe`));
+for(const name of await fs.readdir(nsis))if(name.startsWith(`秧秧玄翎${label}_${version}_`)&&name.endsWith('.exe'))await fs.copyFile(path.join(nsis,name),path.join(delivery,`YangyangXuanling-${version}-${edition}-win-x64-setup-candidate.exe`));
 for(const file of ['LICENSE.txt','LICENSE-CHANG-LI-MIT.txt','THIRD-PARTY-NOTICES.md'])await fs.copyFile(path.join(root,file),path.join(delivery,file));
 for(const file of ['CORE-LICENSE.md','CORE-REDISTRIBUTABLE-FILES.txt','FRAMEWORK-LICENSE.md'])await fs.copyFile(path.join(source,'vendor/live2d',file),path.join(delivery,file));
-await fs.writeFile(path.join(delivery,'edition.json'),JSON.stringify({edition,version:'0.3.5',priceCny:edition==='full'?15:0,status:'local-candidate',publicSaleApproved:false},null,2));
+await fs.writeFile(path.join(delivery,'edition.json'),JSON.stringify({edition,version,priceCny:edition==='full'?15:0,status:'local-candidate',publicSaleApproved:false},null,2));
 console.log(JSON.stringify({edition,stage,dist,native:true}));

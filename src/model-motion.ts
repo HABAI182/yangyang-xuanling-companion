@@ -14,7 +14,10 @@ export function deform(model:CubismModel,restored:Map<number,Float32Array>,now:n
  const dy=((idle?Math.sin(now/850)*.0014:0)+cheer*.015+nod*.008)*ch*level-pulse*.025*ch;
  const pivotX=toX(760),pivotY=toY(1060),cos=Math.cos(angle),sin=Math.sin(angle);
  const keyX=Math.max(-145,Math.min(115,s.reach*160*o.keyboardScale*intensity)),keyY=Math.max(-8,Math.min(69,(s.depth*44+s.keyboardPress*21)*o.keyboardScale*intensity));
- const mouseX=(o.pointer?.x??g.x)*23*o.mouseScale,mouseY=(o.pointer?.y??g.y)*10*o.mouseScale;
+ // Travel is in the original 1536x1360 artwork space. Keep the pointer
+ // bounded, and move mouse/palm together while the sleeve root eases out.
+ const mouseX=Math.max(-1,Math.min(1,o.pointer?.x??g.x))*52*o.mouseScale;
+ const mouseY=Math.max(-1,Math.min(1,o.pointer?.y??g.y))*24*o.mouseScale;
  const face=['ArtMesh8','ArtMesh2','ArtMesh3','ArtMesh4','ArtMesh5','ArtMesh6','ArtMesh7','ArtMesh1'];
  const pose=expressionPose(o.expression,now,o.motionAge,idle),gazeScale=o.gazeScale??2.1;
  for(let i=0;i<model.getDrawableCount();i++){

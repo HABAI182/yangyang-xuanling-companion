@@ -1,7 +1,7 @@
 export const EDITION = import.meta.env.VITE_APP_EDITION === 'basic' ? 'basic' : 'full';
 export const HAS_COMPANION = EDITION === 'full';
 export const EDITION_LABEL = HAS_COMPANION ? '表情完整版' : '免费基础版';
-export const APP_VERSION = '0.3.5';
+export const APP_VERSION = '0.3.6';
 
 /** Edition is baked into the build, never restored from user preferences. */
 export function editionPreferences<T extends Record<string, any>>(p:T):T {
