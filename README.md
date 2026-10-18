@@ -1,6 +1,8 @@
 # 秧秧玄翎桌面伴侣
 
-Windows x64 Q 版 Live2D 桌宠，当前为 **0.3.4 精修预览**。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
+Windows x64 Q 版 Live2D 桌宠，当前为 **0.3.6 两版候选**。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
+
+当前仅保留**免费基础版0元**和**表情完整版15元**，已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[两版说明](docs/distribution/two-editions.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
 
 ## 0.3.5 分版候选
 
@@ -21,9 +23,9 @@ npm run package:full
 
 ## 下载与使用
 
-[v0.3.4 Windows 便携程序 / 安装包](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.4) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
+[v0.3.6 两版 Windows 便携程序 / 安装包](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6) · [v0.3.4](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.4) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
 
-使用有权限的 GitHub 账号下载并核对附件校验单。旧 Tag、Release 和附件原样保留。
+使用有权限的 GitHub 账号下载并核对附件校验单。旧 Tag、Release 和附件原样保留。私有GitHub是作者备份，爱发电买家的领取入口另行配置，不向买家提供仓库凭据。
 
 右键角色或托盘打开互动菜单与设置；`Ctrl + Alt + Y` 找回窗口并解除穿透。画面左侧手（角色右手）控制鼠标，画面右侧手（角色左手）控制键盘。Q/A/U/H 表示四个物理键区，Space 使用独立落点；长按保持姿态，真正再次按下才弹动。
 
