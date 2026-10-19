@@ -1,8 +1,8 @@
 # 秧秧玄翎桌面伴侣
 
-Windows x64 Q 版桌面伴侣。新增 **0.3.7 静态桌面版**，已有免费基础版、表情完整版仍保留 **0.3.6** 原始程序。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
+Windows x64 Q 版桌面伴侣。新增 **0.3.7 静态桌面版**，已有无表情互动版、表情完整版仍保留 **0.3.6** 原始程序。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
 
-当前提供**静态桌面版0元**、**免费基础版0元**和**表情完整版15元**，已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[版本说明](docs/distribution/two-editions.md) · [静态版与EXE入口](docs/distribution/0.3.7-static.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
+2026-10-19 确认三版定价：**静态桌面版0元**、**无表情互动版10元**、**表情完整版15元**，后两版为一次性版本。已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[版本说明](docs/distribution/two-editions.md) · [静态版与EXE入口](docs/distribution/0.3.7-static.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
 
 静态版固定显示现有日常透明画面，不加载Live2D Core/模型、不运行动画循环或全局键盘钩子。保留拖动、缩放、置顶、穿透、位置预设、托盘和开机启动；三个版本的配置和开机启动项彼此独立。已有两个互动版不重新打包或覆盖。
 
@@ -10,7 +10,9 @@ Windows x64 Q 版桌面伴侣。新增 **0.3.7 静态桌面版**，已有免费�
 
 0.3.6 将鼠标与鼠标手的默认横向行程由原画空间 ±23 增至 ±52、纵向由 ±10 增至 ±24；两者同步移动，袖口按原有渐变权重衔接。鼠标幅度滑杆仍为 0–1.6。当前分版包输出到 `yangyang-bilibili-launch/packages/0.3.6/`，旧 0.3.5 文件保留。实际 WebGL 与两版 Windows EXE 已检查扩大后的移动和独立键盘手；极限姿态截图保留于发行准备目录，美术认可另行记录。
 
-`codex/bilibili-editions` 为本地发行准备：免费基础版 0 元，保留日常键鼠、四区与 Space、视线与桌面设置；表情完整版拟定 15 元，增加 16 种情绪与日常状态、3 段互动、台词和动作快捷键。基础版在前端与原生层分别限制付费功能，两个版本使用独立配置与登录启动项。
+`codex/bilibili-editions` 为本地发行准备：10元无表情互动版保留日常键鼠、四区与 Space、眨眼、视线与桌面设置；15元表情完整版增加16种情绪与日常状态、3段互动、台词和动作快捷键。基础互动版在前端与原生层限制额外表情功能，各版本使用独立配置与登录启动项。免费版仅指固定画面的静态版。
+
+此次更新定价、文案与后续构建标识，不重打或覆盖历史EXE。原0.3.6基础版的内部basic标识、文件名及旧“免费基础版”界面可能保留；商品以当前三版说明为准。爱发电后台本轮尚未回读确认，不表示已经开售。
 
 作者已确认底稿自有、可商用改编；库洛对营利发行的书面同意尚未取得。此候选不代表获准公开销售，暂不提供 VTS、面捕或工程商品。现有私有 Release、历史附件与 0.3.4 用户配置保留。
 
@@ -30,7 +32,7 @@ npm run package:static
 直接下载无需安装的 EXE（均需要系统 WebView2）：
 
 - [静态桌面版 0.3.7 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.7/YangyangXuanling-0.3.7-static-win-x64-portable.exe)
-- [免费基础版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-basic-win-x64-portable.exe)
+- [无表情互动版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-basic-win-x64-portable.exe)
 - [表情完整版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-full-win-x64-portable.exe)
 
 [v0.3.6 ZIP / 安装包备份](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)

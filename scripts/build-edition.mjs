@@ -7,6 +7,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const version=JSON.parse(await fs.readFile(path.join(root,'package.json'),'utf8')).version;
 const edition=process.argv[2];
 if(!['static','basic','full'].includes(edition))throw Error('Usage: node scripts/build-edition.mjs static|basic|full [--web-only] [--portable-only]');
+const editionPrice={static:0,basic:10,full:15}[edition];
 const webOnly=process.argv.includes('--web-only');
 const portableOnly=process.argv.includes('--portable-only');
 const stage=path.join(root,'work','editions',edition),publicDir=path.join(stage,'public');
@@ -30,7 +31,7 @@ for(const patch of details.patches)await copy(patch.file.replace(/^\//,''));
 await fs.mkdir(path.join(publicDir,'assets/detail-v14'),{recursive:true});
 await fs.writeFile(path.join(publicDir,'assets/detail-v14/patches.json'),JSON.stringify(details,null,2));
 }
-await fs.writeFile(path.join(publicDir,'assets/edition.json'),JSON.stringify({edition,version,priceCny:edition==='full'?15:0,status:'local-release-candidate',publicSaleApproved:false},null,2));
+await fs.writeFile(path.join(publicDir,'assets/edition.json'),JSON.stringify({edition,version,priceCny:editionPrice,status:'local-release-candidate',publicSaleApproved:false},null,2));
 const env={...process.env,VITE_APP_EDITION:edition,YANGYANG_PUBLIC_DIR:publicDir,YANGYANG_DIST_DIR:dist};
 const run=(args)=>{
  const r=spawnSync(process.execPath,args,{cwd:root,env,stdio:'inherit'});
@@ -59,5 +60,5 @@ const nsis=path.join(target,'release/bundle/nsis');
 if(!portableOnly)for(const name of await fs.readdir(nsis))if(name.startsWith(`秧秧玄翎${label}_${version}_`)&&name.endsWith('.exe'))await fs.copyFile(path.join(nsis,name),path.join(delivery,`YangyangXuanling-${version}-${edition}-win-x64-setup-candidate.exe`));
 for(const file of ['LICENSE.txt','LICENSE-CHANG-LI-MIT.txt','THIRD-PARTY-NOTICES.md'])await fs.copyFile(path.join(root,file),path.join(delivery,file));
 for(const file of ['CORE-LICENSE.md','CORE-REDISTRIBUTABLE-FILES.txt','FRAMEWORK-LICENSE.md'])await fs.copyFile(path.join(source,'vendor/live2d',file),path.join(delivery,file));
-await fs.writeFile(path.join(delivery,'edition.json'),JSON.stringify({edition,version,priceCny:edition==='full'?15:0,status:'local-candidate',publicSaleApproved:false},null,2));
+await fs.writeFile(path.join(delivery,'edition.json'),JSON.stringify({edition,version,priceCny:editionPrice,status:'local-candidate',publicSaleApproved:false},null,2));
 console.log(JSON.stringify({edition,stage,dist,native:true}));
