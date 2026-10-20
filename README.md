@@ -1,47 +1,24 @@
 # 秧秧玄翎桌面伴侣
 
-Windows x64 Q 版桌面伴侣。新增 **0.3.7 静态桌面版**，已有无表情互动版、表情完整版仍保留 **0.3.6** 原始程序。本仓库保持私有，角色源稿与模型仅用于已授权的私有开发。
+Windows x64 Q版桌面伴侣。当前发行仅保留**表情完整版0.3.6**，包含键鼠互动、视线跟随、情绪、小动作、台词与桌面设置。
 
-2026-10-19 确认三版定价：**静态桌面版0元**、**无表情互动版10元**、**表情完整版15元**，后两版为一次性版本。已取消VTS、合集和工程商品计划。爱发电主页：[HABAI](https://afdian.com/a/habai)。[版本说明](docs/distribution/two-editions.md) · [静态版与EXE入口](docs/distribution/0.3.7-static.md) · [0.3.6变更及验证范围](docs/distribution/0.3.6.md)。
+2026-10-20按作者要求，静态版和无表情互动版从本仓库Release移除，转存[另一私有仓库](https://github.com/HABAI182/repository-history-archive-private/releases/tag/yangyang-retired-editions-20261020)并完成原字节、SHA256和独立下载回读核验。三档价格和爱发电引导已撤出当前发行资料，改用[B站投稿草稿](docs/distribution/bilibili-post.md)。仓库仍为Private，开发源码、可编辑源、Tag和其他历史版本保留。
 
-静态版固定显示现有日常透明画面，不加载Live2D Core/模型、不运行动画循环或全局键盘钩子。保留拖动、缩放、置顶、穿透、位置预设、托盘和开机启动；三个版本的配置和开机启动项彼此独立。已有两个互动版不重新打包或覆盖。
-
-## 0.3.5 分版候选
-
-0.3.6 将鼠标与鼠标手的默认横向行程由原画空间 ±23 增至 ±52、纵向由 ±10 增至 ±24；两者同步移动，袖口按原有渐变权重衔接。鼠标幅度滑杆仍为 0–1.6。当前分版包输出到 `yangyang-bilibili-launch/packages/0.3.6/`，旧 0.3.5 文件保留。实际 WebGL 与两版 Windows EXE 已检查扩大后的移动和独立键盘手；极限姿态截图保留于发行准备目录，美术认可另行记录。
-
-`codex/bilibili-editions` 为本地发行准备：10元无表情互动版保留日常键鼠、四区与 Space、眨眼、视线与桌面设置；15元表情完整版增加16种情绪与日常状态、3段互动、台词和动作快捷键。基础互动版在前端与原生层限制额外表情功能，各版本使用独立配置与登录启动项。免费版仅指固定画面的静态版。
-
-此次更新定价、文案与后续构建标识，不重打或覆盖历史EXE。原0.3.6基础版的内部basic标识、文件名及旧“免费基础版”界面可能保留；商品以当前三版说明为准。爱发电后台本轮尚未回读确认，不表示已经开售。
-
-作者已确认底稿自有、可商用改编；库洛对营利发行的书面同意尚未取得。此候选不代表获准公开销售，暂不提供 VTS、面捕或工程商品。现有私有 Release、历史附件与 0.3.4 用户配置保留。
-
-```powershell
-npm run build:basic
-npm run build:full
-npm run build:static
-npm run package:basic
-npm run package:full
-npm run package:static
-```
-
-分版脚本只嵌入当前运行资源，产物写入相邻的 `yangyang-bilibili-launch/packages`；不含 PSD、CMO3、旧模型或个人设置。Tauri 使用相对 `frontendDist` 和 `custom-protocol`，确保 Windows 独立程序嵌入页面而非引用开发机路径。
+[当前版本说明](docs/distribution/full-edition.md) · [0.3.6验证范围](docs/distribution/0.3.6.md)
 
 ## 下载与使用
 
-直接下载无需安装的 EXE（均需要系统 WebView2）：
+- [直接运行表情完整版EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-full-win-x64-portable.exe)
+- [便携ZIP与安装包备份](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6)
+- [其他历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
 
-- [静态桌面版 0.3.7 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.7/YangyangXuanling-0.3.7-static-win-x64-portable.exe)
-- [无表情互动版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-basic-win-x64-portable.exe)
-- [表情完整版 0.3.6 EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-full-win-x64-portable.exe)
+系统需要WebView2。私有GitHub下载需要仓库访问权限；B站观众领取需另设公开可访问的文件地址，不分发仓库凭据。
 
-[v0.3.6 ZIP / 安装包备份](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6) · [全部历史版本](https://github.com/HABAI182/yangyang-xuanling-companion/releases)
-
-使用有权限的 GitHub 账号下载并核对附件校验单。旧 Tag、Release 和附件原样保留。私有GitHub是作者备份，爱发电买家的领取入口另行配置，不向买家提供仓库凭据。
+复用0.3.6原始完整版，实际构建源码为`988d4a3889f60046b4ecd5924fd2a56c33d6430a`。本次不重建软件、修改模型或重渲染视频；完整版EXE、便携ZIP和安装包的原字节及校验值不变。
 
 右键角色或托盘打开互动菜单与设置；`Ctrl + Alt + Y` 找回窗口并解除穿透。画面左侧手（角色右手）控制鼠标，画面右侧手（角色左手）控制键盘。Q/A/U/H 表示四个物理键区，Space 使用独立落点；长按保持姿态，真正再次按下才弹动。
 
-- 17 种情绪、3 段小动作、36 条本地气泡，独立玄翎雀、二维视线与阻尼回弹。
+- 16 种情绪与日常状态、3 段小动作、36 条本地气泡，独立玄翎雀、二维视线与阻尼回弹。
 - 可调静止后视线回正、透明空白自动穿透、置顶、拖动、全屏避让与常用位置。
 - 外观/互动/桌面/高级设置，50%–200% 大小、独立气泡和按键缩放、主题与动作幅度。
 - 默认仅短暂显示最近一个按键，可选最多 6 个；不保存输入文本或按键历史，不联网传输输入。
