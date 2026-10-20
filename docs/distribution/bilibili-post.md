@@ -20,11 +20,13 @@
 视线会跟随鼠标，也可以设置在鼠标静止后慢慢回正。
 支持拖动缩放、置顶、透明空白穿透，以及气泡和按键浮显大小调整。
 
-下载及使用说明见置顶评论，发布时会补上可直接领取的入口。
+完整版下载：https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6
+源码与PSD/CMO3源稿：https://github.com/HABAI182/yangyang-xuanling-companion
+无需登录即可领取，下载EXE直接运行；使用说明见仓库README。
 
 仅适用于Windows 64位电脑，需要WebView2。
 下载后自带独立程序，无需另装BongoCat或VTS。
-不支持手机、面捕，不包含PSD、CMO3或源工程。
+不支持手机或面捕。成品运行无需工程文件，源码和美术源稿也已在GitHub一并公开。
 
 有问题请私信：桌宠问题
 请附上桌宠版本、Windows版本和不含隐私的截图，方便定位。
@@ -40,10 +42,12 @@ BGM：しゅわしゅわハニーレモン350ml — しゃろう（Sharou）
 
 这次提供表情完整版，键鼠互动、视线跟随、情绪、小动作和台词都保留。
 Windows 64位电脑可用，需要WebView2；无需BongoCat或VTS，不支持手机和面捕。
-下载地址补齐后会更新在这里。有问题私信我：桌宠问题。
+下载：https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6
+源码与源稿：https://github.com/HABAI182/yangyang-xuanling-companion
+有问题私信我：桌宠问题。
 
 ## 投稿前处理
 
-上传前把正文“发布时会补上可直接领取的入口”和置顶评论的待补提示替换为实际公开下载地址；未配置前不写“已开放下载”。私有GitHub链接不能直接作为普通观众的领取地址。
+本次先在GitHub完成公开访问核验，再保存B站投稿草稿；不点击“立即投稿”。不在文案中保留旧分档价格或爱发电引导。
 
 视频复用已有48秒成片，片中为此前0.3.4浏览器WebGL实演，不宣称是新版Windows原生全流程录制。本次不重建软件或重渲染宣传片，也不自动更改既有平台草稿。

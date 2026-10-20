@@ -1,17 +1,16 @@
 # 表情完整版发行说明
 
-2026-10-20按作者要求，当前发行仅保留**表情完整版0.3.6，Windows x64**。静态版和无表情互动版从本仓库Release移除，原文件及旧分档上架资料转存另一私有仓库，经SHA256与独立下载回读核验后清理。源码构建配置、Tag和其他历史版本保留。
+2026-10-20按作者要求，当前发行仅保留**表情完整版0.3.6，Windows x64**。静态版和无表情互动版从本仓库Release移除，原文件及旧分档上架资料转存作者的私有恢复归档，经SHA256与独立下载回读核验后清理。源码构建配置、Tag和其他历史版本保留。
 
 ## 当前入口
 
 - [直接运行EXE](https://github.com/HABAI182/yangyang-xuanling-companion/releases/download/v0.3.6/YangyangXuanling-0.3.6-full-win-x64-portable.exe)
 - [便携ZIP与安装包](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6)
-- [已退役分版的私有恢复归档](https://github.com/HABAI182/repository-history-archive-private/releases/tag/yangyang-retired-editions-20261020)
 - [B站标题与简介](bilibili-post.md)
 
 完整版本包含日常键鼠互动、键盘四区与独立Space、鼠标与手同步滑动、眨眼、视线跟随及静止后回正、16种情绪和日常状态、3段动作、本地台词、点击回应、自动小憩和动作快捷键。支持透明空白穿透、拖动、缩放、置顶和桌面设置。
 
-Windows 64位，需要WebView2。独立程序，无需BongoCat或VTS；不支持手机和面捕，不包含PSD、CMO3或源工程。
+Windows 64位，需要WebView2。独立程序，无需BongoCat或VTS；不支持手机和面捕，成品运行不需要PSD、CMO3或源工程；源码和美术源稿在本仓库中另外公开。
 
 ## 交付来源
 
@@ -23,4 +22,4 @@ Windows 64位，需要WebView2。独立程序，无需BongoCat或VTS；不支持
 
 宣传资料改为单一完整版，不再按0/10/15分档，不再引导爱发电。本次尚未声明新的收费方案，也没有代作者发布B站视频。
 
-GitHub仓库与恢复归档保持Private。对外领取地址需由作者在B站发布时配置为观众实际可访问的下载位置；不公开仓库令牌或擅自将源素材搬到公共仓库。
+本GitHub仓库按作者明确授权公开源码、成品与PSD/CMO3。B站观众可从[完整版Release](https://github.com/HABAI182/yangyang-xuanling-companion/releases/tag/v0.3.6)直接领取；已退役分版的恢复归档继续保持私有。公开不改变第三方许可，运行包内仍保留相关说明。
